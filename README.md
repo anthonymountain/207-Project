@@ -1,7 +1,7 @@
 # Members
 **Riena Asakawa** - [riena42](https://github.com/riena42)  
 **Daniel Cheng** - [chengd35](https://github.com/chengd35)  
-**Matteo Moretti** - []()  
+**Matteo Moretti** - [ponyopm](https://github.com/ponyopm)  
 **Adwait Rath** - [Descartes-AR](https://github.com/Descartes-AR)  
 **Anthony Shan** - [anthonymountain](https://github.com/anthonymountain)
 
