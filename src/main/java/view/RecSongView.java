@@ -1,9 +1,12 @@
 package view;
 
-import interface_adapter.change_password.ChangePasswordController;
-import interface_adapter.change_password.LoggedInState;
-import interface_adapter.change_password.LoggedInViewModel;
-import interface_adapter.logout.LogoutController;
+//import interface_adapter.change_password.LoggedInViewModel;
+//import interface_adapter.change_password.ChangePasswordController;
+//import interface_adapter.change_password.LoggedInState;
+//import interface_adapter.logout.LogoutController;
+import interface_adapter.rec_song.RecSongController; // Note: this is to replace the change_password stuff
+import interface_adapter.rec_song.RecSongState;
+import interface_adapter.rec_song.RecSongViewModel;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
