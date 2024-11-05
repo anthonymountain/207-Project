@@ -18,6 +18,8 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.rec_song.RecSongController;
+import interface_adapter.rec_song.RecSongPresenter;
 import interface_adapter.rec_song.RecSongViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
@@ -31,6 +33,9 @@ import use_case.login.LoginOutputBoundary;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
+import use_case.rec_song.RecSongInputBoundary;
+import use_case.rec_song.RecSongInteractor;
+import use_case.rec_song.RecSongOutputBoundary;
 import use_case.signup.SignupInputBoundary;
 import use_case.signup.SignupInteractor;
 import use_case.signup.SignupOutputBoundary;
@@ -175,6 +180,21 @@ public class AppBuilder {
 
         final LogoutController logoutController = new LogoutController(logoutInteractor);
         loggedInView.setLogoutController(logoutController);
+        return this;
+    }
+
+    /**
+     * Adds the RecSong Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addRecSongUseCase() {
+        final RecSongOutputBoundary recSongOutputBoundary = new RecSongPresenter(); // TBD
+
+        final RecSongInputBoundary recSongInteractor =
+                new RecSongInteractor(); //TBD
+
+        final RecSongController recSongController = new RecSongController();
+        recSongView.setRecSongController(recSongController);
         return this;
     }
 

@@ -17,6 +17,7 @@ public class Main {
                                             .addSignupView()
                                             .addLoggedInView()
                                             .addRecSongView()
+                                            .addRecSongUseCase()
                                             .addSignupUseCase()
                                             .addLoginUseCase()
                                             .addChangePasswordUseCase()
