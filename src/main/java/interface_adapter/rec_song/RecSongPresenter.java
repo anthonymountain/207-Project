@@ -1,11 +1,12 @@
 package interface_adapter.rec_song;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.change_password.LoggedInViewModel;
-import interface_adapter.login.LoginViewModel;
 import use_case.rec_song.RecSongOutputBoundary;
 import use_case.rec_song.RecSongOutputData;
 
+/**
+ * This is a presenter for a recommended song.
+ */
 public class RecSongPresenter implements RecSongOutputBoundary {
 
     private final RecSongViewModel recSongViewModel;
@@ -19,13 +20,13 @@ public class RecSongPresenter implements RecSongOutputBoundary {
     @Override
     public void prepareSuccessView(RecSongOutputData outputData) {
 
-        // This code tells the View Manager to switch to the LoginView.
+        // This code tells the View Manager to switch to the RecSongView.
         this.viewManagerModel.setState(recSongViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }
 
     @Override
     public void prepareFailView(String errorMessage) {
-
+        // Apparently it can't fail... KABOOM
     }
 }
