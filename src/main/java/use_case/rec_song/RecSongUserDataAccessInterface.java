@@ -1,19 +1,18 @@
 package use_case.rec_song;
 
+import entity.Song;
+
 /**
- * DAO for the Logout Use Case.
+ * DAO for the Recommend Song Use Case.
  */
 public interface RecSongUserDataAccessInterface {
 
     /**
-     * Returns the username of the curren user of the application.
-     * @return the username of the current user
+     * Recommends a song for the user.
+     * @param song the new song
      */
-    String getCurrentUsername();
-
-    /**
-     * Sets the username indicating who is the current user of the application.
-     * @param username the new current username
-     */
-    void setCurrentUsername(String username);
+    void recommend(Song song);
+    // add duplicate check
+    // add previous recommended song retrieval (from list)
+    // add recommendation saving (to list)
 }

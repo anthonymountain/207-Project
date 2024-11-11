@@ -1,19 +1,22 @@
 package view;
 
-import interface_adapter.like.LikeController;
-import interface_adapter.rec_song.RecSongController;
-import interface_adapter.rec_song.RecSongViewModel;
+import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
-import java.awt.*;
 
+import interface_adapter.like.LikeController;
+import interface_adapter.rec_song.RecSongController;
+import interface_adapter.rec_song.RecSongState;
+import interface_adapter.rec_song.RecSongViewModel;
 
 /**
  * The View for when the user generates a song.
  * //Note: if you want to figure out the correct format and structure, look at LoggedInView.java
  * //import interface_adapter.rec_song.RecSongState;  could be unnecessary
  */
-public class RecSongView extends JPanel {
+public class RecSongView extends JPanel implements PropertyChangeListener {
 
     private final String viewName = "song recommended";
     private final RecSongViewModel recSongViewModel;
@@ -22,19 +25,17 @@ public class RecSongView extends JPanel {
     private LikeController likeController;
     // the likeController will be implemented later for when the likeButton is added
 
+    private final JLabel name;
+
     private final JButton like;
     private final JButton addToPlaylist;
 
     public RecSongView(RecSongViewModel recSongViewModel) {
         this.recSongViewModel = recSongViewModel;
         this.recSongViewModel.addPropertyChangeListener(this);
-        // Note: addPropertyChangeListener is not implemented, if you want to look into implementing this function,
-        // just check LoggedInView for the right thing.
 
-        final JLabel title = new JLabel("Recommended Song");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        final JLabel songInfo = new JLabel("New Song: ");
+        final JLabel songInfo = new JLabel("New Song: " + "placeholder_name");
+        name = new JLabel();
 
         final JPanel buttons = new JPanel();
 
@@ -45,10 +46,44 @@ public class RecSongView extends JPanel {
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        this.add(title);
+        like.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                evt -> {
+                    if (evt.getSource().equals(like)) {
+                        // likeController.execute();
+                    }
+                }
+        );
+
+        addToPlaylist.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                evt -> {
+                    if (evt.getSource().equals(addToPlaylist)) {
+                        // addToPlaylistController.execute();
+                    }
+                }
+        );
+
         this.add(songInfo);
 
         this.add(buttons);
+    }
+
+    @Override
+    public void propertyChange(PropertyChangeEvent evt) {
+        if (evt.getPropertyName().equals("state")) {
+            final RecSongState state = (RecSongState) evt.getNewValue();
+            name.setText(state.getName());
+        }
+        else if (evt.getPropertyName().equals("like")) {
+            final RecSongState state = (RecSongState) evt.getNewValue();
+            JOptionPane.showMessageDialog(null, "liked" + state.getName());
+        }
+        else if (evt.getPropertyName().equals("addToPlaylist")) {
+            final RecSongState state = (RecSongState) evt.getNewValue();
+            JOptionPane.showMessageDialog(null, "added song to playlist: " + state.getList());
+        }
+
     }
 
     public String getViewName() {

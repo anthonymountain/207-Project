@@ -9,6 +9,10 @@ public class LoggedInState {
     private String password = "";
     private String passwordError;
 
+    private String name;
+    private String artist;
+    private String genre;
+
     public LoggedInState(LoggedInState copy) {
         username = copy.username;
         password = copy.password;
@@ -38,5 +42,17 @@ public class LoggedInState {
 
     public String getPassword() {
         return password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getArtist() {
+        return artist;
+    }
+
+    public String getGenre() {
+        return genre;
     }
 }
