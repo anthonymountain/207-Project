@@ -7,7 +7,7 @@ public interface RecSongInputBoundary {
 
     /**
      * Executes the Logout use case.
-     * @param LogoutInputData the input data
+     * @param recSongInputData the input data
      */
-    void execute(RecSongInputData LogoutInputData);
+    void execute(RecSongInputData recSongInputData);
 }

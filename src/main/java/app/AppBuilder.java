@@ -7,7 +7,9 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import data_access.InMemoryUserDataAccessObject;
+import entity.CommonSongFactory;
 import entity.CommonUserFactory;
+import entity.SongFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.ChangePasswordController;
@@ -56,6 +58,7 @@ public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
     // thought question: is the hard dependency below a problem?
+    private final SongFactory songFactory = new CommonSongFactory();
     private final UserFactory userFactory = new CommonUserFactory();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
@@ -155,15 +158,15 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addChangePasswordUseCase() {
-        final ChangePasswordOutputBoundary changePasswordOutputBoundary =
-                new ChangePasswordPresenter(loggedInViewModel);
-
-        final ChangePasswordInputBoundary changePasswordInteractor =
-                new ChangePasswordInteractor(userDataAccessObject, changePasswordOutputBoundary, userFactory);
-
-        final ChangePasswordController changePasswordController =
-                new ChangePasswordController(changePasswordInteractor);
-        loggedInView.setChangePasswordController(changePasswordController);
+        //        final ChangePasswordOutputBoundary changePasswordOutputBoundary =
+        //                new ChangePasswordPresenter(loggedInViewModel);
+        //
+        //        final ChangePasswordInputBoundary changePasswordInteractor =
+        //                new ChangePasswordInteractor(userDataAccessObject, changePasswordOutputBoundary, userFactory);
+        //
+        //        final ChangePasswordController changePasswordController =
+        //                new ChangePasswordController(changePasswordInteractor);
+        //        loggedInView.setChangePasswordController(changePasswordController);
         return this;
     }
 
@@ -188,12 +191,12 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addRecSongUseCase() {
-        final RecSongOutputBoundary recSongOutputBoundary = new RecSongPresenter(); // TBD
+        final RecSongOutputBoundary recSongOutputBoundary = new RecSongPresenter(viewManagerModel, recSongViewModel);
 
         final RecSongInputBoundary recSongInteractor =
-                new RecSongInteractor(); //TBD
+                new RecSongInteractor(userDataAccessObject, recSongOutputBoundary, songFactory);
 
-        final RecSongController recSongController = new RecSongController();
+        final RecSongController recSongController = new RecSongController(recSongInteractor);
         recSongView.setRecSongController(recSongController);
         return this;
     }
@@ -203,12 +206,12 @@ public class AppBuilder {
      * @return the application
      */
     public JFrame build() {
-        final JFrame application = new JFrame("Login Example");
+        final JFrame application = new JFrame("Menu");
         application.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(signupView.getViewName());
+        viewManagerModel.setState(loggedInView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;

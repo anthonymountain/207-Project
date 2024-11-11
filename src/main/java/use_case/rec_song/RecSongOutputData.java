@@ -5,16 +5,16 @@ package use_case.rec_song;
  */
 public class RecSongOutputData {
 
-    private final String username;
+    private final String name;
     private final boolean useCaseFailed;
 
-    public RecSongOutputData(String username, boolean useCaseFailed) {
-        this.username = username;
+    public RecSongOutputData(String name, boolean useCaseFailed) {
+        this.name = name;
         this.useCaseFailed = useCaseFailed;
     }
 
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
     public boolean isUseCaseFailed() {
