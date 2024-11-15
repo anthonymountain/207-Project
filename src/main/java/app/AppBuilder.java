@@ -12,8 +12,6 @@ import entity.CommonUserFactory;
 import entity.SongFactory;
 import entity.UserFactory;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.change_password.ChangePasswordController;
-import interface_adapter.change_password.ChangePasswordPresenter;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.login.LoginController;
 import interface_adapter.login.LoginPresenter;
@@ -26,9 +24,6 @@ import interface_adapter.rec_song.RecSongViewModel;
 import interface_adapter.signup.SignupController;
 import interface_adapter.signup.SignupPresenter;
 import interface_adapter.signup.SignupViewModel;
-import use_case.change_password.ChangePasswordInputBoundary;
-import use_case.change_password.ChangePasswordInteractor;
-import use_case.change_password.ChangePasswordOutputBoundary;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
@@ -58,10 +53,12 @@ public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
     // thought question: is the hard dependency below a problem?
+
     private final SongFactory songFactory = new CommonSongFactory();
     private final UserFactory userFactory = new CommonUserFactory();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
+    private final ViewBuilder viewBuilder;
 
     // thought question: is the hard dependency below a problem?
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
@@ -77,6 +74,7 @@ public class AppBuilder {
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
+        viewBuilder = new ViewBuilder(cardPanel, viewManagerModel);
     }
 
     /**
@@ -85,8 +83,7 @@ public class AppBuilder {
      */
     public AppBuilder addSignupView() {
         signupViewModel = new SignupViewModel();
-        signupView = new SignupView(signupViewModel);
-        cardPanel.add(signupView, signupView.getViewName());
+        signupView = viewBuilder.createSignupView(signupViewModel);
         return this;
     }
 
@@ -96,8 +93,7 @@ public class AppBuilder {
      */
     public AppBuilder addLoginView() {
         loginViewModel = new LoginViewModel();
-        loginView = new LoginView(loginViewModel);
-        cardPanel.add(loginView, loginView.getViewName());
+        loginView = viewBuilder.createLoginView(loginViewModel);
         return this;
     }
 
@@ -107,8 +103,7 @@ public class AppBuilder {
      */
     public AppBuilder addLoggedInView() {
         loggedInViewModel = new LoggedInViewModel();
-        loggedInView = new LoggedInView(loggedInViewModel);
-        cardPanel.add(loggedInView, loggedInView.getViewName());
+        loggedInView = viewBuilder.createLoggedInView(loggedInViewModel);
         return this;
     }
 
@@ -118,8 +113,7 @@ public class AppBuilder {
      */
     public AppBuilder addRecSongView() {
         recSongViewModel = new RecSongViewModel();
-        recSongView = new RecSongView(recSongViewModel);
-        cardPanel.add(recSongView, recSongView.getViewName());
+        recSongView = viewBuilder.createRecSongView(recSongViewModel);
         return this;
     }
 
