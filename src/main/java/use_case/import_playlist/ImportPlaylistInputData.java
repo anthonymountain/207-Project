@@ -1,29 +1,22 @@
 package use_case.import_playlist;
 
+import java.util.List;
+
+import entity.Song;
+
 /**
  * The Input Data for the Logout Use Case.
  */
 public class ImportPlaylistInputData {
 
-    private final String name;
-    private final String artist;
-    private final String genre;
+    private final List<Song> playlist;
 
-    public ImportPlaylistInputData(String name, String artist, String genre) {
-        this.name = name;
-        this.artist = artist;
-        this.genre = genre;
+    public ImportPlaylistInputData(List<Song> playlist) {
+        this.playlist = playlist;
     }
 
-    public String getName() {
-        return name;
+    public List<Song> getPlaylist() {
+        return playlist;
     }
 
-    public String getArtist() {
-        return artist;
-    }
-
-    public String getGenre() {
-        return genre;
-    }
 }

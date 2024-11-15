@@ -1,31 +1,31 @@
 package use_case.import_playlist;
 
+import java.util.List;
+
 import entity.Song;
 import entity.SongFactory;
 
 /**
- * The Recommend Song Interactor.
+ * The Import Playlist Interactor.
  */
 public class ImportPlaylistInteractor implements ImportPlaylistInputBoundary {
-    private final ImportPlaylistUserDataAccessInterface recSongUserDataAccessObject;
-    private final ImportPlaylistOutputBoundary recSongPresenter;
-    private final SongFactory songFactory;
+    private final ImportPlaylistUserDataAccessInterface importPlaylistUserDataAccessObject;
+    private final ImportPlaylistOutputBoundary importPlaylistPresenter;
+    private final List<Song> playlist;
 
-    public ImportPlaylistInteractor(ImportPlaylistUserDataAccessInterface recSongUserDataAccessInterface,
-                                    ImportPlaylistOutputBoundary recSongOutputBoundary,
-                                    SongFactory songFactory) {
-        this.recSongUserDataAccessObject = recSongUserDataAccessInterface;
-        this.recSongPresenter = recSongOutputBoundary;
-        this.songFactory = songFactory;
+    public ImportPlaylistInteractor(ImportPlaylistUserDataAccessInterface importPlaylistUserDataAccessInterface,
+                                    ImportPlaylistOutputBoundary importPlaylistOutputBoundary,
+                                    List<Song> playlist) {
+        this.importPlaylistUserDataAccessObject = importPlaylistUserDataAccessInterface;
+        this.importPlaylistPresenter = importPlaylistOutputBoundary;
+        this.playlist = playlist;
     }
 
     @Override
-    public void execute(ImportPlaylistInputData recSongInputData) {
-        final Song song = songFactory.create(recSongInputData.getName(), recSongInputData.getArtist(),
-                recSongInputData.getGenre());
-        recSongUserDataAccessObject.recommend(song);
+    public void execute(ImportPlaylistInputData importPlaylistInputData) {
+        importPlaylistUserDataAccessObject.importPlaylist(playlist);
         final ImportPlaylistOutputData recSongOutputData = new ImportPlaylistOutputData(song.getName(), false);
-        recSongPresenter.prepareSuccessView(recSongOutputData);
+        importPlaylistPresenter.prepareSuccessView(recSongOutputData);
     }
 }
 
