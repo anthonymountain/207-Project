@@ -1,20 +1,20 @@
 package entity;
 
 /**
- * The representation of a song in our program.
+ * The representation of a genre in our program.
  */
 public interface Genre {
 
     /**
-     * Returns the name of the song.
+     * Returns the type of the genre.
      *
-     * @return the name of the song.
+     * @return the type of the genre.
      */
     String getType();
 
     /**
-     * Returns the song genre.
-     * @return the song genre.
+     * Returns the genre description.
+     * @return the genre description.
      */
     String getDescription();
 

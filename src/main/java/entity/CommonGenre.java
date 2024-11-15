@@ -1,7 +1,7 @@
 package entity;
 
 /**
- * A simple implementation of the User interface.
+ * A simple implementation of the Genre interface.
  */
 public class CommonGenre implements Genre {
 
