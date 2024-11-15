@@ -1,8 +1,6 @@
 package use_case.import_playlist;
 
-import java.util.List;
-
-import entity.Song;
+import entity.Playlist;
 import entity.SongFactory;
 
 /**
@@ -11,11 +9,11 @@ import entity.SongFactory;
 public class ImportPlaylistInteractor implements ImportPlaylistInputBoundary {
     private final ImportPlaylistUserDataAccessInterface importPlaylistUserDataAccessObject;
     private final ImportPlaylistOutputBoundary importPlaylistPresenter;
-    private final List<Song> playlist;
+    private final Playlist playlist;
 
     public ImportPlaylistInteractor(ImportPlaylistUserDataAccessInterface importPlaylistUserDataAccessInterface,
                                     ImportPlaylistOutputBoundary importPlaylistOutputBoundary,
-                                    List<Song> playlist) {
+                                    Playlist playlist) {
         this.importPlaylistUserDataAccessObject = importPlaylistUserDataAccessInterface;
         this.importPlaylistPresenter = importPlaylistOutputBoundary;
         this.playlist = playlist;
@@ -24,8 +22,8 @@ public class ImportPlaylistInteractor implements ImportPlaylistInputBoundary {
     @Override
     public void execute(ImportPlaylistInputData importPlaylistInputData) {
         importPlaylistUserDataAccessObject.importPlaylist(playlist);
-        final ImportPlaylistOutputData recSongOutputData = new ImportPlaylistOutputData(song.getName(), false);
-        importPlaylistPresenter.prepareSuccessView(recSongOutputData);
+//        final ImportPlaylistOutputData recSongOutputData = new ImportPlaylistOutputData(song.getName(), false);
+//        importPlaylistPresenter.prepareSuccessView(recSongOutputData);
     }
 }
 

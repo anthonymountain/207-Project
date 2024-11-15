@@ -1,21 +1,19 @@
 package use_case.import_playlist;
 
-import java.util.List;
-
-import entity.Song;
+import entity.Playlist;
 
 /**
  * The Input Data for the Logout Use Case.
  */
 public class ImportPlaylistInputData {
 
-    private final List<Song> playlist;
+    private final Playlist playlist;
 
-    public ImportPlaylistInputData(List<Song> playlist) {
+    public ImportPlaylistInputData(Playlist playlist) {
         this.playlist = playlist;
     }
 
-    public List<Song> getPlaylist() {
+    public Playlist getPlaylist() {
         return playlist;
     }
 
