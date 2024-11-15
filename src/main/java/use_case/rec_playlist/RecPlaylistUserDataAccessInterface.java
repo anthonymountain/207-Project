@@ -1,17 +1,17 @@
-package use_case.import_playlist;
+package use_case.rec_playlist;
 
 import entity.Playlist;
 
 /**
- * DAO for the Import Playlist Use Case.
+ * DAO for the Recommend Playlist Use Case.
  */
-public interface ImportPlaylistUserDataAccessInterface {
+public interface RecPlaylistUserDataAccessInterface {
 
     /**
-     * Imports a playlist for the user.
+     * Recommends a playlist for the user.
      * @param playlist the playlist.
      */
-    void importPlaylist(Playlist playlist);
+    void recommend(Playlist playlist);
     // add duplicate check
     // add previous recommended song retrieval (from list)
     // add recommendation saving (to list)
