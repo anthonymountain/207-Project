@@ -6,10 +6,7 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
 
-import interface_adapter.like.LikeController;
 import interface_adapter.rec_artist.RecArtistController;
-import interface_adapter.rec_artist.RecArtistState;
-import interface_adapter.rec_artist.RecArtistViewModel;
 
 /**
  * The View for when the user generates a artist.
