@@ -1,7 +1,7 @@
 package use_case.rec_song;
 
 /**
- * Input Boundary for actions which are related to logging in.
+ * Input Boundary for actions which are related to recommending songs.
  */
 public interface RecSongInputBoundary {
 
