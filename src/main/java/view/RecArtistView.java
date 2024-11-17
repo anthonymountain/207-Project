@@ -23,7 +23,7 @@ public class RecArtistView {
 
         builder.addLabel("New Artist: placeholder_name");
 
-        builder.addButton("Recommend Song");
+        builder.addButton("recSong", "Recommend Song");
 
         view = builder.build();
     }

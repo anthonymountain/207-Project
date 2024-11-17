@@ -13,16 +13,16 @@ public class RecArtistInteractor implements RecArtistInputBoundary {
 
     public RecArtistInteractor(RecArtistUserDataAccessInterface recArtistUserDataAccessInterface,
                              RecArtistOutputBoundary recArtistOutputBoundary,
-                             ArtistFactory ArtistFactory) {
+                             ArtistFactory artistFactory) {
         this.recArtistUserDataAccessObject = recArtistUserDataAccessInterface;
         this.recArtistPresenter = recArtistOutputBoundary;
-        this.artistFactory = ArtistFactory;
+        this.artistFactory = artistFactory;
     }
 
     @Override
     public void execute(RecArtistInputData recArtistInputData) {
         final Artist artist = artistFactory.create(recArtistInputData.getName(), recArtistInputData.getSongs());
-        recArtistUserDataAccessObject.recommend(artist);
+        recArtistUserDataAccessObject.recommendArtist(artist);
         final RecArtistOutputData recArtistOutputData = new RecArtistOutputData(artist.getName(), false);
         recArtistPresenter.prepareSuccessView(recArtistOutputData);
     }

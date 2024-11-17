@@ -11,7 +11,7 @@ public interface RecArtistUserDataAccessInterface {
      * Recommends an Artist for the user.
      * @param artist the new Artist
      */
-    void recommend(Artist artist);
+    void recommendArtist(Artist artist);
     // add duplicate check
     // add previous recommended Artist retrieval (from list)
     // add recommendation saving (to list)
