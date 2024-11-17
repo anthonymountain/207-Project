@@ -11,7 +11,7 @@ public interface RecSongUserDataAccessInterface {
      * Recommends a song for the user.
      * @param song the new song
      */
-    void recommend(Song song);
+    void recommendSong(Song song);
     // add duplicate check
     // add previous recommended song retrieval (from list)
     // add recommendation saving (to list)
