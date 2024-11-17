@@ -2,7 +2,9 @@ package view;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.*;
 
@@ -12,13 +14,13 @@ import javax.swing.*;
 public class ViewBuilder extends JPanel {
 
     private final String viewName;
-    private final List<JComponent> components;
+    private final Map<String, JButton> buttonsMap;
     private final JPanel buttonsPanel;
     private final JPanel mainPanel;
 
     public ViewBuilder(String viewName) {
         this.viewName = viewName;
-        this.components = new ArrayList<>();
+        this.buttonsMap = new HashMap<>();
         this.setLayout(new BorderLayout());
 
         // Main content area
@@ -39,31 +41,20 @@ public class ViewBuilder extends JPanel {
      */
     public ViewBuilder addLabel(String labelText) {
         final JLabel label = new JLabel(labelText);
-        components.add(label);
         mainPanel.add(label);
         return this;
     }
 
     /**
      * Adds a button.
+     * @param buttonKey the key for the button in the button map.
      * @param buttonText the text for the button.
      * @return this builder
      */
-    public ViewBuilder addButton(String buttonText) {
+    public ViewBuilder addButton(String buttonKey, String buttonText) {
         final JButton button = new JButton(buttonText);
-        components.add(button);
+        buttonsMap.put(buttonKey, button);
         buttonsPanel.add(button);
-        return this;
-    }
-
-    /**
-     * Adds a component.
-     * @param component the component to be added.
-     * @return this builder
-     */
-    public ViewBuilder addComponent(JComponent component) {
-        components.add(component);
-        mainPanel.add(component);
         return this;
     }
 
@@ -72,10 +63,21 @@ public class ViewBuilder extends JPanel {
     }
 
     /**
+     * Returns the button.
+     * @param buttonKey the key for the button in the button map.
+     * @return the button.
+     */
+    public JButton getButton(String buttonKey) {
+        return buttonsMap.get(buttonKey);
+    }
+
+    /**
      * Builds the view.
      * @return the view.
      */
     public JPanel build() {
+        this.add(mainPanel);
+        this.add(buttonsPanel);
         return this;
     }
 }
