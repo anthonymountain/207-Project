@@ -113,8 +113,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                 evt -> {
                     final JDialog dialog = new JDialog((JFrame) this.getTopLevelAncestor(),
                             "Song Recommendation", true);
-                    final RecSongView recSongView = new RecSongView(recSongViewModel);
-                    dialog.getContentPane().add(recSongView);
+                    final RecSongView recSongView = new RecSongView();
+                    dialog.getContentPane().add(recSongView.getView());
                     dialog.pack();
                     dialog.setResizable(false);
                     dialog.setLocationRelativeTo(this);
