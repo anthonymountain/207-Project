@@ -84,6 +84,20 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addSignupView() {
+//        View myView = new View.ViewBuilder()
+//                .setTitle("Main Window")
+//                .setLayout("GridLayout")
+//                .addButton("OK")
+//                .addButton("Cancel")
+//                .addLabel("Username:")
+//                .addLabel("Password:")
+//                .build();
+//
+//        // Access the built View object
+//        System.out.println("Title: " + myView.getTitle());
+//        System.out.println("Layout: " + myView.getLayout());
+//        System.out.println("Buttons: " + myView.getButtons());
+//        System.out.println("Labels: " + myView.getLabels());
         signupViewModel = new SignupViewModel();
         signupView = new SignupView(signupViewModel);
         cardPanel.add(signupView, signupView.getViewName());
@@ -117,9 +131,8 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addRecSongView() {
-        recSongViewModel = new RecSongViewModel();
-        recSongView = new RecSongView(recSongViewModel);
-        cardPanel.add(recSongView, recSongView.getViewName());
+        this.recSongView = new RecSongView();
+        cardPanel.add(recSongView.getView(), "Recommended Song");
         return this;
     }
 
@@ -198,6 +211,18 @@ public class AppBuilder {
 
         final RecSongController recSongController = new RecSongController(recSongInteractor);
         recSongView.setRecSongController(recSongController);
+        return this;
+    }
+
+    public AppBuilder addRecGenreUseCase() {
+        final RecGenreOutputBoundary recGenreOutputBoundary = new RecGenrePresenter(viewManagerModel,
+                recGenreViewModel, recGenreViewModel);
+
+        final RecGenreInputBoundary recGenreInteractor =
+                new LogoutInteractor(userDataAccessObject, logoutOutputBoundary);
+
+        final LogoutController logoutController = new LogoutController(logoutInteractor);
+        loggedInView.setLogoutController(logoutController);
         return this;
     }
 
