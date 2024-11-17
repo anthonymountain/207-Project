@@ -1,9 +1,10 @@
 package view;
 
-import javax.swing.*;
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.*;
 
 /**
  * A base ViewBuilder for constructing views.
@@ -31,6 +32,11 @@ public class ViewBuilder extends JPanel {
         this.add(buttonsPanel, BorderLayout.SOUTH);
     }
 
+    /**
+     * Adds a label.
+     * @param labelText the text for the label.
+     * @return this builder
+     */
     public ViewBuilder addLabel(String labelText) {
         final JLabel label = new JLabel(labelText);
         components.add(label);
@@ -38,13 +44,23 @@ public class ViewBuilder extends JPanel {
         return this;
     }
 
-    public ViewBuilder addButton(String buttonText, Runnable onClick) {
+    /**
+     * Adds a button.
+     * @param buttonText the text for the button.
+     * @return this builder
+     */
+    public ViewBuilder addButton(String buttonText) {
         final JButton button = new JButton(buttonText);
         components.add(button);
         buttonsPanel.add(button);
         return this;
     }
 
+    /**
+     * Adds a component.
+     * @param component the component to be added.
+     * @return this builder
+     */
     public ViewBuilder addComponent(JComponent component) {
         components.add(component);
         mainPanel.add(component);
@@ -55,6 +71,10 @@ public class ViewBuilder extends JPanel {
         return viewName;
     }
 
+    /**
+     * Builds the view.
+     * @return the view.
+     */
     public JPanel build() {
         return this;
     }
