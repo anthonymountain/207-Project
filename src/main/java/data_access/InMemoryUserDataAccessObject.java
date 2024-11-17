@@ -3,11 +3,13 @@ package data_access;
 import java.util.HashMap;
 import java.util.Map;
 
+import entity.Genre;
 import entity.Song;
 import entity.User;
 import use_case.change_password.ChangePasswordUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
+import use_case.rec_genre.RecGenreUserDataAccessInterface;
 import use_case.rec_song.RecSongUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
 
@@ -19,12 +21,14 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
         LoginUserDataAccessInterface,
         ChangePasswordUserDataAccessInterface,
         LogoutUserDataAccessInterface,
+        RecGenreUserDataAccessInterface,
         RecSongUserDataAccessInterface {
 
     private final Map<String, User> users = new HashMap<>();
 
     private String currentUsername;
     private Song recommendedSong;
+    private Genre recommendedGenre;
 
     @Override
     public boolean existsByName(String identifier) {
@@ -60,5 +64,10 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     @Override
     public void recommend(Song song) {
         this.recommendedSong = song;
+    }
+
+    @Override
+    public void recommend(Genre genre) {
+        this.recommendedGenre = genre;
     }
 }

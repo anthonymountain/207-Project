@@ -7,10 +7,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import data_access.InMemoryUserDataAccessObject;
-import entity.CommonSongFactory;
-import entity.CommonUserFactory;
-import entity.SongFactory;
-import entity.UserFactory;
+import entity.*;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.ChangePasswordPresenter;
@@ -20,6 +17,9 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.rec_genre.RecGenreController;
+import interface_adapter.rec_genre.RecGenrePresenter;
+import interface_adapter.rec_genre.RecGenreViewModel;
 import interface_adapter.rec_song.RecSongController;
 import interface_adapter.rec_song.RecSongPresenter;
 import interface_adapter.rec_song.RecSongViewModel;
@@ -35,6 +35,9 @@ import use_case.login.LoginOutputBoundary;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
+import use_case.rec_genre.RecGenreInputBoundary;
+import use_case.rec_genre.RecGenreInteractor;
+import use_case.rec_genre.RecGenreOutputBoundary;
 import use_case.rec_song.RecSongInputBoundary;
 import use_case.rec_song.RecSongInteractor;
 import use_case.rec_song.RecSongOutputBoundary;
@@ -58,6 +61,7 @@ public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
     // thought question: is the hard dependency below a problem?
+    private final GenreFactory genreFactory = new CommonGenreFactory();
     private final SongFactory songFactory = new CommonSongFactory();
     private final UserFactory userFactory = new CommonUserFactory();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
@@ -72,6 +76,8 @@ public class AppBuilder {
     private LoggedInViewModel loggedInViewModel;
     private LoggedInView loggedInView;
     private LoginView loginView;
+    private RecGenreViewModel recGenreViewModel;
+    private RecGenreView recGenreView;
     private RecSongViewModel recSongViewModel;
     private RecSongView recSongView;
 
@@ -123,6 +129,16 @@ public class AppBuilder {
         loggedInViewModel = new LoggedInViewModel();
         loggedInView = new LoggedInView(loggedInViewModel);
         cardPanel.add(loggedInView, loggedInView.getViewName());
+        return this;
+    }
+
+    /**
+     * Adds the RecSong View to the application.
+     * @return this builder
+     */
+    public AppBuilder addRecGenreView() {
+        this.recGenreView = new RecGenreView();
+        cardPanel.add(recGenreView.getView(), "Recommended Genre");
         return this;
     }
 
@@ -214,15 +230,19 @@ public class AppBuilder {
         return this;
     }
 
+    /**
+     * Adds the RecGenre Use Case to the application.
+     * @return this builder
+     */
     public AppBuilder addRecGenreUseCase() {
-        final RecGenreOutputBoundary recGenreOutputBoundary = new RecGenrePresenter(viewManagerModel,
-                recGenreViewModel, recGenreViewModel);
+        final RecGenreOutputBoundary recGenreOutputBoundary = new RecGenrePresenter(recGenreViewModel,
+                viewManagerModel);
 
         final RecGenreInputBoundary recGenreInteractor =
-                new LogoutInteractor(userDataAccessObject, logoutOutputBoundary);
+                new RecGenreInteractor(userDataAccessObject, recGenreOutputBoundary, genreFactory);
 
-        final LogoutController logoutController = new LogoutController(logoutInteractor);
-        loggedInView.setLogoutController(logoutController);
+        final RecGenreController recGenreController = new RecGenreController(recGenreInteractor);
+        recGenreView.setRecGenreController(recGenreController);
         return this;
     }
 
