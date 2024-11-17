@@ -1,7 +1,7 @@
 package use_case.rec_song;
 
 /**
- * Output Data for the Logout Use Case.
+ * Output Data for the RecSong Use Case.
  */
 public class RecSongOutputData {
 
