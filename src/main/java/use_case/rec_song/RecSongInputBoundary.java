@@ -6,7 +6,7 @@ package use_case.rec_song;
 public interface RecSongInputBoundary {
 
     /**
-     * Executes the Logout use case.
+     * Executes the RecSong use case.
      * @param recSongInputData the input data
      */
     void execute(RecSongInputData recSongInputData);
