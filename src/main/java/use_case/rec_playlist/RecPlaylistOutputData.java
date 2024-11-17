@@ -1,20 +1,22 @@
 package use_case.rec_playlist;
 
+import entity.Playlist;
+
 /**
  * Output Data for the RecPlaylist Use Case.
  */
 public class RecPlaylistOutputData {
 
-    private final String name;
+    private final Playlist playlist;
     private final boolean useCaseFailed;
 
-    public RecPlaylistOutputData(String name, boolean useCaseFailed) {
-        this.name = name;
+    public RecPlaylistOutputData(Playlist playlist, boolean useCaseFailed) {
+        this.playlist = playlist;
         this.useCaseFailed = useCaseFailed;
     }
 
-    public String getName() {
-        return name;
+    public Playlist getPlaylist() {
+        return playlist;
     }
 
     public boolean isUseCaseFailed() {

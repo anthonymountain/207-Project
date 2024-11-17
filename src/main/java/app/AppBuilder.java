@@ -35,6 +35,9 @@ import use_case.login.LoginOutputBoundary;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
+import use_case.rec_playlist.RecPlaylistInputBoundary;
+import use_case.rec_playlist.RecPlaylistInteractor;
+import use_case.rec_playlist.RecPlaylistOutputBoundary;
 import use_case.rec_song.RecSongInputBoundary;
 import use_case.rec_song.RecSongInteractor;
 import use_case.rec_song.RecSongOutputBoundary;
@@ -198,6 +201,21 @@ public class AppBuilder {
 
         final RecSongController recSongController = new RecSongController(recSongInteractor);
         recSongView.setRecSongController(recSongController);
+        return this;
+    }
+
+    /**
+     * Adds the RecPlaylist Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addRecPlaylistUseCase() {
+        final RecPlaylistOutputBoundary recPlaylistOutputBoundary = new RecPlaylistPresenter(viewManagerModel, recSongViewModel);
+
+        final RecPlaylistInputBoundary recPlaylistInteractor =
+                new RecPlaylistInteractor(playlistDataAccessObject, recPlaylistOutputBoundary, songFactory);
+
+        final RecPlaylistController recPlaylistController = new RecPlaylistController(recPlaylistInteractor);
+        recPlaylistView.setRecPlaylistController(recPlaylistController);
         return this;
     }
 
