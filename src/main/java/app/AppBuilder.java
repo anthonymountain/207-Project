@@ -201,6 +201,18 @@ public class AppBuilder {
         return this;
     }
 
+    public AppBuilder addRecGenreUseCase() {
+        final RecGenreOutputBoundary recGenreOutputBoundary = new RecGenrePresenter(viewManagerModel,
+                recGenreViewModel, recGenreViewModel);
+
+        final RecGenreInputBoundary recGenreInteractor =
+                new LogoutInteractor(userDataAccessObject, logoutOutputBoundary);
+
+        final LogoutController logoutController = new LogoutController(logoutInteractor);
+        loggedInView.setLogoutController(logoutController);
+        return this;
+    }
+
     /**
      * Creates the JFrame for the application and initially sets the SignupView to be displayed.
      * @return the application
