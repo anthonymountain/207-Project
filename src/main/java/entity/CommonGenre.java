@@ -1,26 +1,19 @@
 package entity;
 
+import java.util.ArrayList;
+
 /**
  * A simple implementation of the Genre interface.
  */
 public class CommonGenre implements Genre {
+    private final ArrayList<String> genres;
 
-    private final String type;
-    private final String description;
-
-    public CommonGenre(String type, String description) {
-        this.type = type;
-        this.description = description;
+    public CommonGenre(ArrayList<String> genres) {
+        this.genres = genres;
     }
 
     @Override
-    public String getType() {
-        return type;
+    public ArrayList<String> getGenres() {
+        return genres;
     }
-
-    @Override
-    public String getDescription() {
-        return description;
-    }
-
 }

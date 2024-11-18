@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Implementation of the Artist interface.
  */
-public class CommonArtist implements Artist{
+public class CommonArtist implements Artist {
     private final String name;
     private final ArrayList<Track> tracks;
 
