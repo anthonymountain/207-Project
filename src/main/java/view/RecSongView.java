@@ -20,14 +20,13 @@ public class RecSongView {
 
     private final JPanel view;
     private RecSongController recSongController;
-    private LikeController likeController;
 
     public RecSongView() {
-        final ViewBuilder builder = new ViewBuilder("Recommended Song");
+        final ViewBuilder builder = new ViewBuilder();
 
-        builder.addLabel("New Song: placeholder_name");
-
-        builder.addButton("addToPlaylist", "Add to Playlist");
+        builder.addLabel("New Song: placeholder_name")
+                .addButton("addToPlaylist", "Add to Playlist")
+                .setViewName("Recommended Song");
 
         view = builder.build();
     }

@@ -15,15 +15,9 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
-import interface_adapter.like.LikeController;
 import interface_adapter.logout.LogoutController;
-import interface_adapter.rec_artist.RecArtistController;
-import interface_adapter.rec_artist.RecArtistViewModel;
-import interface_adapter.rec_song.RecSongController;
-import interface_adapter.rec_song.RecSongViewModel;
 
 /**
  * The View for when the user is logged into the program.
@@ -41,15 +35,15 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         this.loggedInViewModel = loggedInViewModel;
         this.loggedInViewModel.addPropertyChangeListener(this);
 
-        final JLabel usernameInfo = new JLabel("Currently logged in: ");
+        // final JLabel usernameInfo = new JLabel("Currently logged in: ");
         username = new JLabel();
 
-        viewBuilder = new ViewBuilder(viewName);
-        viewBuilder.addLabel("Currently logged in: ");
-        viewBuilder
+        viewBuilder = new ViewBuilder();
+        viewBuilder.addLabel("Currently logged in: ")
                 .addButton("logout", "Log Out")
                 .addButton("recSong", "Recommend Song")
-                .addButton("recArtist", "Recommend Artist");
+                .addButton("recArtist", "Recommend Artist")
+                .setViewName(viewName);
 
         setupListeners();
 
