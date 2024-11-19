@@ -17,7 +17,6 @@ public class ViewBuilder extends JPanel {
     private final Map<String, JButton> buttonsMap;
     private final JPanel buttonsPanel;
     private final JPanel mainPanel;
-    private final Controller controller;
 
     public ViewBuilder() {
         this.buttonsMap = new HashMap<>();
@@ -73,15 +72,6 @@ public class ViewBuilder extends JPanel {
      */
     public JButton getButton(String buttonKey) {
         return buttonsMap.get(buttonKey);
-    }
-
-    /**
-     * Returns the button.
-     * @param buttonKey the key for the button in the button map.
-     * @return the button.
-     */
-    public void setController(Controller controller) {
-        return buttonsMap.get();
     }
 
     /**

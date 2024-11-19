@@ -6,7 +6,6 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
 
-import interface_adapter.like.LikeController;
 import interface_adapter.rec_song.RecSongController;
 import interface_adapter.rec_song.RecSongState;
 import interface_adapter.rec_song.RecSongViewModel;
