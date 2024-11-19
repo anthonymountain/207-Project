@@ -27,7 +27,7 @@ public class RecSongView {
 
         builder.addLabel("New Song: placeholder_name");
 
-        builder.addButton("Add to Playlist");
+        builder.addButton("addToPlaylist", "Add to Playlist");
 
         view = builder.build();
     }
