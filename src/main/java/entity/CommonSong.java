@@ -1,7 +1,7 @@
 package entity;
 
 /**
- * A CommonSong.
+ * A simple implementation of the Song interface.
  */
 public class CommonSong implements Song {
 

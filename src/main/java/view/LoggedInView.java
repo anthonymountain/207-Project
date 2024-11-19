@@ -1,6 +1,6 @@
 package view;
 
-import java.awt.Component;
+import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
@@ -18,7 +18,10 @@ import javax.swing.event.DocumentListener;
 import interface_adapter.change_password.ChangePasswordController;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.like.LikeController;
 import interface_adapter.logout.LogoutController;
+import interface_adapter.rec_artist.RecArtistController;
+import interface_adapter.rec_artist.RecArtistViewModel;
 import interface_adapter.rec_song.RecSongController;
 import interface_adapter.rec_song.RecSongViewModel;
 
@@ -29,103 +32,67 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     private final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
-    private final RecSongViewModel recSongViewModel;
-    private final JLabel passwordErrorField = new JLabel();
-    private LogoutController logoutController;
-    private RecSongController recSongController;
-
     private final JLabel username;
+    private final ViewBuilder viewBuilder;
 
-    private final JButton logOut;
-
-    private final JButton recSong;
+    private LogoutController logoutController;
 
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
-        this.recSongViewModel = new RecSongViewModel();
         this.loggedInViewModel.addPropertyChangeListener(this);
 
         final JLabel usernameInfo = new JLabel("Currently logged in: ");
         username = new JLabel();
 
-        final JPanel buttons = new JPanel();
-        recSong = new JButton("Recommend Song");
-        buttons.add(recSong);
+        viewBuilder = new ViewBuilder(viewName);
+        viewBuilder.addLabel("Currently logged in: ");
+        viewBuilder
+                .addButton("logout", "Log Out")
+                .addButton("recSong", "Recommend Song")
+                .addButton("recArtist", "Recommend Artist");
 
-        logOut = new JButton("Log Out");
-        buttons.add(logOut);
+        setupListeners();
 
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new BorderLayout());
+        this.add(viewBuilder.build(), BorderLayout.CENTER);
+    }
 
-        //        passwordInputField.getDocument().addDocumentListener(new DocumentListener() {
-        //
-        //            private void documentListenerHelper() {
-        //                final LoggedInState currentState = loggedInViewModel.getState();
-        //                currentState.setPassword(passwordInputField.getText());
-        //                loggedInViewModel.setState(currentState);
-        //            }
-        //
-        //            @Override
-        //            public void insertUpdate(DocumentEvent e) {
-        //                documentListenerHelper();
-        //            }
-        //
-        //            @Override
-        //            public void removeUpdate(DocumentEvent e) {
-        //                documentListenerHelper();
-        //            }
-        //
-        //            @Override
-        //            public void changedUpdate(DocumentEvent e) {
-        //                documentListenerHelper();
-        //            }
-        //        });
+    private void setupListeners() {
+        final JButton logOutButton = viewBuilder.getButton("logout");
+        if (logOutButton != null) {
+            logOutButton.addActionListener(evt -> {
+                final LoggedInState currentState = loggedInViewModel.getState();
+                logoutController.execute(currentState.getUsername());
+            });
+        }
 
-        //        changePassword.addActionListener(
-        //                // This creates an anonymous subclass of ActionListener and instantiates it.
-        //                evt -> {
-        //                    if (evt.getSource().equals(changePassword)) {
-        //                        final LoggedInState currentState = loggedInViewModel.getState();
-        //
-        //                        this.changePasswordController.execute(
-        //                                currentState.getUsername(),
-        //                                currentState.getPassword()
-        //                        );
-        //                    }
-        //                }
-        //        );
+        final JButton recSongButton = viewBuilder.getButton("recSong");
+        if (recSongButton != null) {
+            recSongButton.addActionListener(evt -> {
+                final JDialog dialog = new JDialog((JFrame) this.getTopLevelAncestor(),
+                        "Song Recommendation", true);
+                final RecSongView recSongView = new RecSongView();
+                dialog.getContentPane().add(recSongView.getView());
+                dialog.pack();
+                dialog.setResizable(false);
+                dialog.setLocationRelativeTo(this);
+                dialog.setVisible(true);
+            });
+        }
 
-        logOut.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                evt -> {
-                    if (evt.getSource().equals(logOut)) {
-                        final LoggedInState currentState = loggedInViewModel.getState();
-
-                        logoutController.execute(
-                                currentState.getUsername()
-                        );
-                    }
-                }
-        );
-
-        recSong.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                evt -> {
-                    final JDialog dialog = new JDialog((JFrame) this.getTopLevelAncestor(),
-                            "Song Recommendation", true);
-                    final RecSongView recSongView = new RecSongView(recSongViewModel);
-                    dialog.getContentPane().add(recSongView);
-                    dialog.pack();
-                    dialog.setResizable(false);
-                    dialog.setLocationRelativeTo(this);
-                    dialog.setVisible(true);
-                }
-        );
-
-        this.add(usernameInfo);
-        this.add(username);
-
-        this.add(buttons);
+        final JButton recArtistButton = viewBuilder.getButton("recArtist");
+        if (recArtistButton != null) {
+            recArtistButton.addActionListener(evt -> {
+                final JDialog dialog = new JDialog((JFrame) this.getTopLevelAncestor(),
+                        "Artist Recommendation", true);
+                final RecArtistView recArtistView = new RecArtistView();
+                dialog.getContentPane().add(recArtistView.getView());
+                dialog.pack();
+                dialog.setResizable(false);
+                dialog.setLocationRelativeTo(this);
+                dialog.setVisible(true);
+            });
+        }
     }
 
     @Override
@@ -136,9 +103,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         }
         else if (evt.getPropertyName().equals("password")) {
             final LoggedInState state = (LoggedInState) evt.getNewValue();
-            JOptionPane.showMessageDialog(null, "password updated for " + state.getUsername());
+            JOptionPane.showMessageDialog(null, "Password updated for " + state.getUsername());
         }
-
     }
 
     public String getViewName() {
