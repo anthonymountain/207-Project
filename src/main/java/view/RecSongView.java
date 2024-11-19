@@ -1,12 +1,10 @@
 package view;
 
-import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
 
-import interface_adapter.like.LikeController;
 import interface_adapter.rec_song.RecSongController;
 import interface_adapter.rec_song.RecSongState;
 import interface_adapter.rec_song.RecSongViewModel;
@@ -22,12 +20,9 @@ public class RecSongView extends JPanel implements PropertyChangeListener {
     private final RecSongViewModel recSongViewModel;
     //      the recSongViewModel will be implemented later.
     private RecSongController recSongController;
-    private LikeController likeController;
-    // the likeController will be implemented later for when the likeButton is added
 
     private final JLabel name;
 
-    private final JButton like;
     private final JButton addToPlaylist;
 
     public RecSongView(RecSongViewModel recSongViewModel) {
@@ -38,22 +33,10 @@ public class RecSongView extends JPanel implements PropertyChangeListener {
         name = new JLabel();
 
         final JPanel buttons = new JPanel();
-
-        like = new JButton("Like");
-        buttons.add(like);
         addToPlaylist = new JButton("Add to Playlist");
         buttons.add(addToPlaylist);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        like.addActionListener(
-                // This creates an anonymous subclass of ActionListener and instantiates it.
-                evt -> {
-                    if (evt.getSource().equals(like)) {
-                        // likeController.execute();
-                    }
-                }
-        );
 
         addToPlaylist.addActionListener(
                 // This creates an anonymous subclass of ActionListener and instantiates it.
@@ -88,10 +71,6 @@ public class RecSongView extends JPanel implements PropertyChangeListener {
 
     public String getViewName() {
         return viewName;
-    }
-
-    public void setLikeController(LikeController likeController) {
-        this.likeController = likeController;
     }
 
     public void setRecSongController(RecSongController recSongController) {
