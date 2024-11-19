@@ -20,6 +20,8 @@ import interface_adapter.login.LoginPresenter;
 import interface_adapter.login.LoginViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
+import interface_adapter.rec_playlist.RecPlaylistController;
+import interface_adapter.rec_playlist.RecPlaylistPresenter;
 import interface_adapter.rec_song.RecSongController;
 import interface_adapter.rec_song.RecSongPresenter;
 import interface_adapter.rec_song.RecSongViewModel;
@@ -76,6 +78,8 @@ public class AppBuilder {
     private LoggedInView loggedInView;
     private LoginView loginView;
     private RecSongViewModel recSongViewModel;
+    private RecSongView recSongView;
+    private RecPlaylistViewModel recPlaylistViewModel;
     private RecSongView recSongView;
 
     public AppBuilder() {
@@ -209,10 +213,10 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addRecPlaylistUseCase() {
-        final RecPlaylistOutputBoundary recPlaylistOutputBoundary = new RecPlaylistPresenter(viewManagerModel, recSongViewModel);
+        final RecPlaylistOutputBoundary recPlaylistOutputBoundary = new RecPlaylistPresenter(viewManagerModel, recPlaylistViewModel);
 
         final RecPlaylistInputBoundary recPlaylistInteractor =
-                new RecPlaylistInteractor(playlistDataAccessObject, recPlaylistOutputBoundary, songFactory);
+                new RecPlaylistInteractor(playlistDataAccessObject, recPlaylistOutputBoundary);
 
         final RecPlaylistController recPlaylistController = new RecPlaylistController(recPlaylistInteractor);
         recPlaylistView.setRecPlaylistController(recPlaylistController);
