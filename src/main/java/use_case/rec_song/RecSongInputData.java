@@ -1,7 +1,7 @@
 package use_case.rec_song;
 
 /**
- * The Input Data for the Logout Use Case.
+ * The Input Data for the RecSong Use Case.
  */
 public class RecSongInputData {
 

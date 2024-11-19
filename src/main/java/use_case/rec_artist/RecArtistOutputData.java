@@ -1,14 +1,14 @@
-package use_case.rec_song;
+package use_case.rec_artist;
 
 /**
- * Output Data for the RecSong Use Case.
+ * Output Data for the RecArtist Use Case.
  */
-public class RecSongOutputData {
+public class RecArtistOutputData {
 
     private final String name;
     private final boolean useCaseFailed;
 
-    public RecSongOutputData(String name, boolean useCaseFailed) {
+    public RecArtistOutputData(String name, boolean useCaseFailed) {
         this.name = name;
         this.useCaseFailed = useCaseFailed;
     }
