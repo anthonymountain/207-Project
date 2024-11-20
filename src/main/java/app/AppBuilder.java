@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import data_access.InMemoryPlaylistDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
 import entity.*;
 import interface_adapter.ViewManagerModel;
@@ -20,6 +21,9 @@ import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.rec_artist.RecArtistController;
 import interface_adapter.rec_artist.RecArtistPresenter;
 import interface_adapter.rec_artist.RecArtistViewModel;
+import interface_adapter.rec_playlist.RecPlaylistController;
+import interface_adapter.rec_playlist.RecPlaylistPresenter;
+import interface_adapter.rec_playlist.RecPlaylistViewModel;
 import interface_adapter.rec_song.RecSongController;
 import interface_adapter.rec_song.RecSongPresenter;
 import interface_adapter.rec_song.RecSongViewModel;
@@ -38,6 +42,9 @@ import use_case.logout.LogoutOutputBoundary;
 import use_case.rec_artist.RecArtistInputBoundary;
 import use_case.rec_artist.RecArtistInteractor;
 import use_case.rec_artist.RecArtistOutputBoundary;
+import use_case.rec_playlist.RecPlaylistInputBoundary;
+import use_case.rec_playlist.RecPlaylistInteractor;
+import use_case.rec_playlist.RecPlaylistOutputBoundary;
 import use_case.rec_song.RecSongInputBoundary;
 import use_case.rec_song.RecSongInteractor;
 import use_case.rec_song.RecSongOutputBoundary;
@@ -69,6 +76,7 @@ public class AppBuilder {
 
     // thought question: is the hard dependency below a problem?
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
+    private final InMemoryPlaylistDataAccessObject playlistDataAccessObject = new InMemoryPlaylistDataAccessObject();
 
     private SignupView signupView;
     private SignupViewModel signupViewModel;
@@ -80,6 +88,8 @@ public class AppBuilder {
     private RecSongView recSongView;
     private RecArtistViewModel recArtistViewModel;
     private RecArtistView recArtistView;
+    private RecPlaylistView recPlaylistView;
+    private RecPlaylistViewModel recPlaylistViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -152,16 +162,15 @@ public class AppBuilder {
         return this;
     }
 
-    //    /**
-    //     * Adds the RecPlaylist View to the application.
-    //     * @return this builder
-    //     */
-    //    public AppBuilder addRecPlaylistView() {
-    //        recPlaylistViewModel = new RecPlaylistViewModel();
-    //        recPlaylistView = new RecPlaylistView(recPlaylistViewModel);
-    //        cardPanel.add(recPlaylistView, recPlaylistView.getViewName());
-    //        return this;
-    //    }
+    /**
+     * Adds the RecPlaylist View to the application.
+     * @return this builder
+     */
+    public AppBuilder addRecPlaylistView() {
+        recPlaylistView = new RecPlaylistView();
+        cardPanel.add(recPlaylistView.getView(), "Recommended Playlist");
+        return this;
+    }
 
     /**
      * Adds the Signup Use Case to the application.
@@ -257,21 +266,21 @@ public class AppBuilder {
         return this;
     }
 
-    //    /**
-    //     * Adds the RecPlaylist Use Case to the application.
-    //     * @return this builder
-    //     */
-    //    public AppBuilder addRecPlaylistUseCase() {
-    //        final RecPlaylistOutputBoundary recPlaylistOutputBoundary = new RecPlaylistPresenter(viewManagerModel,
-    //        recPlaylistViewModel);
-    //
-    //        final RecPlaylistInputBoundary recPlaylistInteractor =
-    //                new RecPlaylistInteractor(playlistDataAccessObject, recPlaylistOutputBoundary);
-    //
-    //        final RecPlaylistController recPlaylistController = new RecPlaylistController(recPlaylistInteractor);
-    //        recPlaylistView.setRecPlaylistController(recPlaylistController);
-    //        return this;
-    //    }
+    /**
+     * Adds the RecPlaylist Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addRecPlaylistUseCase() {
+        final RecPlaylistOutputBoundary recPlaylistOutputBoundary = new RecPlaylistPresenter(viewManagerModel,
+            recPlaylistViewModel);
+
+        final RecPlaylistInputBoundary recPlaylistInteractor =
+                new RecPlaylistInteractor(playlistDataAccessObject, recPlaylistOutputBoundary);
+
+        final RecPlaylistController recPlaylistController = new RecPlaylistController(recPlaylistInteractor);
+        recPlaylistView.setRecPlaylistController(recPlaylistController);
+        return this;
+    }
 
     /**
      * Creates the JFrame for the application and initially sets the SignupView to be displayed.

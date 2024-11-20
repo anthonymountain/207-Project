@@ -1,27 +1,26 @@
 package interface_adapter.rec_playlist;
 
 import interface_adapter.ViewManagerModel;
-import use_case.rec_song.RecSongOutputBoundary;
-import use_case.rec_song.RecSongOutputData;
+import use_case.rec_playlist.RecPlaylistOutputBoundary;
+import use_case.rec_playlist.RecPlaylistOutputData;
 
 /**
  * This is a presenter for a recommended song.
  */
-public class RecPlaylistPresenter implements RecSongOutputBoundary {
+public class RecPlaylistPresenter implements RecPlaylistOutputBoundary {
 
-    private final RecPlaylistViewModel recSongViewModel;
+    private final RecPlaylistViewModel recPlaylistViewModel;
     private final ViewManagerModel viewManagerModel;
 
-    public RecPlaylistPresenter(ViewManagerModel viewManagerModel, RecPlaylistViewModel recSongViewModel) {
-        this.recSongViewModel = recSongViewModel;
+    public RecPlaylistPresenter(ViewManagerModel viewManagerModel, RecPlaylistViewModel recPlaylistViewModel) {
+        this.recPlaylistViewModel = recPlaylistViewModel;
         this.viewManagerModel = viewManagerModel;
     }
 
     @Override
-    public void prepareSuccessView(RecSongOutputData outputData) {
-
-        // This code tells the View Manager to switch to the RecSongView.
-        this.viewManagerModel.setState(recSongViewModel.getViewName());
+    public void prepareSuccessView(RecPlaylistOutputData outputData) {
+        // Tells the ViewManager to switch to the RecPlaylistView.
+        this.viewManagerModel.setState(recPlaylistViewModel.getViewName());
         this.viewManagerModel.firePropertyChanged();
     }
 

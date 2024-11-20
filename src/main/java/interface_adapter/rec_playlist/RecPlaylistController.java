@@ -1,27 +1,27 @@
 package interface_adapter.rec_playlist;
 
-import use_case.rec_song.RecSongInputBoundary;
-import use_case.rec_song.RecSongInputData;
+import entity.Playlist;
+import use_case.rec_playlist.RecPlaylistInputBoundary;
+import use_case.rec_playlist.RecPlaylistInputData;
 
 /**
- * Controller for the Recommend Song Use Case.
+ * Controller for the Recommend Playlist Use Case.
  */
 public class RecPlaylistController {
-    private final RecSongInputBoundary recSongUseCaseInteractor;
+    private final RecPlaylistInputBoundary recPlaylistUseCaseInteractor;
 
-    public RecPlaylistController(RecSongInputBoundary recSongUseCaseInteractor) {
-        this.recSongUseCaseInteractor = recSongUseCaseInteractor;
+    public RecPlaylistController(RecPlaylistInputBoundary recPlaylistUseCaseInteractor) {
+        this.recPlaylistUseCaseInteractor = recPlaylistUseCaseInteractor;
     }
 
     /**
-     * Executes the Recommend Song Use Case.
-     * @param name the song name
-     * @param artist the artist of the song
-     * @param genre the genre of the song
+     * Executes the Recommend Playlist Use Case.
+     * Highly recommend looking at the Recommend Song Use Case to see how to properly use recPlaylistInputData.
+     * @param playlist the playlist
      */
-    public void execute(String name, String artist, String genre) {
-        final RecSongInputData recSongInputData = new RecSongInputData(name, artist, genre);
+    public void execute(Playlist playlist) {
+        final RecPlaylistInputData recPlaylistInputData = new RecPlaylistInputData(playlist);
 
-        recSongUseCaseInteractor.execute(recSongInputData);
+        recPlaylistUseCaseInteractor.execute(recPlaylistInputData);
     }
 }

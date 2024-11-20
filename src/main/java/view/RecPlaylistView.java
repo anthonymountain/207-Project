@@ -3,24 +3,31 @@ package view;
 import interface_adapter.rec_playlist.RecPlaylistController;
 import interface_adapter.rec_playlist.RecPlaylistViewModel;
 
+import javax.swing.JPanel;
+
 /**
  * This View pops up when a playlist is recommended.
  */
 public class RecPlaylistView {
 
+    private final JPanel view;
     private RecPlaylistController recPlaylistController;
-    private final String viewName = "playlist recommended";
-    private final RecPlaylistViewModel recPlaylistViewModel;
 
-    public RecPlaylistView(RecPlaylistViewModel recPlaylistViewModel) {
-        this.recPlaylistViewModel = recPlaylistViewModel;
+    public RecPlaylistView() {
+        final ViewBuilder builder = new ViewBuilder();
+
+        builder.addLabel("New Playlist: Placeholder_name")
+                .addButton("recPlaylist", "Recommend Playlist")
+                .setViewName("Recommended Playlist");
+
+        view = builder.build();
     }
 
-    public String getViewName() {
-        return viewName;
+    public JPanel getView() {
+        return view;
     }
 
-    public void setRecSongController(RecPlaylistController recPlaylistController) {
+    public void setRecPlaylistController(RecPlaylistController recPlaylistController) {
         this.recPlaylistController = recPlaylistController;
     }
 }
