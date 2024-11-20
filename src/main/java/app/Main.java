@@ -18,12 +18,14 @@ public class Main {
                                             .addLoggedInView()
                                             .addRecSongView()
                                             .addRecArtistView()
+                                            .addRecPlaylistView()
                                             .addSignupUseCase()
                                             .addLoginUseCase()
                                             .addChangePasswordUseCase()
                                             .addLogoutUseCase()
                                             .addRecSongUseCase()
                                             .addRecArtistUseCase()
+                                            .addRecPlaylistUseCase()
                                             .build();
 
         application.pack();
