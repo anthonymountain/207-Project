@@ -5,7 +5,7 @@ import entity.Playlist;
 /**
  * DAO for the Recommend Playlist Use Case.
  */
-public interface RecPlaylistUserDataAccessInterface {
+public interface RecPlaylistDataAccessInterface {
 
     /**
      * Recommends a playlist for the user.

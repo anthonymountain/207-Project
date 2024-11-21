@@ -17,7 +17,7 @@ public class RecPlaylistView {
         final ViewBuilder builder = new ViewBuilder();
 
         builder.addLabel("New Playlist: Placeholder_name")
-                .addButton("recPlaylist", "Recommend Playlist")
+                .addButton("IDK", "what's up")
                 .setViewName("Recommended Playlist");
 
         view = builder.build();

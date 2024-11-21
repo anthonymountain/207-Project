@@ -43,6 +43,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                 .addButton("logout", "Log Out")
                 .addButton("recSong", "Recommend Song")
                 .addButton("recArtist", "Recommend Artist")
+                .addButton("recPlaylist", "Recommend Playlist")
                 .setViewName(viewName);
 
         setupListeners();
@@ -81,6 +82,19 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                         "Artist Recommendation", true);
                 final RecArtistView recArtistView = new RecArtistView();
                 dialog.getContentPane().add(recArtistView.getView());
+                dialog.pack();
+                dialog.setResizable(false);
+                dialog.setLocationRelativeTo(this);
+                dialog.setVisible(true);
+            });
+        }
+        final JButton recPlaylistButton = viewBuilder.getButton("recPlaylist");
+        if (recPlaylistButton != null) {
+            recPlaylistButton.addActionListener(evt -> {
+                final JDialog dialog = new JDialog((JFrame) this.getTopLevelAncestor(),
+                        "Playlist Recommendation", true);
+                final RecPlaylistView recPlaylistView = new RecPlaylistView();
+                dialog.getContentPane().add(recPlaylistView.getView());
                 dialog.pack();
                 dialog.setResizable(false);
                 dialog.setLocationRelativeTo(this);

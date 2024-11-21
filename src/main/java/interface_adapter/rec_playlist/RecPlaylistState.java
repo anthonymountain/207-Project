@@ -1,7 +1,7 @@
 package interface_adapter.rec_playlist;
 
 /**
- * This state is for when a song is recommended.
+ * This state is for when a playlist is recommended.
  */
 public class RecPlaylistState {
     private String name;

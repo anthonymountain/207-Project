@@ -12,6 +12,11 @@ public class CommonPlaylist implements Playlist {
         this.songs = songs;
     }
 
+    public CommonPlaylist() {
+        this.songs = null;
+        // Nothing yet, this is just to create a Playlist entity.
+    }
+
     @Override
     public ArrayList<Song> getSongs() {
         return songs;
