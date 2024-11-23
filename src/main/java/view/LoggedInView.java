@@ -44,6 +44,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private static final Font BUTTON_FONT = new Font("Futura", Font.PLAIN, 16);
     private static final Font LABEL_FONT = new Font("Futura", Font.PLAIN, 14);
 
+    private final String viewName = "logged in";
     private final RecSongViewModel recSongViewModel;
     private LogoutController logoutController;
 
@@ -155,11 +156,19 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         if ("state".equals(evt.getPropertyName())) {
             final LoggedInState state = (LoggedInState) evt.getNewValue();
             username.setText(state.getUsername());
-        }
-        else if ("password".equals(evt.getPropertyName())) {
+        } else if ("password".equals(evt.getPropertyName())) {
             final LoggedInState state = (LoggedInState) evt.getNewValue();
             JOptionPane.showMessageDialog(null, "Password updated for " + state.getUsername());
         }
+    }
+
+    /**
+     * Returns the name of the view.
+     *
+     * @return the name of the view
+     */
+    public String getViewName() {
+        return viewName;
     }
 
     public void setLogoutController(LogoutController logoutController) {
@@ -231,7 +240,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         }
     }
 }
-
 
 // /**
 // * The View for when the user is logged into the program.
