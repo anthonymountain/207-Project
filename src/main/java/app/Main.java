@@ -27,7 +27,7 @@ public class Main {
                 .build();
 
         // Set the frame size to a larger size (e.g., 1200x800)
-        application.setSize(1000, 700);
+        application.setSize(800, 500);
 
         // Ensure the window is centered on the screen
         application.setLocationRelativeTo(null);
