@@ -67,7 +67,7 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     }
 
     @Override
-    public void recommend(Genre genre) {
+    public void recommendGenre(Genre genre) {
         this.recommendedGenre = genre;
     }
 }

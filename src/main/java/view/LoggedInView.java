@@ -40,6 +40,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     private final JButton recSong;
 
+    private final JButton recGenre;
+
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
         this.recSongViewModel = new RecSongViewModel();
@@ -49,8 +51,12 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         username = new JLabel();
 
         final JPanel buttons = new JPanel();
+
         recSong = new JButton("Recommend Song");
         buttons.add(recSong);
+
+        recGenre = new JButton("Recommend Genre");
+        buttons.add(recGenre);
 
         logOut = new JButton("Log Out");
         buttons.add(logOut);
@@ -105,6 +111,20 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
                                 currentState.getUsername()
                         );
                     }
+                }
+        );
+
+        recGenre.addActionListener(
+                // This creates an anonymous subclass of ActionListener and instantiates it.
+                evt -> {
+                    final JDialog dialog = new JDialog((JFrame) this.getTopLevelAncestor(),
+                            "Genre Recommendation", true);
+                    final RecGenreView recGenreView = new RecGenreView();
+                    dialog.getContentPane().add(recGenreView.getView());
+                    dialog.pack();
+                    dialog.setResizable(false);
+                    dialog.setLocationRelativeTo(this);
+                    dialog.setVisible(true);
                 }
         );
 
