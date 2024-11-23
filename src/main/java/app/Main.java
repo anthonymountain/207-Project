@@ -20,10 +20,13 @@ public class Main {
                                             .addRecSongView()
                                             .addRecGenreUseCase()
                                             .addRecSongUseCase()
+                                            .addRecArtistView()
                                             .addSignupUseCase()
                                             .addLoginUseCase()
                                             .addChangePasswordUseCase()
                                             .addLogoutUseCase()
+                                            .addRecSongUseCase()
+                                            .addRecArtistUseCase()
                                             .build();
 
         application.pack();
