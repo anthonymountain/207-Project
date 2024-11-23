@@ -3,12 +3,14 @@ package data_access;
 import java.util.HashMap;
 import java.util.Map;
 
+import entity.Genre;
 import entity.Artist;
 import entity.Song;
 import entity.User;
 import use_case.change_password.ChangePasswordUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
+import use_case.rec_genre.RecGenreUserDataAccessInterface;
 import use_case.rec_artist.RecArtistUserDataAccessInterface;
 import use_case.rec_song.RecSongUserDataAccessInterface;
 import use_case.signup.SignupUserDataAccessInterface;
@@ -21,6 +23,8 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
         LoginUserDataAccessInterface,
         ChangePasswordUserDataAccessInterface,
         LogoutUserDataAccessInterface,
+        RecGenreUserDataAccessInterface,
+        RecSongUserDataAccessInterface {
         RecSongUserDataAccessInterface,
         RecArtistUserDataAccessInterface {
 
@@ -28,6 +32,7 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
 
     private String currentUsername;
     private Song recommendedSong;
+    private Genre recommendedGenre;
     private Artist recommendedArtist;
 
     @Override
@@ -67,6 +72,8 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     }
 
     @Override
+    public void recommend(Genre genre) {
+        this.recommendedGenre = genre;
     public void recommendArtist(Artist artist) {
         this.recommendedArtist = artist;
     }
