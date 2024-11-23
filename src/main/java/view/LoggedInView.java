@@ -147,6 +147,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     // Custom button class for rounded buttons
     private static class RoundedButton extends JButton {
+        private boolean hovered = false; // Track hover state
+        private final int arcSize = 30;  // Arc size for rounded corners
+
         public RoundedButton(String text) {
             super(text);
             setFont(BUTTON_FONT);
@@ -156,6 +159,23 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             setContentAreaFilled(false);
             setOpaque(false);
             setCursor(new Cursor(Cursor.HAND_CURSOR));
+
+            // Add hover effects
+            addMouseListener(new java.awt.event.MouseAdapter() {
+                @Override
+                public void mouseEntered(java.awt.event.MouseEvent evt) {
+                    hovered = true;
+                    setBackground(SPOTIFY_GREEN.darker()); // Darker shade on hover
+                    repaint(); // Request a redraw to reflect the changes
+                }
+
+                @Override
+                public void mouseExited(java.awt.event.MouseEvent evt) {
+                    hovered = false;
+                    setBackground(SPOTIFY_GREEN); // Reset to original color
+                    repaint(); // Request a redraw to reflect the changes
+                }
+            });
         }
 
         @Override
@@ -163,9 +183,16 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
             Graphics2D g2 = (Graphics2D) g.create();
             g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
+            // Set button size for hover effect
+            int inset = hovered ? 2 : 0; // Slightly reduce size when hovered for a subtle zoom effect
+            int x = inset;
+            int y = inset;
+            int width = getWidth() - 2 * inset;
+            int height = getHeight() - 2 * inset;
+
             // Draw rounded rectangle background
             g2.setColor(getBackground());
-            g2.fill(new RoundRectangle2D.Float(0, 0, getWidth(), getHeight(), 30, 30));
+            g2.fill(new RoundRectangle2D.Float(x, y, width, height, arcSize, arcSize));
 
             // Draw the text
             g2.setColor(getForeground());
@@ -180,36 +207,13 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
         @Override
         protected void paintBorder(Graphics g) {
-            // Optional: Draw a border
+            // Optional: Smooth border for the button
             Graphics2D g2 = (Graphics2D) g.create();
+            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             g2.setColor(getBackground().darker());
-            g2.draw(new RoundRectangle2D.Float(0, 0, getWidth() - 1, getHeight() - 1, 30, 30));
+            g2.draw(new RoundRectangle2D.Float(1, 1, getWidth() - 2, getHeight() - 2, arcSize, arcSize));
             g2.dispose();
         }
-    }
-
-    // Main application to test LoggedInView
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            JFrame frame = new JFrame("Logged In Screen");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-            // Create LoggedInView with a dummy LoggedInViewModel (replace with actual implementation)
-            LoggedInViewModel loggedInViewModel = new LoggedInViewModel(); // Replace with actual instantiation
-            LoggedInView loggedInView = new LoggedInView(loggedInViewModel);
-
-            // Add LoggedInView to the frame
-            frame.getContentPane().add(loggedInView);
-
-            // Set the frame size to be larger
-            frame.setSize(800, 600);
-
-            // Center the frame on the screen
-            frame.setLocationRelativeTo(null);
-
-            // Make the frame visible
-            frame.setVisible(true);
-        });
     }
 }
 
