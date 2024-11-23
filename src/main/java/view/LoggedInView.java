@@ -34,12 +34,10 @@ import interface_adapter.rec_song.RecSongViewModel;
  */
 public class LoggedInView extends JPanel implements PropertyChangeListener {
 
-    // Spotify-inspired colors
     private static final Color SPOTIFY_GREEN = new Color(30, 215, 96);
     private static final Color DARK_BACKGROUND = new Color(24, 24, 32);
     private static final Color BUTTON_TEXT_COLOR = Color.WHITE;
 
-    // Fonts similar to Nord
     private static final Font HEADER_FONT = new Font("Futura", Font.BOLD, 18);
     private static final Font BUTTON_FONT = new Font("Futura", Font.PLAIN, 16);
     private static final Font LABEL_FONT = new Font("Futura", Font.PLAIN, 14);
@@ -53,11 +51,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private JButton recSong;
     private JButton recGenre;
 
-    /**
-     * Constructor for LoggedInView.
-     *
-     * @param loggedInViewModel the view model for logged-in functionality
-     */
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.recSongViewModel = new RecSongViewModel();
         loggedInViewModel.addPropertyChangeListener(this);
@@ -105,6 +98,10 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         recSong = createRoundedButton("Recommend Song");
         recGenre = createRoundedButton("Recommend Genre");
         logOut = createRoundedButton("Log Out");
+
+        recSong.setAlignmentX(Component.CENTER_ALIGNMENT);
+        recGenre.setAlignmentX(Component.CENTER_ALIGNMENT);
+        logOut.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         buttons.add(Box.createRigidArea(new Dimension(0, 10)));
         buttons.add(recSong);
@@ -162,11 +159,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         }
     }
 
-    /**
-     * Returns the name of the view.
-     *
-     * @return the name of the view
-     */
     public String getViewName() {
         return viewName;
     }
