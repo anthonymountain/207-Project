@@ -13,20 +13,26 @@ public class Main {
     public static void main(String[] args) {
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
-                                            .addLoginView()
-                                            .addSignupView()
-                                            .addLoggedInView()
-                                            .addRecGenreView()
-                                            .addRecSongView()
-                                            .addRecGenreUseCase()
-                                            .addRecSongUseCase()
-                                            .addSignupUseCase()
-                                            .addLoginUseCase()
-                                            .addChangePasswordUseCase()
-                                            .addLogoutUseCase()
-                                            .build();
+                .addLoginView()
+                .addSignupView()
+                .addLoggedInView()
+                .addRecGenreView()
+                .addRecSongView()
+                .addRecGenreUseCase()
+                .addRecSongUseCase()
+                .addSignupUseCase()
+                .addLoginUseCase()
+                .addChangePasswordUseCase()
+                .addLogoutUseCase()
+                .build();
 
-        application.pack();
+        // Set the frame size to a larger size (e.g., 1200x800)
+        application.setSize(1000, 700);
+
+        // Ensure the window is centered on the screen
+        application.setLocationRelativeTo(null);
+
+        // Make the frame visible
         application.setVisible(true);
     }
 }
