@@ -1,11 +1,18 @@
 package view;
 
-import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 
 import interface_adapter.like.LikeController;
 import interface_adapter.rec_genre.RecGenreController;
-import view.components.RoundedButton;
 
 /**
  * The View for when the user generates a genre recommendation.
