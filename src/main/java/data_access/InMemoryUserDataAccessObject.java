@@ -24,7 +24,6 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
         ChangePasswordUserDataAccessInterface,
         LogoutUserDataAccessInterface,
         RecGenreUserDataAccessInterface,
-        RecSongUserDataAccessInterface {
         RecSongUserDataAccessInterface,
         RecArtistUserDataAccessInterface {
 
@@ -74,6 +73,9 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     @Override
     public void recommendGenre(Genre genre) {
         this.recommendedGenre = genre;
+    }
+
+    @Override
     public void recommendArtist(Artist artist) {
         this.recommendedArtist = artist;
     }

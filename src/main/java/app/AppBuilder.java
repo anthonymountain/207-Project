@@ -262,6 +262,11 @@ public class AppBuilder {
 
         final RecGenreController recGenreController = new RecGenreController(recGenreInteractor);
         recGenreView.setRecGenreController(recGenreController);
+
+        return this;
+    }
+
+    /**
      * Adds the RecArtist Use Case to the application.
      * @return this builder
      */
