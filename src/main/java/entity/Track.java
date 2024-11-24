@@ -6,14 +6,27 @@ import java.util.ArrayList;
  * Represents a track.
  */
 public class Track {
+    private final String id;
     private final String name;
     private final int popularity;
+    private final Album album;
     private final ArrayList<Artist> artists;
 
-    public Track(String name, int popularity, ArrayList<Artist> artists) {
+    public Track(String id, String name, int popularity, Album album, ArrayList<Artist> artists) {
+        this.id = id;
         this.name = name;
         this.popularity = popularity;
+        this.album = album;
         this.artists = artists;
+    }
+
+    /**
+     * Returns the id of the track.
+     *
+     * @return the id of the track
+     */
+    public String getId() {
+        return id;
     }
 
     /**
@@ -43,4 +56,12 @@ public class Track {
         return artists;
     }
 
+    /**
+     * Returns the album of the track.
+     *
+     * @return the album of the track
+     */
+    public Album getAlbum() {
+        return album;
+    }
 }

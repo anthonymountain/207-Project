@@ -4,13 +4,22 @@ package entity;
  * A simple implementation of the User interface.
  */
 public class User {
+    private final String id;
+    @SuppressWarnings({"checkstyle:MemberName", "checkstyle:SuppressWarnings"})
+    private final String display_name;
 
-    private final String name;
-    private final String password;
+    public User(String name, String password, String id) {
+        this.display_name = name;
+        this.id = id;
+    }
 
-    public User(String name, String password) {
-        this.name = name;
-        this.password = password;
+    /**
+     * Returns the id of the user.
+     *
+     * @return the id of the user
+     */
+    public String getId() {
+        return id;
     }
 
     /**
@@ -19,16 +28,7 @@ public class User {
      * @return the name of the user
      */
     public String getName() {
-        return name;
-    }
-
-    /**
-     * Returns the password of the user.
-     *
-     * @return the password of the user
-     */
-    public String getPassword() {
-        return password;
+        return display_name;
     }
 
 }
