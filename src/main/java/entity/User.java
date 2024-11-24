@@ -13,12 +13,20 @@ public class User {
         this.password = password;
     }
 
-    @Override
+    /**
+     * Returns the name of the user.
+     *
+     * @return the name of the user
+     */
     public String getName() {
         return name;
     }
 
-    @Override
+    /**
+     * Returns the password of the user.
+     *
+     * @return the password of the user
+     */
     public String getPassword() {
         return password;
     }

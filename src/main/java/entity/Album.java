@@ -17,17 +17,29 @@ public class Album {
         this.artists = artists;
     }
 
-    @Override
+    /**
+     * Returns the name of the album.
+     *
+     * @return the name of the album
+     */
     public String getName() {
         return name;
     }
 
-    @Override
+    /**
+     * Returns the popularity of the album. The popularity is a value between 0 and 100.
+     *
+     * @return the popularity of the album
+     */
     public int getPopularity() {
         return popularity;
     }
 
-    @Override
+    /**
+     * Returns the artists of the album.
+     *
+     * @return the artists of the album
+     */
     public ArrayList<Artist> getArtists() {
         return artists;
     }

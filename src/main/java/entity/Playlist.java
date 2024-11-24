@@ -5,7 +5,7 @@ import java.util.ArrayList;
 /**
  * Represents a playlist.
  */
-public class Playlist implements Playlist {
+public class Playlist {
     private final String name;
     private final ArrayList<Track> tracks;
 
@@ -14,12 +14,20 @@ public class Playlist implements Playlist {
         this.tracks = tracks;
     }
 
-    @Override
+    /**
+     * Returns the name of the playlist.
+     *
+     * @return the name of the playlist
+     */
     public String getName() {
         return name;
     }
 
-    @Override
+    /**
+     * Returns the tracks of the playlist.
+     *
+     * @return the tracks of the playlist
+     */
     public ArrayList<Track> getTracks() {
         return tracks;
     }
