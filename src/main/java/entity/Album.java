@@ -3,25 +3,33 @@ package entity;
 import java.util.ArrayList;
 
 /**
- * Represents an album.
+ * Implementation of an album.
  */
-public interface Album {
-    /**
-     * Returns the name of the album.
-     * @return the name of the album
-     */
-    String getName();
+public class Album {
 
-    /**
-     * Returns the popularity of the album.
-     * The value will be between 0 and 100 with 100 being the most popular
-     * @return the popularity of the album
-     */
-    int getPopularity();
+    private final String name;
+    private final int popularity;
+    private final ArrayList<Artist> artists;
 
-    /**
-     * Returns the artists of the album.
-     * @return the artists of the album
-     */
-    ArrayList<Artist> getArtists();
+    public Album(String name, int popularity, ArrayList<Artist> artists) {
+        this.name = name;
+        this.popularity = popularity;
+        this.artists = artists;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public int getPopularity() {
+        return popularity;
+    }
+
+    @Override
+    public ArrayList<Artist> getArtists() {
+        return artists;
+    }
+
 }

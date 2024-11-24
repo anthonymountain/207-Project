@@ -3,18 +3,24 @@ package entity;
 import java.util.ArrayList;
 
 /**
- * Represents an artist.
+ * Implementation of the Artist interface.
  */
-public interface Artist {
-    /**
-     * Returns the name of the artist.
-     * @return the name of the artist
-     */
-    String getName();
+public class Artist {
+    private final String name;
+    private final ArrayList<Track> tracks;
 
-    /**
-     * Returns the top tracks of the artist.
-     * @return the top tracks of the artist
-     */
-    ArrayList<Track> getTracks();
+    public Artist(String name, ArrayList<Track> tracks) {
+        this.name = name;
+        this.tracks = tracks;
+    }
+
+    @Override
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public ArrayList<Track> getTracks() {
+        return tracks;
+    }
 }

@@ -1,7 +1,5 @@
 package use_case.rec_genre;
 
-import entity.Genre;
-
 /**
  * Output Data for the RecGenre Use Case.
  */
