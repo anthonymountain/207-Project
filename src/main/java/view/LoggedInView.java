@@ -8,6 +8,7 @@ import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.GradientPaint;
 import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
 import java.beans.PropertyChangeEvent;
@@ -35,7 +36,6 @@ import interface_adapter.rec_song.RecSongViewModel;
 public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     private static final Color SPOTIFY_GREEN = new Color(30, 215, 96);
-    private static final Color DARK_BACKGROUND = new Color(24, 24, 32);
     private static final Color BUTTON_TEXT_COLOR = Color.WHITE;
 
     private static final Font HEADER_FONT = new Font("Futura", Font.BOLD, 18);
@@ -68,9 +68,31 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         initializeButtonActions(loggedInViewModel);
     }
 
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        final Graphics2D g2d = (Graphics2D) g.create();
+
+        // Define gradient colors
+        final Color gradientStart = new Color(24, 24, 32);
+        final Color gradientEnd = new Color(18, 18, 24);
+
+        // Create a vertical gradient
+        final GradientPaint gradientPaint = new GradientPaint(
+                0, 0, gradientStart,
+                0, getHeight(), gradientEnd
+        );
+
+        // Apply the gradient paint
+        g2d.setPaint(gradientPaint);
+        g2d.fillRect(0, 0, getWidth(), getHeight());
+
+        g2d.dispose();
+    }
+
     private void setupPanelLayout() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.setBackground(DARK_BACKGROUND);
         this.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
     }
 
@@ -92,7 +114,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private JPanel createButtonsPanel() {
         final JPanel buttons = new JPanel();
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
-        buttons.setBackground(DARK_BACKGROUND);
+        buttons.setOpaque(false);
         buttons.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         recSong = createRoundedButton("Recommend Song");
@@ -153,8 +175,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         if ("state".equals(evt.getPropertyName())) {
             final LoggedInState state = (LoggedInState) evt.getNewValue();
             username.setText(state.getUsername());
-        }
-        else if ("password".equals(evt.getPropertyName())) {
+        } else if ("password".equals(evt.getPropertyName())) {
             final LoggedInState state = (LoggedInState) evt.getNewValue();
             JOptionPane.showMessageDialog(null, "Password updated for " + state.getUsername());
         }
