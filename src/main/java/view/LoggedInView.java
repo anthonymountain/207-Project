@@ -2,17 +2,8 @@ package view;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.FontMetrics;
-import java.awt.GradientPaint;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
-import java.awt.geom.RoundRectangle2D;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -29,23 +20,28 @@ import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.rec_song.RecSongController;
 import interface_adapter.rec_song.RecSongViewModel;
+import view.components.RoundedButton;
 
 /**
  * The View for the LoggedIn Use Case.
  */
-public class LoggedInView extends JPanel implements PropertyChangeListener {
+public class LoggedInView extends JPanel implements java.beans.PropertyChangeListener {
 
+    private static final String FONT = "Futura";
+    private static final int TWENTY = 20;
+    private static final int TEN = 10;
+
+    private static final Color DARK_BACKGROUND = new Color(24, 24, 32);
     private static final Color SPOTIFY_GREEN = new Color(30, 215, 96);
     private static final Color BUTTON_TEXT_COLOR = Color.WHITE;
 
-    private static final Font HEADER_FONT = new Font("Futura", Font.BOLD, 18);
-    private static final Font BUTTON_FONT = new Font("Futura", Font.PLAIN, 16);
-    private static final Font LABEL_FONT = new Font("Futura", Font.PLAIN, 14);
+    private static final Font HEADER_FONT = new Font(FONT, Font.BOLD, 18);
+    private static final Font BUTTON_FONT = new Font(FONT, Font.PLAIN, 16);
+    private static final Font LABEL_FONT = new Font(FONT, Font.PLAIN, 14);
 
     private final String viewName = "logged in";
     private final RecSongViewModel recSongViewModel;
     private LogoutController logoutController;
-
     private final JLabel username;
     private JButton logOut;
     private JButton recSong;
@@ -60,40 +56,18 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         username = setupLabels();
         final JPanel buttonsPanel = createButtonsPanel();
 
-        this.add(Box.createRigidArea(new Dimension(0, 10)));
+        this.add(Box.createRigidArea(new Dimension(0, TEN)));
         this.add(username);
-        this.add(Box.createRigidArea(new Dimension(0, 20)));
+        this.add(Box.createRigidArea(new Dimension(0, TWENTY)));
         this.add(buttonsPanel);
 
         initializeButtonActions(loggedInViewModel);
     }
 
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-
-        final Graphics2D g2d = (Graphics2D) g.create();
-
-        // Define gradient colors
-        final Color gradientStart = new Color(24, 24, 32);
-        final Color gradientEnd = new Color(18, 18, 24);
-
-        // Create a vertical gradient
-        final GradientPaint gradientPaint = new GradientPaint(
-                0, 0, gradientStart,
-                0, getHeight(), gradientEnd
-        );
-
-        // Apply the gradient paint
-        g2d.setPaint(gradientPaint);
-        g2d.fillRect(0, 0, getWidth(), getHeight());
-
-        g2d.dispose();
-    }
-
     private void setupPanelLayout() {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        this.setBackground(DARK_BACKGROUND);
+        this.setBorder(BorderFactory.createEmptyBorder(TWENTY, TWENTY, TWENTY, TWENTY));
     }
 
     private JLabel setupLabels() {
@@ -114,22 +88,22 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private JPanel createButtonsPanel() {
         final JPanel buttons = new JPanel();
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
-        buttons.setOpaque(false);
+        buttons.setBackground(DARK_BACKGROUND);
         buttons.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        recSong = createRoundedButton("Recommend Song");
-        recGenre = createRoundedButton("Recommend Genre");
-        logOut = createRoundedButton("Log Out");
+        recSong = new RoundedButton("Recommend Song");
+        recGenre = new RoundedButton("Recommend Genre");
+        logOut = new RoundedButton("Log Out");
 
         recSong.setAlignmentX(Component.CENTER_ALIGNMENT);
         recGenre.setAlignmentX(Component.CENTER_ALIGNMENT);
         logOut.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        buttons.add(Box.createRigidArea(new Dimension(0, 10)));
+        buttons.add(Box.createRigidArea(new Dimension(0, TEN)));
         buttons.add(recSong);
-        buttons.add(Box.createRigidArea(new Dimension(0, 10)));
+        buttons.add(Box.createRigidArea(new Dimension(0, TEN)));
         buttons.add(recGenre);
-        buttons.add(Box.createRigidArea(new Dimension(0, 10)));
+        buttons.add(Box.createRigidArea(new Dimension(0, TEN)));
         buttons.add(logOut);
 
         return buttons;
@@ -166,16 +140,13 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         dialog.setVisible(true);
     }
 
-    private JButton createRoundedButton(String text) {
-        return new RoundedButton(text);
-    }
-
     @Override
-    public void propertyChange(PropertyChangeEvent evt) {
+    public void propertyChange(java.beans.PropertyChangeEvent evt) {
         if ("state".equals(evt.getPropertyName())) {
             final LoggedInState state = (LoggedInState) evt.getNewValue();
-            username.setText(state.getUsername());
-        } else if ("password".equals(evt.getPropertyName())) {
+            username.setText("Currently logged in as: " + state.getUsername());
+        }
+        else if ("password".equals(evt.getPropertyName())) {
             final LoggedInState state = (LoggedInState) evt.getNewValue();
             JOptionPane.showMessageDialog(null, "Password updated for " + state.getUsername());
         }
@@ -187,71 +158,6 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public void setLogoutController(LogoutController logoutController) {
         this.logoutController = logoutController;
-    }
-
-    private static class RoundedButton extends JButton {
-        private boolean hovered = false;
-        private final int arcSize = 30;
-
-        RoundedButton(String text) {
-            super(text);
-            setFont(BUTTON_FONT);
-            setFocusPainted(false);
-            setForeground(BUTTON_TEXT_COLOR);
-            setBackground(SPOTIFY_GREEN);
-            setContentAreaFilled(false);
-            setOpaque(false);
-            setCursor(new Cursor(Cursor.HAND_CURSOR));
-
-            addMouseListener(new java.awt.event.MouseAdapter() {
-                @Override
-                public void mouseEntered(java.awt.event.MouseEvent evt) {
-                    hovered = true;
-                    setBackground(SPOTIFY_GREEN.darker());
-                    repaint();
-                }
-
-                @Override
-                public void mouseExited(java.awt.event.MouseEvent evt) {
-                    hovered = false;
-                    setBackground(SPOTIFY_GREEN);
-                    repaint();
-                }
-            });
-        }
-
-        @Override
-        protected void paintComponent(Graphics g) {
-            final Graphics2D g2 = (Graphics2D) g.create();
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-
-            final int inset = hovered ? 2 : 0;
-            final int x = inset;
-            final int y = inset;
-            final int width = getWidth() - 2 * inset;
-            final int height = getHeight() - 2 * inset;
-
-            g2.setColor(getBackground());
-            g2.fill(new RoundRectangle2D.Float(x, y, width, height, arcSize, arcSize));
-
-            g2.setColor(getForeground());
-            g2.setFont(getFont());
-            final FontMetrics fm = g2.getFontMetrics();
-            final int textX = (getWidth() - fm.stringWidth(getText())) / 2;
-            final int textY = (getHeight() + fm.getAscent() - fm.getDescent()) / 2;
-            g2.drawString(getText(), textX, textY);
-
-            g2.dispose();
-        }
-
-        @Override
-        protected void paintBorder(Graphics g) {
-            final Graphics2D g2 = (Graphics2D) g.create();
-            g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-            g2.setColor(getBackground().darker());
-            g2.draw(new RoundRectangle2D.Float(1, 1, getWidth() - 2, getHeight() - 2, arcSize, arcSize));
-            g2.dispose();
-        }
     }
 }
 
