@@ -6,7 +6,6 @@ import java.beans.PropertyChangeListener;
 
 import javax.swing.*;
 
-import interface_adapter.like.LikeController;
 import interface_adapter.rec_song.RecSongController;
 import interface_adapter.rec_song.RecSongState;
 import interface_adapter.rec_song.RecSongViewModel;
@@ -20,14 +19,13 @@ public class RecSongView {
 
     private final JPanel view;
     private RecSongController recSongController;
-    private LikeController likeController;
 
     public RecSongView() {
-        final ViewBuilder builder = new ViewBuilder("Recommended Song");
+        final ViewBuilder builder = new ViewBuilder();
 
-        builder.addLabel("New Song: placeholder_name");
-
-        builder.addButton("addToPlaylist", "Add to Playlist");
+        builder.addLabel("New Song: placeholder_name")
+                .addButton("addToPlaylist", "Add to Playlist")
+                .setViewName("Recommended Song");
 
         view = builder.build();
     }

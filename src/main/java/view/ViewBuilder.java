@@ -13,13 +13,12 @@ import javax.swing.*;
  */
 public class ViewBuilder extends JPanel {
 
-    private final String viewName;
+    private String viewName;
     private final Map<String, JButton> buttonsMap;
     private final JPanel buttonsPanel;
     private final JPanel mainPanel;
 
-    public ViewBuilder(String viewName) {
-        this.viewName = viewName;
+    public ViewBuilder() {
         this.buttonsMap = new HashMap<>();
         this.setLayout(new BorderLayout());
 
@@ -56,6 +55,10 @@ public class ViewBuilder extends JPanel {
         buttonsMap.put(buttonKey, button);
         buttonsPanel.add(button);
         return this;
+    }
+
+    public void setViewName(String viewName) {
+        this.viewName = viewName;
     }
 
     public String getViewName() {
