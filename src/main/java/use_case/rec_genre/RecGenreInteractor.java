@@ -22,7 +22,7 @@ public class RecGenreInteractor implements RecGenreInputBoundary {
     @Override
     public void execute(RecGenreInputData recGenreInputData) {
         final Genre genre = genreFactory.create(recGenreInputData.getType(), recGenreInputData.getDescription());
-        recGenreUserDataAccessObject.recommend(genre);
+        recGenreUserDataAccessObject.recommendGenre(genre);
         final RecGenreOutputData recGenreOutputData = new RecGenreOutputData(genre);
         recGenrePresenter.prepareSuccessView(recGenreOutputData);
     }
