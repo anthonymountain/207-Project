@@ -8,7 +8,7 @@ public class User {
     @SuppressWarnings({"checkstyle:MemberName", "checkstyle:SuppressWarnings"})
     private final String display_name;
 
-    public User(String name, String password, String id) {
+    public User(String id, String name) {
         this.display_name = name;
         this.id = id;
     }

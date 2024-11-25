@@ -13,7 +13,8 @@ public class Album {
     private final ArrayList<Track> tracks;
     private final ArrayList<Genre> genres;
 
-    public Album(String id, String name, int popularity, ArrayList<Artist> artists, ArrayList<Track> tracks, ArrayList<Genre> genres) {
+    public Album(String id, String name, int popularity,
+                 ArrayList<Artist> artists, ArrayList<Track> tracks, ArrayList<Genre> genres) {
         this.id = id;
         this.name = name;
         this.popularity = popularity;

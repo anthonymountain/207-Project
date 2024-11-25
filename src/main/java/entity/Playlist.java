@@ -24,6 +24,7 @@ public class Playlist {
     public String getId() {
         return id;
     }
+
     /**
      * Returns the name of the playlist.
      *
