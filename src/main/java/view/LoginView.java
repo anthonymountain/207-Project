@@ -15,9 +15,9 @@ import javax.swing.JTextField;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
-import interface_adapter.SpotifyAuth.LoginController;
-import interface_adapter.SpotifyAuth.LoginState;
-import interface_adapter.SpotifyAuth.LoginViewModel;
+import interface_adapter.spotifyauth.LoginController;
+import interface_adapter.spotifyauth.LoginState;
+import interface_adapter.spotifyauth.LoginViewModel;
 
 /**
  * The View for when the user is logging into the program.
