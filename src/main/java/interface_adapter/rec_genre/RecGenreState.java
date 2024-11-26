@@ -6,6 +6,7 @@ package interface_adapter.rec_genre;
 public class RecGenreState {
     private String type;
     private String description;
+    private String error;
 
     // No uses yet
     public RecGenreState(RecGenreState copy) {
@@ -31,5 +32,13 @@ public class RecGenreState {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getError() {
+        return error;
+    }
+
+    public void setError(String error) {
+        this.error = error;
     }
 }

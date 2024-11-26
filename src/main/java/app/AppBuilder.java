@@ -254,8 +254,11 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addRecGenreUseCase() {
-        final RecGenreOutputBoundary recGenreOutputBoundary = new RecGenrePresenter(recGenreViewModel,
-                viewManagerModel);
+        if (recGenreViewModel == null) {
+            recGenreViewModel = new RecGenreViewModel();
+        }
+
+        final RecGenreOutputBoundary recGenreOutputBoundary = new RecGenrePresenter(recGenreViewModel, viewManagerModel);
 
         final RecGenreInputBoundary recGenreInteractor =
                 new RecGenreInteractor(userDataAccessObject, recGenreOutputBoundary, genreFactory);

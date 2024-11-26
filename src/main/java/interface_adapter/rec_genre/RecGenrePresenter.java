@@ -20,23 +20,23 @@ public class RecGenrePresenter implements RecGenreOutputBoundary {
     @Override
     public void prepareSuccessView(RecGenreOutputData outputData) {
         // Populate the ViewModel with data from the OutputData
-        recGenreViewModel.setGenreType(outputData.getType());
-        recGenreViewModel.setGenreDescription(outputData.getDescription());
+        recGenreViewModel.setRecommendedType(outputData.getType());
+        recGenreViewModel.setRecommendedDescription(outputData.getGenre().getDescription());
 
         // Trigger state update for the View
         viewManagerModel.setState(recGenreViewModel.getViewName());
         viewManagerModel.firePropertyChanged();
     }
 
-    @Override
-    public void prepareFailureView(String errorMessage) {
-        // Populate the ViewModel with an error message
-        recGenreViewModel.setError(errorMessage);
-
-        // Trigger state update for the error view
-        viewManagerModel.setState(recGenreViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
-    }
+//    @Override
+//    public void prepareFailureView(String errorMessage) {
+//        // Populate the ViewModel with an error message
+//        recGenreViewModel.setError(errorMessage);
+//
+//        // Trigger state update for the error view
+//        viewManagerModel.setState(recGenreViewModel.getViewName());
+//        viewManagerModel.firePropertyChanged();
+//    }
 }
 
 
@@ -47,7 +47,7 @@ public class RecGenrePresenter implements RecGenreOutputBoundary {
 //import use_case.rec_genre.RecGenreOutputBoundary;
 //import use_case.rec_genre.RecGenreOutputData;
 //
-///**
+//**
 // * This is a presenter for a recommended genre.
 // */
 //public class RecGenrePresenter implements RecGenreOutputBoundary {

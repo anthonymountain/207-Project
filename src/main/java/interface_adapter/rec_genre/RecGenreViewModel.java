@@ -16,23 +16,33 @@ public class RecGenreViewModel extends ViewModel<RecGenreState> {
      * Updates the recommended genre in the state.
      *
      * @param genreType the type of the recommended genre
-     * @param genreDescription the description of the recommended genre
      */
-    public void setRecommendedGenre(String genreType, String genreDescription) {
+    public void setRecommendedType(String genreType) {
         final RecGenreState state = getState();
         state.setType(genreType);
+        notifyStateChanged();
+    }
+
+    /**
+     * Updates the recommended genre in the state.
+     *
+     * @param genreDescription the description of the recommended genre
+     */
+    public void setRecommendedDescription(String genreDescription) {
+        final RecGenreState state = getState();
         state.setDescription(genreDescription);
         notifyStateChanged();
     }
 
-//    /**
-//     * Updates the state to reflect an error.
-//     *
-//     * @param errorMessage the error message to set
-//     */
-//    public void setErrorState(String errorMessage) {
-//        RecGenreState state = getState();
-//        state.setErrorMessage(errorMessage);
-//        notifyStateChanged();
-//    }
+    /**
+     * Sets the error message.
+     *
+     * @param errorMessage sets the error message
+     */
+    public void setError(String errorMessage) {
+        final RecGenreState state = getState();
+        state.setError(errorMessage);
+        notifyStateChanged();
+    }
+
 }
