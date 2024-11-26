@@ -20,7 +20,7 @@ public class RecSongInteractor implements RecSongInputBoundary {
     public void execute(RecSongInputData recSongInputData) {
         final Song song = songFactory.create(recSongInputData.getName(), recSongInputData.getArtist(),
                 recSongInputData.getGenre());
-        recSongUserDataAccessObject.recommend(song);
+        recSongUserDataAccessObject.recommendSong(song);
         final RecSongOutputData recSongOutputData = new RecSongOutputData(song.getName(), false);
         recSongPresenter.prepareSuccessView(recSongOutputData);
     }

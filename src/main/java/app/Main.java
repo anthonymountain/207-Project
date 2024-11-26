@@ -16,12 +16,19 @@ public class Main {
                                             .addLoginView()
                                             .addSignupView()
                                             .addLoggedInView()
+                                            .addRecGenreView()
                                             .addRecSongView()
+                                            .addRecGenreUseCase()
                                             .addRecSongUseCase()
+                                            .addRecArtistView()
+                                            .addRecPlaylistView()
                                             .addSignupUseCase()
                                             .addLoginUseCase()
                                             .addChangePasswordUseCase()
                                             .addLogoutUseCase()
+                                            .addRecSongUseCase()
+                                            .addRecArtistUseCase()
+                                            .addRecPlaylistUseCase()
                                             .build();
 
         application.pack();

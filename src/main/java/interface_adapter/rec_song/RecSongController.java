@@ -24,4 +24,11 @@ public class RecSongController {
 
         recSongUseCaseInteractor.execute(recSongInputData);
     }
+
+    /**
+     * Add a song to playlist.
+     * Not implemented.
+     */
+    public void addToPlaylist() {
+    }
 }
