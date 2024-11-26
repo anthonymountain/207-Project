@@ -1,21 +1,23 @@
 package entity;
 
+import java.util.ArrayList;
+
 /**
- * The representation of a genre in our program.
+ * A simple implementation of the Genre interface.
  */
-public interface Genre {
+public class Genre {
+    private final ArrayList<String> genres;
+
+    public Genre(ArrayList<String> genres) {
+        this.genres = genres;
+    }
 
     /**
-     * Returns the type of the genre.
+     * Returns the genres.
      *
-     * @return the type of the genre.
+     * @return the genres
      */
-    String getType();
-
-    /**
-     * Returns the genre description.
-     * @return the genre description.
-     */
-    String getDescription();
-
+    public ArrayList<String> getGenres() {
+        return genres;
+    }
 }

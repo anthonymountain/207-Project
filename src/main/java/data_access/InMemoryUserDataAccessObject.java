@@ -6,6 +6,7 @@ import java.util.Map;
 import entity.Genre;
 import entity.Artist;
 import entity.Song;
+import entity.Track;
 import entity.User;
 import use_case.change_password.ChangePasswordUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
@@ -24,14 +25,13 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
         ChangePasswordUserDataAccessInterface,
         LogoutUserDataAccessInterface,
         RecGenreUserDataAccessInterface,
-        RecSongUserDataAccessInterface {
         RecSongUserDataAccessInterface,
         RecArtistUserDataAccessInterface {
 
     private final Map<String, User> users = new HashMap<>();
 
     private String currentUsername;
-    private Song recommendedSong;
+    private Track recommendedSong;
     private Genre recommendedGenre;
     private Artist recommendedArtist;
 
@@ -72,8 +72,11 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     }
 
     @Override
-    public void recommend(Genre genre) {
+    public void recommendGenre(Genre genre) {
         this.recommendedGenre = genre;
+    }
+
+    @Override
     public void recommendArtist(Artist artist) {
         this.recommendedArtist = artist;
     }

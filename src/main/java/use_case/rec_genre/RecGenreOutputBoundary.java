@@ -12,9 +12,9 @@ public interface RecGenreOutputBoundary {
      */
     void prepareSuccessView(RecGenreOutputData outputData);
 
-    /**
-     * Prepares the failure view for the RecGenre Use Case.
-     * @param errorMessage the explanation of the failure
-     */
-    void prepareFailView(String errorMessage);
+//   /**
+//   * Prepares the failure view for the RecGenre Use Case.
+//   * @param errorMessage the explanation of the failure
+//   */
+    // void prepareFailView(String errorMessage);
 }
