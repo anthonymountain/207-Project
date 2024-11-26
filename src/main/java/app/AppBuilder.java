@@ -89,7 +89,7 @@ public class AppBuilder {
     private RecArtistViewModel recArtistViewModel;
     private RecArtistView recArtistView;
     private RecPlaylistView recPlaylistView;
-    private RecPlaylistViewModel recPlaylistViewModel;
+    private RecPlaylistViewModel recPlaylistViewModel = new RecPlaylistViewModel();
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -278,7 +278,10 @@ public class AppBuilder {
                 new RecPlaylistInteractor(playlistDataAccessObject, recPlaylistOutputBoundary);
 
         final RecPlaylistController recPlaylistController = new RecPlaylistController(recPlaylistInteractor);
+        // Lowkey setting the RecPlaylistController to the recPlaylist View is probably useless
+        // instead we should probably be setting an import playlist controller or something.
         recPlaylistView.setRecPlaylistController(recPlaylistController);
+        loggedInView.setRecPlaylistController(recPlaylistController);
         return this;
     }
 

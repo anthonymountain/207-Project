@@ -96,14 +96,14 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         if (recPlaylistButton != null) {
             recPlaylistButton.addActionListener(evt -> {
                 recPlaylistController.execute();
-                final JDialog dialog = new JDialog((JFrame) this.getTopLevelAncestor(),
-                        "Playlist Recommendation", true);
-                final RecPlaylistView recPlaylistView = new RecPlaylistView();
-                dialog.getContentPane().add(recPlaylistView.getView());
-                dialog.pack();
-                dialog.setResizable(false);
-                dialog.setLocationRelativeTo(this);
-                dialog.setVisible(true);
+                //                final JDialog dialog = new JDialog((JFrame) this.getTopLevelAncestor(),
+                //                        "Playlist Recommendation", true);
+                //                final RecPlaylistView recPlaylistView = new RecPlaylistView();
+                //                dialog.getContentPane().add(recPlaylistView.getView());
+                //                dialog.pack();
+                //                dialog.setResizable(false);
+                //                dialog.setLocationRelativeTo(this);
+                //                dialog.setVisible(true);
             });
         }
     }
@@ -126,5 +126,9 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     public void setLogoutController(LogoutController logoutController) {
         this.logoutController = logoutController;
+    }
+
+    public void setRecPlaylistController(RecPlaylistController recPlaylistController) {
+        this.recPlaylistController = recPlaylistController;
     }
 }
