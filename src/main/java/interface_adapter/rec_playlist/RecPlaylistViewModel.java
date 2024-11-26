@@ -8,7 +8,7 @@ import interface_adapter.ViewModel;
 public class RecPlaylistViewModel extends ViewModel<RecPlaylistState> {
 
     public RecPlaylistViewModel() {
-        super("song recommended");
+        super("Recommended Playlist");
         setState(new RecPlaylistState());
     }
 }

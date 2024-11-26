@@ -1,5 +1,6 @@
 package data_access;
 
+import entity.CommonPlaylist;
 import entity.Playlist;
 import use_case.rec_playlist.RecPlaylistDataAccessInterface;
 
@@ -11,8 +12,11 @@ public class InMemoryPlaylistDataAccessObject implements RecPlaylistDataAccessIn
     private Playlist playlist;
 
     @Override
-    public Playlist recommend() {
+    public Playlist getRecommendations() {
         // Make API call to get recommendation
+        final Playlist playlist1 = new CommonPlaylist();
+        this.playlist = playlist1;
+        // He has a point that the local variable playlist1 is useless.
         // Returns a playlist
         // this.playlist = playlist;
         return null;

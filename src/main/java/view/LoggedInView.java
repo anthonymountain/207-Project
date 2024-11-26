@@ -1,9 +1,9 @@
 package view;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.Font;
+import java.awt.*;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
+import java.util.concurrent.Executor;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -18,6 +18,9 @@ import javax.swing.JPanel;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.logout.LogoutController;
+import interface_adapter.rec_artist.RecArtistController;
+import interface_adapter.rec_playlist.RecPlaylistController;
+import interface_adapter.rec_playlist.RecPlaylistState;
 import interface_adapter.rec_song.RecSongController;
 import interface_adapter.rec_song.RecSongViewModel;
 import view.components.RoundedButton;
@@ -49,6 +52,12 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
     private JButton recSong;
     private JButton recGenre;
     private final ViewBuilder viewBuilder;
+
+    private LogoutController logoutController;
+    private RecPlaylistController recPlaylistController;
+    private RecArtistController recArtistController;
+    private RecSongController recSongController;
+    private RecGenreController recGenreController;
 
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
@@ -115,43 +124,19 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
     }
 
     private void openGenreRecommendationDialog() {
-        final JDialog dialog = new JDialog((JFrame) this.getTopLevelAncestor(), "Genre Recommendation", true);
-        final RecGenreView recGenreView = new RecGenreView();
-        dialog.getContentPane().add(recGenreView.getView());
-        dialog.pack();
-        dialog.setResizable(false);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
+        recGenreController.execute();
     }
 
     private void openSongRecommendationDialog() {
-        final JDialog dialog = new JDialog((JFrame) this.getTopLevelAncestor(), "Song Recommendation", true);
-        final RecSongView recSongView = new RecSongView();
-        dialog.getContentPane().add(recSongView.getView());
-        dialog.pack();
-        dialog.setResizable(false);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
+        recSongController.execute();
     }
 
     private void openArtistRecommendationDialog() {
-        final JDialog dialog = new JDialog((JFrame) this.getTopLevelAncestor(), "Artist Recommendation", true);
-        final RecArtistView recArtistView = new RecArtistView();
-        dialog.getContentPane().add(recArtistView.getView());
-        dialog.pack();
-        dialog.setResizable(false);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
+        recArtistController.execute();
     }
 
     private void openPlaylistRecommendationDialog() {
-        final JDialog dialog = new JDialog((JFrame) this.getTopLevelAncestor(), "Playlist Recommendation", true);
-        final RecPlaylistView recPlaylistView = new RecPlaylistView();
-        dialog.getContentPane().add(recPlaylistView.getView());
-        dialog.pack();
-        dialog.setResizable(false);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
+        recPlaylistController.execute();
     }
 
     @Override
@@ -173,6 +158,19 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
     public void setLogoutController(LogoutController logoutController) {
         this.logoutController = logoutController;
     }
+
+    public void setRecPlaylistController(RecPlaylistController recPlaylistController) {
+        this.recPlaylistController = recPlaylistController;
+    }
+
+    public void setRecSongController(RecSongController recSongController) {
+        this.recSongController = recSongController;
+    }
+
+    public void setRecArtistController(RecArtistController recArtistController) {
+        this.recArtistController = recArtistController;
+    }
+
 }
 
 // /**
