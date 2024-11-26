@@ -19,8 +19,10 @@ import javax.swing.event.DocumentListener;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.logout.LogoutController;
+import interface_adapter.rec_artist.RecArtistController;
 import interface_adapter.rec_playlist.RecPlaylistController;
 import interface_adapter.rec_playlist.RecPlaylistState;
+import interface_adapter.rec_song.RecSongController;
 
 /**
  * The View for when the user is logged into the program.
@@ -34,6 +36,8 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
 
     private LogoutController logoutController;
     private RecPlaylistController recPlaylistController;
+    private RecArtistController recArtistController;
+    private RecSongController recSongController;
 
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
@@ -68,28 +72,22 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         final JButton recSongButton = viewBuilder.getButton("recSong");
         if (recSongButton != null) {
             recSongButton.addActionListener(evt -> {
-                final JDialog dialog = new JDialog((JFrame) this.getTopLevelAncestor(),
-                        "Song Recommendation", true);
-                final RecSongView recSongView = new RecSongView();
-                dialog.getContentPane().add(recSongView.getView());
-                dialog.pack();
-                dialog.setResizable(false);
-                dialog.setLocationRelativeTo(this);
-                dialog.setVisible(true);
+                recSongController.execute("", "", "");
             });
         }
 
         final JButton recArtistButton = viewBuilder.getButton("recArtist");
         if (recArtistButton != null) {
             recArtistButton.addActionListener(evt -> {
-                final JDialog dialog = new JDialog((JFrame) this.getTopLevelAncestor(),
-                        "Artist Recommendation", true);
-                final RecArtistView recArtistView = new RecArtistView();
-                dialog.getContentPane().add(recArtistView.getView());
-                dialog.pack();
-                dialog.setResizable(false);
-                dialog.setLocationRelativeTo(this);
-                dialog.setVisible(true);
+                recArtistController.execute();
+                //                final JDialog dialog = new JDialog((JFrame) this.getTopLevelAncestor(),
+                //                        "Artist Recommendation", true);
+                //                final RecArtistView recArtistView = new RecArtistView();
+                //                dialog.getContentPane().add(recArtistView.getView());
+                //                dialog.pack();
+                //                dialog.setResizable(false);
+                //                dialog.setLocationRelativeTo(this);
+                //                dialog.setVisible(true);
             });
         }
         final JButton recPlaylistButton = viewBuilder.getButton("recPlaylist");
@@ -131,4 +129,13 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     public void setRecPlaylistController(RecPlaylistController recPlaylistController) {
         this.recPlaylistController = recPlaylistController;
     }
+
+    public void setRecSongController(RecSongController recSongController) {
+        this.recSongController = recSongController;
+    }
+
+    public void setRecArtistController(RecArtistController recArtistController) {
+        this.recArtistController = recArtistController;
+    }
+
 }

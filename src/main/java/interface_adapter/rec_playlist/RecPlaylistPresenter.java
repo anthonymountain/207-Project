@@ -32,7 +32,7 @@ public class RecPlaylistPresenter implements RecPlaylistOutputBoundary {
         dialog.getContentPane().add(recPlaylistView.getView());
         dialog.pack();
         dialog.setResizable(false);
-        dialog.setLocationRelativeTo(dialog);
+        //        dialog.setLocationRelativeTo(dialog);
         dialog.setVisible(true);
     }
 

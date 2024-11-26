@@ -246,7 +246,9 @@ public class AppBuilder {
                 new RecSongInteractor(userDataAccessObject, recSongOutputBoundary, songFactory);
 
         final RecSongController recSongController = new RecSongController(recSongInteractor);
+        // Prob unnecessary, since we only call the RecSongController from the loggedInView
         recSongView.setRecSongController(recSongController);
+        loggedInView.setRecSongController(recSongController);
         return this;
     }
 
@@ -262,7 +264,9 @@ public class AppBuilder {
                 new RecArtistInteractor(userDataAccessObject, recArtistOutputBoundary, artistFactory);
 
         final RecArtistController recArtistController = new RecArtistController(recArtistInteractor);
+        // Prob unnecessary, we only make calls to the RecArtistController from the LoggedinView
         recArtistView.setRecArtistController(recArtistController);
+        loggedInView.setRecArtistController(recArtistController);
         return this;
     }
 
