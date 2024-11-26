@@ -19,7 +19,7 @@ public class RecArtistView {
     private RecArtistController recArtistController;
 
     public RecArtistView() {
-        final ViewBuilder builder = new ViewBuilder("Recommended Artist");
+        final ViewBuilder builder = new ViewBuilder();
 
         builder.addLabel("New Artist: placeholder_name");
 

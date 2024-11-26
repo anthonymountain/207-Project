@@ -40,27 +40,39 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
     private static final Font LABEL_FONT = new Font(FONT, Font.PLAIN, 14);
 
     private final String viewName = "logged in";
-    private final RecSongViewModel recSongViewModel;
+    private final LoggedInViewModel loggedInViewModel;
     private LogoutController logoutController;
     private final JLabel username;
     private JButton logOut;
     private JButton recSong;
     private JButton recGenre;
+    private final ViewBuilder viewBuilder;
 
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
-        this.recSongViewModel = new RecSongViewModel();
+        this.loggedInViewModel = loggedInViewModel;
         loggedInViewModel.addPropertyChangeListener(this);
 
         setupPanelLayout();
 
         username = setupLabels();
-        final JPanel buttonsPanel = createButtonsPanel();
+
+        viewBuilder = new ViewBuilder();
+        viewBuilder.addLabel("Currently logged in: ")
+                .addButton("recSong", "Recommend Song")
+                .addButton("recArtist", "Recommend Artist")
+                .addButton("recGenre", "Recommend Genre")
+                .addButton("recPlaylist", "Recommend Playlist")
+                .addButton("logout", "Log Out")
+                .setViewName(viewName);
+
+        recSong = viewBuilder.getButton("recSong");
+        recGenre = viewBuilder.getButton("recGenre");
+        logOut = viewBuilder.getButton("logout");
 
         this.add(Box.createRigidArea(new Dimension(0, TEN)));
         this.add(username);
+        this.add(viewBuilder);
         this.add(Box.createRigidArea(new Dimension(0, TWENTY)));
-        this.add(buttonsPanel);
-
         initializeButtonActions(loggedInViewModel);
     }
 
@@ -85,38 +97,14 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
         return usernameLabel;
     }
 
-    private JPanel createButtonsPanel() {
-        final JPanel buttons = new JPanel();
-        buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS));
-        buttons.setBackground(DARK_BACKGROUND);
-        buttons.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        recSong = new RoundedButton("Recommend Song");
-        recGenre = new RoundedButton("Recommend Genre");
-        logOut = new RoundedButton("Log Out");
-
-        recSong.setAlignmentX(Component.CENTER_ALIGNMENT);
-        recGenre.setAlignmentX(Component.CENTER_ALIGNMENT);
-        logOut.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        buttons.add(Box.createRigidArea(new Dimension(0, TEN)));
-        buttons.add(recSong);
-        buttons.add(Box.createRigidArea(new Dimension(0, TEN)));
-        buttons.add(recGenre);
-        buttons.add(Box.createRigidArea(new Dimension(0, TEN)));
-        buttons.add(logOut);
-
-        return buttons;
-    }
-
-    private void initializeButtonActions(LoggedInViewModel loggedInViewModel) {
-        logOut.addActionListener(evt -> handleLogoutAction(loggedInViewModel));
+    private void initializeButtonActions(LoggedInViewModel viewModel) {
+        logOut.addActionListener(evt -> handleLogoutAction(viewModel));
         recGenre.addActionListener(evt -> openGenreRecommendationDialog());
         recSong.addActionListener(evt -> openSongRecommendationDialog());
     }
 
-    private void handleLogoutAction(LoggedInViewModel loggedInViewModel) {
-        final LoggedInState currentState = loggedInViewModel.getState();
+    private void handleLogoutAction(LoggedInViewModel viewModel) {
+        final LoggedInState currentState = viewModel.getState();
         logoutController.execute(currentState.getUsername());
     }
 

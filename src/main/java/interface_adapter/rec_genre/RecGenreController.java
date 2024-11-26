@@ -5,6 +5,9 @@ import use_case.rec_genre.RecGenreInputBoundary;
 import use_case.rec_genre.RecGenreInputData;
 import use_case.rec_genre.RecGenreOutputData;
 import use_case.rec_song.RecSongInputData;
+import view.RecGenreView;
+
+import javax.swing.*;
 
 /**
  * Controller for the Recommend Genre Use Case.
@@ -24,7 +27,6 @@ public class RecGenreController {
      */
     public void execute(String type, String description) {
         final RecGenreInputData recGenreInputData = new RecGenreInputData(type, description);
-
         recGenreUseCaseInteractor.execute(recGenreInputData);
     }
 }
