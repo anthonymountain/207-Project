@@ -23,9 +23,8 @@ public class RecPlaylistInteractor implements RecPlaylistInputBoundary {
         // We are also going to have to use our List of Tracks, change it into an ArrayList of songs, and then create
         // a Playlist object that will be passed as Output Data.
         //        recPlaylistPresenter.prepareFailView("error, playlist was not generated, please try again.");
-        final Playlist playlist = new CommonPlaylist();
         // Note: the below might have to be a Spotify API client call instead.
-        recPlaylistUserDataAccessObject.getRecommendations();
+        final Playlist playlist = recPlaylistUserDataAccessObject.getRecommendations();
         final RecPlaylistOutputData recPlaylistOutputData = new RecPlaylistOutputData(playlist, false);
         recPlaylistPresenter.prepareSuccessView(recPlaylistOutputData);
     }
