@@ -5,13 +5,16 @@ package use_case.rec_genre;
  */
 public class RecGenreInputData {
 
-    private final String type;
-    private final String description;
+    private String type;
+    private String description;
 
-    public RecGenreInputData(String type, String description) {
-        this.type = type;
-        this.description = description;
+    public RecGenreInputData() {
     }
+
+//    public RecGenreInputData(String type, String description) {
+//        this.type = type;
+//        this.description = description;
+//    }
 
     public String getType() {
         return type;

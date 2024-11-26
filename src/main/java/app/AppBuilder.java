@@ -260,8 +260,8 @@ public class AppBuilder {
         final RecGenreInputBoundary recGenreInteractor =
                 new RecGenreInteractor(userDataAccessObject, recGenreOutputBoundary, genreFactory);
 
-//        final RecGenreController recGenreController = new RecGenreController(recGenreInteractor);
-//        recGenreView.setRecGenreController(recGenreController);
+        final RecGenreController recGenreController = new RecGenreController(recGenreInteractor);
+        recGenreView.setRecGenreController(recGenreController);
 
         return this;
     }

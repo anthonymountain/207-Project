@@ -9,5 +9,5 @@ public interface RecGenreInputBoundary {
      * Executes the Logout use case.
      * @param recGenreInputData the input data
      */
-    void execute(RecGenreInputData recGenreInputData);
+    RecGenreOutputData execute(RecGenreInputData recGenreInputData);
 }
