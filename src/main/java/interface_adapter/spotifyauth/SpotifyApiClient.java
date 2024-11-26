@@ -1,25 +1,39 @@
 package interface_adapter.spotifyauth;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.springframework.stereotype.Component;
-
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.springframework.stereotype.Component;
+
+import services.TokenService;
+
 @Component
 public class SpotifyApiClient {
 
     private final HttpClient httpClient;
+    private final TokenService tokenService;
 
-    public SpotifyApiClient() {
+    public SpotifyApiClient(TokenService tokenService) {
         this.httpClient = HttpClient.newHttpClient();
+        this.tokenService = tokenService;
     }
 
-    public String getRecommendations(String accessToken, String seedArtists, String seedGenres, String seedTracks) {
+    /**
+     * Get recommendations based on seed artists, genres, or tracks.
+     *
+     * @param seedArtists Comma-separated artist IDs.
+     * @param seedGenres  Comma-separated genres.
+     * @param seedTracks  Comma-separated track IDs.
+     * @return A JSON string containing Spotify's recommendations.
+     */
+    public String getRecommendations(String seedArtists, String seedGenres, String seedTracks) {
         try {
+            final String accessToken = tokenService.getToken();
+
             final URI uri = new URI(String.format(
                     "https://api.spotify.com/v1/recommendations?seed_artists=%s&seed_genres=%s&seed_tracks=%s",
                     seedArtists, seedGenres, seedTracks));
@@ -37,8 +51,17 @@ public class SpotifyApiClient {
         }
     }
 
-    public String createPlaylist(String accessToken, String userId, String playlistName) {
+    /**
+     * Create a new playlist for a given user.
+     *
+     * @param userId       Spotify user ID.
+     * @param playlistName Name of the new playlist.
+     * @return A JSON string containing the newly created playlist's details.
+     */
+    public String createPlaylist(String userId, String playlistName) {
         try {
+            final String accessToken = tokenService.getToken();
+
             final URI uri = new URI(String.format("https://api.spotify.com/v1/users/%s/playlists", userId));
 
             final JSONObject payload = new JSONObject();
@@ -60,8 +83,16 @@ public class SpotifyApiClient {
         }
     }
 
-    public void addTracksToPlaylist(String accessToken, String playlistId, JSONArray trackUris) {
+    /**
+     * Add tracks to a playlist.
+     *
+     * @param playlistId Spotify playlist ID.
+     * @param trackUris  JSON array of track URIs to add to the playlist.
+     */
+    public void addTracksToPlaylist(String playlistId, JSONArray trackUris) {
         try {
+            final String accessToken = tokenService.getToken();
+
             final URI uri = new URI(String.format("https://api.spotify.com/v1/playlists/%s/tracks", playlistId));
 
             final JSONObject payload = new JSONObject();
@@ -77,6 +108,58 @@ public class SpotifyApiClient {
             httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (Exception e) {
             throw new RuntimeException("Failed to add tracks to playlist", e);
+        }
+    }
+
+    /**
+     * Get the current user's profile.
+     *
+     * @return A JSON string containing the user's profile details.
+     */
+    public String getCurrentUserProfile() {
+        try {
+            final String accessToken = tokenService.getToken();
+
+            final URI uri = new URI("https://api.spotify.com/v1/me");
+
+            final HttpRequest request = HttpRequest.newBuilder()
+                    .uri(uri)
+                    .header("Authorization", "Bearer " + accessToken)
+                    .GET()
+                    .build();
+
+            final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            return response.body();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to get current user profile", e);
+        }
+    }
+
+    /**
+     * Get an artist's top tracks.
+     *
+     * @param artistId Artist ID.
+     * @param market   Market (e.g., "US").
+     * @return A JSON string containing the artist's top tracks.
+     */
+    public String getArtistTopTracks(String artistId, String market) {
+        try {
+            final String accessToken = tokenService.getToken();
+
+            final URI uri = new URI(
+                    String.format("https://api.spotify.com/v1/artists/%s/top-tracks?market=%s", artistId, market));
+
+            final HttpRequest request = HttpRequest.newBuilder()
+                    .uri(uri)
+                    .header("Authorization", "Bearer " + accessToken)
+                    .GET()
+                    .build();
+
+            final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            return response.body();
+        } 
+        catch (Exception e) {
+            throw new RuntimeException("Failed to get artist's top tracks", e);
         }
     }
 }
