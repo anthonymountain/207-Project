@@ -11,23 +11,31 @@ public class Main {
      * @param args unused arguments
      */
     public static void main(String[] args) {
+        final int width = 500;
+        final int height = 500;
+
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
-                .addLoginView()
-                .addSignupView()
-                .addLoggedInView()
-                .addRecGenreView()
-                .addRecSongView()
-                .addRecGenreUseCase()
-                .addRecSongUseCase()
-                .addSignupUseCase()
-                .addLoginUseCase()
-                .addChangePasswordUseCase()
-                .addLogoutUseCase()
-                .build();
+                                            .addLoginView()
+                                            .addSignupView()
+                                            .addLoggedInView()
+                                            .addRecGenreView()
+                                            .addRecSongView()
+                                            .addRecGenreUseCase()
+                                            .addRecSongUseCase()
+                                            .addRecArtistView()
+                                            .addRecPlaylistView()
+                                            .addSignupUseCase()
+                                            .addLoginUseCase()
+                                            .addChangePasswordUseCase()
+                                            .addLogoutUseCase()
+                                            .addRecSongUseCase()
+                                            .addRecArtistUseCase()
+                                            .addRecPlaylistUseCase()
+                                            .build();
 
         // Set the frame size to a larger size (e.g., 1200x800)
-        application.setSize(800, 500);
+        application.setSize(width, height);
 
         // Ensure the window is centered on the screen
         application.setLocationRelativeTo(null);

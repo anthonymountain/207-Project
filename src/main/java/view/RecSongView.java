@@ -4,7 +4,6 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import interface_adapter.like.LikeController;
 import interface_adapter.rec_song.RecSongController;
 import view.components.RoundedButton;
 
@@ -23,8 +22,7 @@ public class RecSongView {
     private RecSongController recSongController;
 
     public RecSongView() {
-        // Create a ViewBuilder instance
-        ViewBuilder viewBuilder = new ViewBuilder();
+        final ViewBuilder viewBuilder = new ViewBuilder();
 
         // Add a header label
         viewBuilder.addLabel("Recommended Song");
@@ -46,7 +44,7 @@ public class RecSongView {
     public void setRecSongController(RecSongController recSongController) {
         this.recSongController = recSongController;
         // Optionally, you can bind controller actions to buttons here
-        JButton addToPlaylistButton = ((ViewBuilder) view).getButton("addToPlaylist");
+        final JButton addToPlaylistButton = ((ViewBuilder) view).getButton("addToPlaylist");
         addToPlaylistButton.addActionListener(e -> {
 //            if (recSongController != null) {
 //                recSongController.execute(); // Example action

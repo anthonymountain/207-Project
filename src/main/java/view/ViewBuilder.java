@@ -100,6 +100,8 @@ public class ViewBuilder extends JPanel {
      * @return the view.
      */
     public JPanel build() {
+        this.add(mainPanel);
+        this.add(buttonsPanel);
         return this;
     }
 }
