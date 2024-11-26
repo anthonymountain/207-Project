@@ -1,37 +1,46 @@
 package view;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import view.components.RoundedButton;
 
 import javax.swing.*;
+import java.awt.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A base ViewBuilder for constructing views.
  */
 public class ViewBuilder extends JPanel {
 
-    private final String viewName;
+    private static final String FONT = "Futura";
+    private static final Color DARK_BACKGROUND = new Color(24, 24, 32);
+    private static final Color SPOTIFY_GREEN = new Color(30, 215, 96);
+    private static final Color BUTTON_TEXT_COLOR = Color.WHITE;
+
+    private static final Font LABEL_FONT = new Font(FONT, Font.PLAIN, 14);
+    private static final Font BUTTON_FONT = new Font(FONT, Font.PLAIN, 16);
+
+    private String viewName;
     private final Map<String, JButton> buttonsMap;
     private final JPanel buttonsPanel;
     private final JPanel mainPanel;
 
-    public ViewBuilder(String viewName) {
-        this.viewName = viewName;
+    public ViewBuilder() {
         this.buttonsMap = new HashMap<>();
         this.setLayout(new BorderLayout());
+        this.setBackground(DARK_BACKGROUND);
 
         // Main content area
         mainPanel = new JPanel();
         mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.setBackground(DARK_BACKGROUND);
         this.add(mainPanel, BorderLayout.CENTER);
 
         // Buttons panel
         buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new FlowLayout(FlowLayout.CENTER));
-        this.add(buttonsPanel, BorderLayout.SOUTH);
+        buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS)); // Vertical alignment
+        buttonsPanel.setBackground(DARK_BACKGROUND);
+        this.add(buttonsPanel, BorderLayout.CENTER); // Center the buttons in the panel
     }
 
     /**
@@ -41,7 +50,11 @@ public class ViewBuilder extends JPanel {
      */
     public ViewBuilder addLabel(String labelText) {
         final JLabel label = new JLabel(labelText);
+        label.setFont(LABEL_FONT);
+        label.setForeground(BUTTON_TEXT_COLOR);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainPanel.add(label);
+        mainPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Add spacing
         return this;
     }
 
@@ -52,10 +65,21 @@ public class ViewBuilder extends JPanel {
      * @return this builder
      */
     public ViewBuilder addButton(String buttonKey, String buttonText) {
-        final JButton button = new JButton(buttonText);
+        final JButton button = new RoundedButton(buttonText);
+        button.setFont(BUTTON_FONT);
+        button.setForeground(BUTTON_TEXT_COLOR);
+        button.setBackground(SPOTIFY_GREEN);
+        button.setAlignmentX(Component.CENTER_ALIGNMENT);
+
         buttonsMap.put(buttonKey, button);
+
+        buttonsPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Add spacing
         buttonsPanel.add(button);
         return this;
+    }
+
+    public void setViewName(String viewName) {
+        this.viewName = viewName;
     }
 
     public String getViewName() {
