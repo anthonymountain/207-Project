@@ -21,12 +21,14 @@ public class Main {
                                             .addRecGenreUseCase()
                                             .addRecSongUseCase()
                                             .addRecArtistView()
+                                            .addRecPlaylistView()
                                             .addSignupUseCase()
                                             .addLoginUseCase()
                                             .addChangePasswordUseCase()
                                             .addLogoutUseCase()
                                             .addRecSongUseCase()
                                             .addRecArtistUseCase()
+                                            .addRecPlaylistUseCase()
                                             .build();
 
         application.pack();
