@@ -1,6 +1,5 @@
 package use_case.rec_playlist;
 
-import entity.CommonPlaylist;
 import entity.Playlist;
 
 /**

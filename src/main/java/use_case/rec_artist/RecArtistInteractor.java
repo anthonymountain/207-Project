@@ -1,7 +1,6 @@
 package use_case.rec_artist;
 
 import entity.Artist;
-import entity.ArtistFactory;
 
 /**
  * The Recommend Artist Interactor.
