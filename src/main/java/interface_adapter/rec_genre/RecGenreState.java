@@ -32,9 +32,4 @@ public class RecGenreState {
     public void setDescription(String description) {
         this.description = description;
     }
-
-    public String getList() {
-        return "genre_list";
-        // TODO Implement this
-    }
 }

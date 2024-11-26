@@ -59,7 +59,7 @@ public class RecGenreView {
 
         // Fetch initial recommendation and update the label
         if (recGenreController != null) {
-            final String recommendedGenre = recGenreController.execute();
+            final String recommendedGenre = recGenreController.execute().toString();
             updateGenreLabel(recommendedGenre);
         }
     }
