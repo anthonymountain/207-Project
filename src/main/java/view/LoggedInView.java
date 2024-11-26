@@ -3,6 +3,7 @@ package view;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.util.concurrent.Executor;
 
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -18,6 +19,8 @@ import javax.swing.event.DocumentListener;
 import interface_adapter.change_password.LoggedInState;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.logout.LogoutController;
+import interface_adapter.rec_playlist.RecPlaylistController;
+import interface_adapter.rec_playlist.RecPlaylistState;
 
 /**
  * The View for when the user is logged into the program.
@@ -30,6 +33,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
     private final ViewBuilder viewBuilder;
 
     private LogoutController logoutController;
+    private RecPlaylistController recPlaylistController;
 
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
@@ -91,6 +95,7 @@ public class LoggedInView extends JPanel implements PropertyChangeListener {
         final JButton recPlaylistButton = viewBuilder.getButton("recPlaylist");
         if (recPlaylistButton != null) {
             recPlaylistButton.addActionListener(evt -> {
+                recPlaylistController.execute();
                 final JDialog dialog = new JDialog((JFrame) this.getTopLevelAncestor(),
                         "Playlist Recommendation", true);
                 final RecPlaylistView recPlaylistView = new RecPlaylistView();

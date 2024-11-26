@@ -17,10 +17,9 @@ public class RecPlaylistController {
     /**
      * Executes the Recommend Playlist Use Case.
      * Highly recommend looking at the Recommend Song Use Case to see how to properly use recPlaylistInputData.
-     * @param playlist the playlist
      */
-    public void execute(Playlist playlist) {
-        final RecPlaylistInputData recPlaylistInputData = new RecPlaylistInputData(playlist);
+    public void execute() {
+        final RecPlaylistInputData recPlaylistInputData = new RecPlaylistInputData();
 
         recPlaylistUseCaseInteractor.execute(recPlaylistInputData);
     }
