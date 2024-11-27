@@ -6,7 +6,6 @@ import java.util.Map;
 import entity.Genre;
 import entity.Artist;
 import entity.Song;
-import entity.Track;
 import entity.User;
 import use_case.change_password.ChangePasswordUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
@@ -31,7 +30,7 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     private final Map<String, User> users = new HashMap<>();
 
     private String currentUsername;
-    private Track recommendedSong;
+    private Song recommendedSong;
     private Genre recommendedGenre;
     private Artist recommendedArtist;
 
