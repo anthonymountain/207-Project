@@ -1,5 +1,8 @@
 package use_case.rec_song;
 
+import entity.Song;
+import entity.SongFactory;
+
 /**
  * The Recommend Song Interactor.
  */

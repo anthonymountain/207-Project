@@ -1,5 +1,7 @@
 package use_case.rec_song;
 
+import entity.Song;
+
 /**
  * DAO for the Recommend Song Use Case.
  */
