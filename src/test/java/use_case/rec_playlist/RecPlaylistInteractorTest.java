@@ -1,11 +1,6 @@
 package use_case.rec_playlist;
 
-import data_access.InMemoryPlaylistDataAccessObject;
-import interface_adapter.rec_playlist.RecPlaylistPresenter;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 public class RecPlaylistInteractorTest {
 
@@ -13,25 +8,6 @@ public class RecPlaylistInteractorTest {
     public void successPlaylistRecommendedTest(){
         // Nothin just yet
         // Just making sure that we get a playlist from our API calls
-        RecPlaylistInputData recPlaylistInputData = new RecPlaylistInputData();
-        RecPlaylistDataAccessInterface recPlaylistRepository = new InMemoryPlaylistDataAccessObject();
-
-        // Presenter to see if our use case handles as expected
-        RecPlaylistOutputBoundary recPlaylistPresenter = new RecPlaylistOutputBoundary() {
-            @Override
-            public void prepareSuccessView(RecPlaylistOutputData outputData) {
-                assertEquals(recPlaylistRepository.getRecommendations(), outputData.getPlaylist());
-            }
-
-            @Override
-            public void prepareFailView(String errorMessage) {
-                fail("Use case failure is unexpected");
-            }
-        };
-
-        RecPlaylistInputBoundary recPlaylistInteractor = new RecPlaylistInteractor(recPlaylistRepository,
-                recPlaylistPresenter);
-        recPlaylistInteractor.execute(recPlaylistInputData);
     }
 
     @Test

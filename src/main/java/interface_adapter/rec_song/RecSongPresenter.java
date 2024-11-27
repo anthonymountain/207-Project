@@ -3,9 +3,6 @@ package interface_adapter.rec_song;
 import interface_adapter.ViewManagerModel;
 import use_case.rec_song.RecSongOutputBoundary;
 import use_case.rec_song.RecSongOutputData;
-import view.RecSongView;
-
-import javax.swing.*;
 
 /**
  * This is a presenter for a recommended song.
@@ -24,16 +21,8 @@ public class RecSongPresenter implements RecSongOutputBoundary {
     public void prepareSuccessView(RecSongOutputData outputData) {
 
         // This code tells the View Manager to switch to the RecSongView.
-        //        this.viewManagerModel.setState(recSongViewModel.getViewName());
-        //        this.viewManagerModel.firePropertyChanged();
-        final JDialog dialog = new JDialog(new JFrame(),
-                "Song Recommendation", true);
-        final RecSongView recSongView = new RecSongView();
-        dialog.getContentPane().add(recSongView.getView());
-        dialog.pack();
-        dialog.setResizable(false);
-        //        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
+        this.viewManagerModel.setState(recSongViewModel.getViewName());
+        this.viewManagerModel.firePropertyChanged();
     }
 
     @Override

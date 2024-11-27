@@ -19,7 +19,7 @@ public class RecPlaylistOutputData {
         return playlist;
     }
 
-    //    public boolean isUseCaseFailed() {
-    //        return useCaseFailed;
-    //    }
+    public boolean isUseCaseFailed() {
+        return useCaseFailed;
+    }
 }

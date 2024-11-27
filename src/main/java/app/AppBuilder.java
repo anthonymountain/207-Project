@@ -98,7 +98,7 @@ public class AppBuilder {
     private RecArtistViewModel recArtistViewModel;
     private RecArtistView recArtistView;
     private RecPlaylistView recPlaylistView;
-    private RecPlaylistViewModel recPlaylistViewModel = new RecPlaylistViewModel();
+    private RecPlaylistViewModel recPlaylistViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -265,9 +265,7 @@ public class AppBuilder {
                 new RecSongInteractor(userDataAccessObject, recSongOutputBoundary, songFactory);
 
         final RecSongController recSongController = new RecSongController(recSongInteractor);
-        // Prob unnecessary, since we only call the RecSongController from the loggedInView
         recSongView.setRecSongController(recSongController);
-        loggedInView.setRecSongController(recSongController);
         return this;
     }
 
@@ -300,9 +298,7 @@ public class AppBuilder {
                 new RecArtistInteractor(userDataAccessObject, recArtistOutputBoundary, artistFactory);
 
         final RecArtistController recArtistController = new RecArtistController(recArtistInteractor);
-        // Prob unnecessary, we only make calls to the RecArtistController from the LoggedinView
         recArtistView.setRecArtistController(recArtistController);
-        loggedInView.setRecArtistController(recArtistController);
         return this;
     }
 
@@ -318,10 +314,7 @@ public class AppBuilder {
                 new RecPlaylistInteractor(playlistDataAccessObject, recPlaylistOutputBoundary);
 
         final RecPlaylistController recPlaylistController = new RecPlaylistController(recPlaylistInteractor);
-        // Lowkey setting the RecPlaylistController to the recPlaylist View is probably useless
-        // instead we should probably be setting an import playlist controller or something.
         recPlaylistView.setRecPlaylistController(recPlaylistController);
-        loggedInView.setRecPlaylistController(recPlaylistController);
         return this;
     }
 
