@@ -10,15 +10,12 @@ import data_access.InMemoryPlaylistDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
 import entity.*;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.spotifyauth.LoginController;
-import interface_adapter.spotifyauth.LoginPresenter;
-import interface_adapter.spotifyauth.LoginViewModel;
-import interface_adapter.change_password.ChangePasswordController;
-import interface_adapter.change_password.ChangePasswordPresenter;
+import interface_adapter.spotify_auth.LoginController;
+import interface_adapter.spotify_auth.LoginPresenter;
+import interface_adapter.spotify_auth.LoginViewModel;
 import interface_adapter.change_password.LoggedInViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
-import interface_adapter.rec_genre.RecGenreController;
 import interface_adapter.rec_genre.RecGenrePresenter;
 import interface_adapter.rec_genre.RecGenreViewModel;
 import interface_adapter.rec_artist.RecArtistController;
@@ -30,12 +27,6 @@ import interface_adapter.rec_playlist.RecPlaylistViewModel;
 import interface_adapter.rec_song.RecSongController;
 import interface_adapter.rec_song.RecSongPresenter;
 import interface_adapter.rec_song.RecSongViewModel;
-import interface_adapter.signup.SignupController;
-import interface_adapter.signup.SignupPresenter;
-import interface_adapter.signup.SignupViewModel;
-import use_case.change_password.ChangePasswordInputBoundary;
-import use_case.change_password.ChangePasswordInteractor;
-import use_case.change_password.ChangePasswordOutputBoundary;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
@@ -54,9 +45,6 @@ import use_case.rec_playlist.RecPlaylistOutputBoundary;
 import use_case.rec_song.RecSongInputBoundary;
 import use_case.rec_song.RecSongInteractor;
 import use_case.rec_song.RecSongOutputBoundary;
-import use_case.signup.SignupInputBoundary;
-import use_case.signup.SignupInteractor;
-import use_case.signup.SignupOutputBoundary;
 import view.*;
 
 /**
@@ -86,7 +74,6 @@ public class AppBuilder {
     private final InMemoryPlaylistDataAccessObject playlistDataAccessObject = new InMemoryPlaylistDataAccessObject();
 
     private SignupView signupView;
-    private SignupViewModel signupViewModel;
     private LoginViewModel loginViewModel;
     private LoggedInViewModel loggedInViewModel;
     private LoggedInView loggedInView;
@@ -102,31 +89,6 @@ public class AppBuilder {
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
-    }
-
-    /**
-     * Adds the Signup View to the application.
-     * @return this builder
-     */
-    public AppBuilder addSignupView() {
-    //        View myView = new View.ViewBuilder()
-    //                .setTitle("Main Window")
-    //                .setLayout("GridLayout")
-    //                .addButton("OK")
-    //                .addButton("Cancel")
-    //                .addLabel("Username:")
-    //                .addLabel("Password:")
-    //                .build();
-    //
-    //        // Access the built View object
-    //        System.out.println("Title: " + myView.getTitle());
-    //        System.out.println("Layout: " + myView.getLayout());
-    //        System.out.println("Buttons: " + myView.getButtons());
-    //        System.out.println("Labels: " + myView.getLabels());
-        signupViewModel = new SignupViewModel();
-        signupView = new SignupView(signupViewModel);
-        cardPanel.add(signupView, signupView.getViewName());
-        return this;
     }
 
     /**
@@ -192,21 +154,6 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the Signup Use Case to the application.
-     * @return this builder
-     */
-    public AppBuilder addSignupUseCase() {
-        final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel,
-                signupViewModel, loginViewModel);
-        final SignupInputBoundary userSignupInteractor = new SignupInteractor(
-                userDataAccessObject, signupOutputBoundary, userFactory);
-
-        final SignupController controller = new SignupController(userSignupInteractor);
-        signupView.setSignupController(controller);
-        return this;
-    }
-
-    /**
      * Adds the Login Use Case to the application.
      * @return this builder
      */
@@ -218,23 +165,6 @@ public class AppBuilder {
 
         final LoginController loginController = new LoginController(loginInteractor);
         loginView.setLoginController(loginController);
-        return this;
-    }
-
-    /**
-     * Adds the Change Password Use Case to the application.
-     * @return this builder
-     */
-    public AppBuilder addChangePasswordUseCase() {
-        //        final ChangePasswordOutputBoundary changePasswordOutputBoundary =
-        //                new ChangePasswordPresenter(loggedInViewModel);
-        //
-        //        final ChangePasswordInputBoundary changePasswordInteractor =
-        //                new ChangePasswordInteractor(userDataAccessObject, changePasswordOutputBoundary, userFactory);
-        //
-        //        final ChangePasswordController changePasswordController =
-        //                new ChangePasswordController(changePasswordInteractor);
-        //        loggedInView.setChangePasswordController(changePasswordController);
         return this;
     }
 
@@ -267,7 +197,6 @@ public class AppBuilder {
         final RecSongController recSongController = new RecSongController(recSongInteractor);
         // Prob unnecessary, since we only call the RecSongController from the loggedInView
         recSongView.setRecSongController(recSongController);
-        loggedInView.setRecSongController(recSongController);
         return this;
     }
 
