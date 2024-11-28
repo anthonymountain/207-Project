@@ -5,24 +5,19 @@ import java.util.Map;
 
 import entity.Genre;
 import entity.Artist;
-import entity.Song;
 import entity.Track;
 import entity.User;
-import use_case.change_password.ChangePasswordUserDataAccessInterface;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
 import use_case.rec_genre.RecGenreUserDataAccessInterface;
 import use_case.rec_artist.RecArtistUserDataAccessInterface;
 import use_case.rec_song.RecSongUserDataAccessInterface;
-import use_case.signup.SignupUserDataAccessInterface;
 
 /**
  * In-memory implementation of the DAO for storing user data. This implementation does
  * NOT persist data between runs of the program.
  */
-public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterface,
-        LoginUserDataAccessInterface,
-        ChangePasswordUserDataAccessInterface,
+public class InMemoryUserDataAccessObject implements LoginUserDataAccessInterface,
         LogoutUserDataAccessInterface,
         RecGenreUserDataAccessInterface,
         RecSongUserDataAccessInterface,
@@ -51,12 +46,6 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     }
 
     @Override
-    public void changePassword(User user) {
-        // Replace the old entry with the new password
-        users.put(user.getName(), user);
-    }
-
-    @Override
     public void setCurrentUsername(String name) {
         this.currentUsername = name;
     }
@@ -67,7 +56,7 @@ public class InMemoryUserDataAccessObject implements SignupUserDataAccessInterfa
     }
 
     @Override
-    public void recommendSong(Song song) {
+    public void recommendSong(Track song) {
         this.recommendedSong = song;
     }
 

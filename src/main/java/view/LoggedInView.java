@@ -15,8 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import interface_adapter.change_password.LoggedInState;
-import interface_adapter.change_password.LoggedInViewModel;
+import interface_adapter.loggedin.LoggedInState;
+import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.rec_artist.RecArtistController;
 import interface_adapter.rec_playlist.RecPlaylistController;
