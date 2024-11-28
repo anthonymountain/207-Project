@@ -1,6 +1,7 @@
 package view;
 
 import interface_adapter.rec_genre.RecGenreController;
+import use_case.rec_genre.RecGenreOutputData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -57,8 +58,8 @@ public class RecGenreView {
     public void setRecGenreController(RecGenreController recGenreController) {
         this.recGenreController = recGenreController;
         if (recGenreController != null) {
-            final String recommendedGenre = recGenreController.execute();
-            updateGenreLabel(recommendedGenre);
+            final RecGenreOutputData recommendedGenre = recGenreController.execute();
+            updateGenreLabel(recommendedGenre.toString());
         }
     }
 

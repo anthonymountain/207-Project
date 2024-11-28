@@ -33,4 +33,15 @@ public class Genre {
     public ArrayList<String> getGenres() {
         return genres;
     }
+
+    /**
+     * Converts the genres to a string.
+     * @return the genres as a string
+     * @see Object#toString()
+     * @see ArrayList#toString()
+     */
+    @Override
+    public String toString() {
+        return genres.toString();
+    }
 }

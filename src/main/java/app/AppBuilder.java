@@ -215,13 +215,22 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addRecGenreUseCase() {
-        final RecGenreOutputBoundary recGenreOutputBoundary = new RecGenrePresenter(recGenreViewModel,
-                viewManagerModel);
+        // Initialize RecGenreViewModel and ViewManagerModel before use
+        final RecGenreViewModel recGenreViewModel = new RecGenreViewModel();
+        final ViewManagerModel viewManagerModel = new ViewManagerModel();
 
-        final RecGenreInputBoundary recGenreInteractor =
-                new RecGenreInteractor(userDataAccessObject, recGenreOutputBoundary);
-                
+        // Pass initialized ViewModel and ViewManagerModel to the Presenter
+        final RecGenreOutputBoundary recGenreOutputBoundary =
+             new RecGenrePresenter(recGenreViewModel, viewManagerModel);
+
+        // Create Interactor with initialized Presenter
+        final RecGenreInputBoundary recGenreInteractor = 
+            new RecGenreInteractor(userDataAccessObject, recGenreOutputBoundary);
+
+        // Create Controller with initialized Interactor
         final RecGenreController recGenreController = new RecGenreController(recGenreInteractor);
+
+        // Set Controller in the View
         recGenreView.setRecGenreController(recGenreController);
 
         return this;

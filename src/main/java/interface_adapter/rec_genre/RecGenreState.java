@@ -1,28 +1,23 @@
 package interface_adapter.rec_genre;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
- * This state is for when a song is recommended.
+ * Represents the state for a recommended genre.
  */
 public class RecGenreState {
-    private ArrayList<String> genres;
-
-    // No uses yet
-    public RecGenreState(RecGenreState copy) {
-        this.genres = copy.genres;
-    }
+    private final List<String> genres;
 
     public RecGenreState() {
-
+        this.genres = List.of();
     }
 
-    public void setGenres(ArrayList<String> genres) {
+    public RecGenreState(List<String> genres) {
         this.genres = genres;
     }
 
-    public String getList() {
-        return "genre_list";
-        // TODO Implement this
+    public List<String> getGenres() {
+        return genres;
     }
 }
+
