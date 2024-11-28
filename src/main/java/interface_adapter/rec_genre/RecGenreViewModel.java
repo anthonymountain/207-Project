@@ -11,4 +11,6 @@ public class RecGenreViewModel extends ViewModel<RecGenreState> {
         super("genre recommended");
         setState(new RecGenreState());
     }
+
+    
 }

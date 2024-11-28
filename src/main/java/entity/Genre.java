@@ -8,8 +8,21 @@ import java.util.ArrayList;
 public class Genre {
     private final ArrayList<String> genres;
 
+    /**
+     * Creates a genre.
+     *
+     * @param genres the genres
+     */
+
     public Genre(ArrayList<String> genres) {
         this.genres = genres;
+    }
+
+    /**
+     * Null constructor for Genre.
+     */
+    public Genre() {
+        this.genres = new ArrayList<>();
     }
 
     /**

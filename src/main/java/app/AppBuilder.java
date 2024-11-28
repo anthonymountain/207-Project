@@ -10,11 +10,20 @@ import data_access.InMemoryPlaylistDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
 import entity.Track;
 import entity.User;
+import entity.Genre;
+import entity.Artist;
+import entity.Playlist;
+import view.LoginView;
+import view.RecArtistView;
+import view.RecGenreView;
+import view.RecPlaylistView;
+import view.RecSongView;
+import view.ViewManager;
 import interface_adapter.spotify_auth.LoginController;
 import interface_adapter.spotify_auth.LoginPresenter;
 import interface_adapter.spotify_auth.LoginViewModel;
 import interface_adapter.loggedin.LoggedInViewModel;
-import interface_adapter.loggedin.LoggedInView;
+import view.LoggedInView;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
@@ -30,9 +39,6 @@ import interface_adapter.rec_playlist.RecPlaylistViewModel;
 import interface_adapter.rec_song.RecSongController;
 import interface_adapter.rec_song.RecSongPresenter;
 import interface_adapter.rec_song.RecSongViewModel;
-import interface_adapter.spotify_auth.LoginController;
-import interface_adapter.spotify_auth.LoginPresenter;
-import interface_adapter.spotify_auth.LoginViewModel;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
@@ -51,9 +57,6 @@ import use_case.rec_playlist.RecPlaylistOutputBoundary;
 import use_case.rec_song.RecSongInputBoundary;
 import use_case.rec_song.RecSongInteractor;
 import use_case.rec_song.RecSongOutputBoundary;
-import view.*;
-
-
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -69,6 +72,11 @@ import view.*;
 public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
+    private final User user = new User();
+    private final Track track = new Track();
+    private final Genre genre = new Genre();
+    private final Artist artist = new Artist();
+    private final Playlist playlist = new Playlist();
     // thought question: is the hard dependency below a problem?
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
@@ -156,8 +164,6 @@ public class AppBuilder {
         return this;
     }
 
-
-
     /**
      * Adds the Login Use Case to the application.
      * @return this builder
@@ -172,8 +178,6 @@ public class AppBuilder {
         loginView.setLoginController(loginController);
         return this;
     }
-
-   
 
     /**
      * Adds the Logout Use Case to the application.
@@ -199,7 +203,7 @@ public class AppBuilder {
         final RecSongOutputBoundary recSongOutputBoundary = new RecSongPresenter(viewManagerModel, recSongViewModel);
 
         final RecSongInputBoundary recSongInteractor =
-                new RecSongInteractor(userDataAccessObject, recSongOutputBoundary, songFactory);
+                new RecSongInteractor(userDataAccessObject, recSongOutputBoundary);
 
         final RecSongController recSongController = new RecSongController(recSongInteractor);
         recSongView.setRecSongController(recSongController);
@@ -215,10 +219,10 @@ public class AppBuilder {
                 viewManagerModel);
 
         final RecGenreInputBoundary recGenreInteractor =
-                new RecGenreInteractor(userDataAccessObject, recGenreOutputBoundary, genreFactory);
-
-//        final RecGenreController recGenreController = new RecGenreController(recGenreInteractor);
-//        recGenreView.setRecGenreController(recGenreController);
+                new RecGenreInteractor(userDataAccessObject, recGenreOutputBoundary);
+                
+        final RecGenreController recGenreController = new RecGenreController(recGenreInteractor);
+        recGenreView.setRecGenreController(recGenreController);
 
         return this;
     }
@@ -232,8 +236,7 @@ public class AppBuilder {
                 recArtistViewModel);
 
         final RecArtistInputBoundary recArtistInteractor =
-                new RecArtistInteractor(userDataAccessObject, recArtistOutputBoundary, artistFactory);
-
+                new RecArtistInteractor(userDataAccessObject, recArtistOutputBoundary);
         final RecArtistController recArtistController = new RecArtistController(recArtistInteractor);
         recArtistView.setRecArtistController(recArtistController);
         return this;

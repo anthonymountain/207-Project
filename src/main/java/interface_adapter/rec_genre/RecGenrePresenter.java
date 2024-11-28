@@ -19,7 +19,21 @@ public class RecGenrePresenter implements RecGenreOutputBoundary {
 
     @Override
     public void prepareSuccessView(RecGenreOutputData outputData) {
-        this.viewManagerModel.setState(recGenreViewModel.getViewName());
-        this.viewManagerModel.firePropertyChanged();
+        // Populate the ViewModel with data from the OutputData
+        recGenreViewModel.setGenres(outputData.getGenre().getGenres());
+
+        // Trigger state update for the View
+        viewManagerModel.setState(recGenreViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
+
+//    @Override
+//    public void prepareFailureView(String errorMessage) {
+//        // Populate the ViewModel with an error message
+//        recGenreViewModel.setError(errorMessage);
+//
+//        // Trigger state update for the error view
+//        viewManagerModel.setState(recGenreViewModel.getViewName());
+//        viewManagerModel.firePropertyChanged();
+//    }
 }

@@ -1,7 +1,5 @@
 package interface_adapter.spotify_auth;
 
-
-
 import interface_adapter.ViewModel;
 
 /**

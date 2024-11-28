@@ -24,7 +24,6 @@ public class Main {
                                             .addRecSongUseCase()
                                             .addRecArtistView()
                                             .addRecPlaylistView()
-                                            .addSignupUseCase()
                                             .addLoginUseCase()
                                             .addLogoutUseCase()
                                             .addRecSongUseCase()

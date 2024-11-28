@@ -54,15 +54,13 @@ public class RecGenreView {
      *
      * @param recGenreController the genre recommendation controller
      */
-//    public void setRecGenreController(RecGenreController recGenreController) {
-//        this.recGenreController = recGenreController;
-//
-//        // Fetch initial recommendation and update the label
-//        if (recGenreController != null) {
-//            final String recommendedGenre = recGenreController.execute();
-//            updateGenreLabel(recommendedGenre);
-//        }
-//    }
+    public void setRecGenreController(RecGenreController recGenreController) {
+        this.recGenreController = recGenreController;
+        if (recGenreController != null) {
+            final String recommendedGenre = recGenreController.execute();
+            updateGenreLabel(recommendedGenre);
+        }
+    }
 
     /**
      * Updates the genre label with a new recommended genre.
