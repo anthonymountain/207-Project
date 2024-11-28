@@ -1,4 +1,4 @@
-package com.example.app.presentation.views;
+package interface_adapter.spotify_auth;
 
 import com.example.app.application.services.SpotifyAuthService;
 import com.example.app.application.services.TokenService;

@@ -1,10 +1,10 @@
 package interface_adapter.logout;
 
 import interface_adapter.ViewManagerModel;
-import interface_adapter.SpotifyAuth.LoginState;
-import interface_adapter.SpotifyAuth.LoginViewModel;
 import interface_adapter.loggedin.LoggedInState;
 import interface_adapter.loggedin.LoggedInViewModel;
+import interface_adapter.spotify_auth.LoginState;
+import interface_adapter.spotify_auth.LoginViewModel;
 import use_case.logout.LogoutOutputBoundary;
 import use_case.logout.LogoutOutputData;
 

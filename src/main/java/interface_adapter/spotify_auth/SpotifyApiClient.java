@@ -1,4 +1,4 @@
-package interface_adapter.SpotifyAuth;
+package interface_adapter.spotify_auth;
 
 import java.net.URI;
 import java.net.http.HttpClient;

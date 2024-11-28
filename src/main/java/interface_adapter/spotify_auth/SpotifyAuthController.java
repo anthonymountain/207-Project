@@ -1,4 +1,4 @@
-package interface_adapter.Spotifyauth;
+package interface_adapter.spotify_auth;
 
 import org.json.simple.JSONArray;
 import org.springframework.web.bind.annotation.GetMapping;

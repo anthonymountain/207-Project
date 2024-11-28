@@ -1,4 +1,4 @@
-package interface_adapter.SpotifyAuth;
+package interface_adapter.spotify_auth;
 
 /**
  * The state for the Login View Model.

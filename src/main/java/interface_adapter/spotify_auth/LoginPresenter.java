@@ -1,4 +1,4 @@
-package interface_adapter.SpotifyAuth;
+package interface_adapter.spotify_auth;
 
 import interface_adapter.ViewManagerModel;
 import interface_adapter.loggedin.LoggedInState;

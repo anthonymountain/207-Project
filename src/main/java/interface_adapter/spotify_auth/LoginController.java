@@ -1,4 +1,4 @@
-package interface_adapter.spotifyauth
+package interface_adapter.spotify_auth
 
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInputData;
