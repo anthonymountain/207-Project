@@ -1,5 +1,7 @@
 package interface_adapter.rec_genre;
 
+import java.util.List;
+
 import interface_adapter.ViewManagerModel;
 import use_case.rec_genre.RecGenreOutputBoundary;
 import use_case.rec_genre.RecGenreOutputData;
@@ -19,7 +21,23 @@ public class RecGenrePresenter implements RecGenreOutputBoundary {
 
     @Override
     public void prepareSuccessView(RecGenreOutputData outputData) {
-        this.viewManagerModel.setState(recGenreViewModel.getViewName());
-        this.viewManagerModel.firePropertyChanged();
+        // Update the ViewModel with data from OutputData
+        final List<String> genres = outputData.getGenre().getGenres();
+        recGenreViewModel.updateGenres(genres);
+
+        // Trigger state update for the View
+        viewManagerModel.setState(recGenreViewModel.getViewName());
+        viewManagerModel.firePropertyChanged();
     }
 }
+
+//    @Override
+//    public void prepareFailureView(String errorMessage) {
+//        // Populate the ViewModel with an error message
+//        recGenreViewModel.setError(errorMessage);
+//
+//        // Trigger state update for the error view
+//        viewManagerModel.setState(recGenreViewModel.getViewName());
+//        viewManagerModel.firePropertyChanged();
+//    }
+

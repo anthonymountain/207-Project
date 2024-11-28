@@ -17,16 +17,16 @@ public class RecommendationService {
     }
 
     public String getRandomRecommendation(String accessToken, String seedArtist, String seedGenre, String seedTrack) {
-        String response = spotifyApiClient.getRecommendations(accessToken, seedArtist, seedGenre, seedTrack);
-        JSONObject jsonResponse = new JSONObject(response);
-        JSONArray tracks = jsonResponse.getJSONArray("tracks");
+        final String response = spotifyApiClient.getRecommendations(accessToken, seedArtist, seedGenre, seedTrack);
+        final JSONObject jsonResponse = new JSONObject(response);
+        final JSONArray tracks = jsonResponse.getJSONArray("tracks");
 
         if (tracks.isEmpty()) {
             return "No recommendations found.";
         }
 
-        Random random = new Random();
-        JSONObject randomTrack = tracks.getJSONObject(random.nextInt(tracks.length()));
+        final Random random = new Random();
+        final JSONObject randomTrack = tracks.getJSONObject(random.nextInt(tracks.length()));
         return randomTrack.getString("name") + " by " + randomTrack.getJSONArray("artists").getJSONObject(0).getString("name");
     }
 }

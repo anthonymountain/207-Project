@@ -11,11 +11,30 @@ public class Artist {
     private final ArrayList<Track> tracks;
     private final ArrayList<Genre> genres;
 
+    /**
+     * Creates an artist.
+     *
+     * @param id the id of the artist
+     * @param name the name of the artist
+     * @param tracks the tracks of the artist
+     * @param genres the genres of the artist
+     */
+
     public Artist(String id, String name, ArrayList<Track> tracks, ArrayList<Genre> genres) {
         this.id = id;
         this.name = name;
         this.tracks = tracks;
         this.genres = genres;
+    }
+
+    /**
+     * Null constructor for Artist.
+     */
+    public Artist() {
+        this.id = null;
+        this.name = null;
+        this.tracks = new ArrayList<>();
+        this.genres = new ArrayList<>();
     }
 
     /**

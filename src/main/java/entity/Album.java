@@ -13,6 +13,17 @@ public class Album {
     private final ArrayList<Track> tracks;
     private final ArrayList<Genre> genres;
 
+    /**
+     * Creates an album.
+     *
+     * @param id the id of the album
+     * @param name the name of the album
+     * @param popularity the popularity of the album
+     * @param artists the artists of the album
+     * @param tracks the tracks of the album
+     * @param genres the genres of the album
+     */
+
     public Album(String id, String name, int popularity,
                  ArrayList<Artist> artists, ArrayList<Track> tracks, ArrayList<Genre> genres) {
         this.id = id;
@@ -21,6 +32,18 @@ public class Album {
         this.artists = artists;
         this.tracks = tracks;
         this.genres = genres;
+    }
+
+    /**
+     * Null constructor for Album.
+     */
+    public Album() {
+        this.id = null;
+        this.name = null;
+        this.popularity = 0;
+        this.artists = new ArrayList<>();
+        this.tracks = new ArrayList<>();
+        this.genres = new ArrayList<>();
     }
 
     /**

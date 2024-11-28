@@ -3,7 +3,7 @@ package use_case.rec_genre;
 import data_access.InMemoryUserDataAccessObject;
 import entity.CommonGenreFactory;
 import entity.Genre;
-import entity.GenreFactory;
+import entity.Genre;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
