@@ -17,7 +17,6 @@ public class Main {
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
                                             .addLoginView()
-                                            .addSignupView()
                                             .addLoggedInView()
                                             .addRecGenreView()
                                             .addRecSongView()
@@ -27,7 +26,6 @@ public class Main {
                                             .addRecPlaylistView()
                                             .addSignupUseCase()
                                             .addLoginUseCase()
-                                            .addChangePasswordUseCase()
                                             .addLogoutUseCase()
                                             .addRecSongUseCase()
                                             .addRecArtistUseCase()

@@ -1,4 +1,4 @@
-package interface_adapter.spotifyauth;
+package interface_adapter.SpotifyAuth;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
