@@ -1,6 +1,6 @@
 package interface_adapter.spotify_auth;
 
-import org.json.simple.JSONArray;
+import org.json.JSONArray;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -37,9 +37,10 @@ public class SpotifyAuthController {
     @PostMapping("/playlist/recommendations")
     public String createPlaylistForRecommendations(
             @RequestHeader("Authorization") String accessToken,
-            @RequestBody JSONArray recommendations
+            @RequestBody JSONArray recommendations,
+            @RequestParam String userId
     ) {
-        return playlistService.createPlaylistForRecommendations(accessToken, recommendations);
+        return playlistService.createPlaylistForRecommendations(accessToken, userId, recommendations);
     }
 
     @PostMapping("/playlist/artist")

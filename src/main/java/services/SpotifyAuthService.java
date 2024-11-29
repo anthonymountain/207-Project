@@ -1,10 +1,12 @@
 package services;
 
-import interface_adapter.spotifyauth.SpotifyConfig;
+import interface_adapter.spotify_auth.SpotifyConfig;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
+import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 
 @Service
 public class SpotifyAuthService {
@@ -25,9 +27,19 @@ public class SpotifyAuthService {
 
         try {
             Desktop.getDesktop().browse(new URI(authUrl));
-        } catch (Exception ex) {
-            throw new RuntimeException("Failed to open browser for login", ex);
         }
+        catch (URISyntaxException ex) {
+            throw new RuntimeException("input", ex);
+        }
+        catch (IOException ex) {
+            throw new RuntimeException("ahhh", ex);
+        }
+        finally {
+            // a
+        }
+//        catch (Exception ex) {
+//            throw new RuntimeException("Failed to open browser for login", ex);
+//        }
     }
 
     public void handleCallback(String accessToken, int expiresInSeconds) {

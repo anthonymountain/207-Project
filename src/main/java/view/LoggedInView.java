@@ -19,6 +19,7 @@ import interface_adapter.loggedin.LoggedInState;
 import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.rec_artist.RecArtistController;
+import interface_adapter.rec_genre.RecGenreController;
 import interface_adapter.rec_playlist.RecPlaylistController;
 import interface_adapter.rec_playlist.RecPlaylistState;
 import interface_adapter.rec_song.RecSongController;
@@ -44,7 +45,6 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
 
     private final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
-    private LogoutController logoutController;
     private final JLabel username;
     private JButton logOut;
     private JButton recArtist;
@@ -128,7 +128,7 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
     }
 
     private void openSongRecommendationDialog() {
-        recSongController.execute();
+        recSongController.execute(null, null, 0, null, null);
     }
 
     private void openArtistRecommendationDialog() {

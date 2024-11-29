@@ -19,6 +19,7 @@ public class ViewBuilder extends JPanel {
 
     private static final Font LABEL_FONT = new Font(FONT, Font.PLAIN, 14);
     private static final Font BUTTON_FONT = new Font(FONT, Font.PLAIN, 16);
+    private static final int MAGIC_NUMBER = 10;
 
     private String viewName;
     private final Map<String, JButton> buttonsMap;
@@ -54,7 +55,7 @@ public class ViewBuilder extends JPanel {
         label.setForeground(BUTTON_TEXT_COLOR);
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainPanel.add(label);
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Add spacing
+        mainPanel.add(Box.createRigidArea(new Dimension(0, MAGIC_NUMBER)));
         return this;
     }
 
@@ -73,7 +74,7 @@ public class ViewBuilder extends JPanel {
 
         buttonsMap.put(buttonKey, button);
 
-        buttonsPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Add spacing
+        buttonsPanel.add(Box.createRigidArea(new Dimension(0, MAGIC_NUMBER)));
         buttonsPanel.add(button);
         return this;
     }
