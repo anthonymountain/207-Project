@@ -39,9 +39,11 @@ public class ViewBuilder extends JPanel {
 
         // Buttons panel
         buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS)); // Vertical alignment
+        buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS));
+        // Vertical alignment
         buttonsPanel.setBackground(DARK_BACKGROUND);
-        this.add(buttonsPanel, BorderLayout.CENTER); // Center the buttons in the panel
+        this.add(buttonsPanel, BorderLayout.CENTER);
+        // Center the buttons in the panel
     }
 
     /**
@@ -103,6 +105,7 @@ public class ViewBuilder extends JPanel {
     public JPanel build() {
         this.add(mainPanel);
         this.add(buttonsPanel);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         return this;
     }
 }
