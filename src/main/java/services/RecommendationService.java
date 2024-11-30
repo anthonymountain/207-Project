@@ -1,6 +1,6 @@
 package services;
 
-import interface_adapter.spotifyauth.SpotifyApiClient;
+import interface_adapter.spotify_auth.SpotifyApiClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ public class RecommendationService {
     }
 
     public String getRandomRecommendation(String accessToken, String seedArtist, String seedGenre, String seedTrack) {
-        final String response = spotifyApiClient.getRecommendations(accessToken, seedArtist, seedGenre, seedTrack);
+        final String response = spotifyApiClient.getRecommendations(seedArtist, seedGenre, seedTrack);
         final JSONObject jsonResponse = new JSONObject(response);
         final JSONArray tracks = jsonResponse.getJSONArray("tracks");
 

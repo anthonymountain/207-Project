@@ -1,6 +1,6 @@
 package services;
 
-import interface_adapter.spotifyauth.SpotifyConfig;
+import interface_adapter.spotify_auth.SpotifyConfig;
 import org.springframework.stereotype.Service;
 
 import java.awt.*;
