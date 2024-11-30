@@ -10,16 +10,13 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-import use_case.change_password.ChangePasswordUserDataAccessInterface;
+import entity.User;
 import use_case.login.LoginUserDataAccessInterface;
-import use_case.signup.SignupUserDataAccessInterface;
 
 /**
  * DAO for user data implemented using a File to persist the data.
  */
-public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
-                                                 LoginUserDataAccessInterface,
-                                                 ChangePasswordUserDataAccessInterface {
+public class FileUserDataAccessObject implements LoginUserDataAccessInterface {
 
     private static final String HEADER = "username,password";
 
@@ -28,7 +25,7 @@ public class FileUserDataAccessObject implements SignupUserDataAccessInterface,
     private final Map<String, User> accounts = new HashMap<>();
     private String currentUsername;
 
-    public FileUserDataAccessObject(String csvPath, UserFactory userFactory) throws IOException {
+    public FileUserDataAccessObject(String csvPath) throws IOException {
 
         csvFile = new File(csvPath);
         headers.put("username", 0);
