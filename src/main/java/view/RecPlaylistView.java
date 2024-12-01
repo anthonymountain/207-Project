@@ -4,7 +4,6 @@ import javax.swing.JPanel;
 
 import entity.Playlist;
 import interface_adapter.rec_playlist.RecPlaylistController;
-import interface_adapter.rec_playlist.RecPlaylistViewModel;
 
 /**
  * This View pops up when a playlist is recommended.
