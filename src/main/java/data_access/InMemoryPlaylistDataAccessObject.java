@@ -29,11 +29,12 @@ public class InMemoryPlaylistDataAccessObject implements RecPlaylistDataAccessIn
         //            displayStuff.add(recommendationService.getRandomRecommendation("", "", ""));
         //        }
 
-        // Make API call to get recommendation
-        final ArrayList<String> displayStuff = new ArrayList<>();
-        for (int i = 0; i < TEN; i++) {
-            displayStuff.add(spotifyAuthController.getRandomRecommendation("", "", "", ""));
-        }
-        return new DisplayPlaylist(displayStuff);
+        // Make API call to get recommendation - to be figured out later.
+        //        final ArrayList<String> displayStuff = new ArrayList<>();
+        //        for (int i = 0; i < TEN; i++) {
+        //            displayStuff.add(spotifyAuthController.getRandomRecommendation("", "", "", ""));
+        //        }
+        //        return new DisplayPlaylist(displayStuff);
+        return new DisplayPlaylist(new ArrayList<>());
     }
 }

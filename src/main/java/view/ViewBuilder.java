@@ -108,4 +108,18 @@ public class ViewBuilder extends JPanel {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         return this;
     }
+
+    /**
+     * Builds the view.
+     * @return the view.
+     * THis gets us a JFrame instead of a JPanel.
+     */
+    public JFrame build(String s) {
+        this.add(mainPanel);
+        this.add(buttonsPanel);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        final JFrame frame = new JFrame();
+        frame.add(this);
+        return frame;
+    }
 }

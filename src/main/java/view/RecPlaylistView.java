@@ -13,11 +13,17 @@ import java.awt.*;
 /**
  * This View pops up when a playlist is recommended.
  */
-public class RecPlaylistView extends JFrame {
+public class RecPlaylistView extends JLabel {
 
     private final JPanel view;
     private RecPlaylistController recPlaylistController;
     private DisplayPlaylist playlist;
+
+    //    private static final String FONT = "Futura";
+    private static final int TWENTY = 20;
+    //    private static final int TEN = 10;
+
+    private static final Color DARK_BACKGROUND = new Color(24, 24, 32);
 
     public RecPlaylistView() {
         final ViewBuilder builder = new ViewBuilder();
@@ -27,6 +33,10 @@ public class RecPlaylistView extends JFrame {
                 .addButton("IDK", "what's up")
                 .setViewName("Recommended Playlist");
         view = builder.build();
+        this.add(view);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setBackground(DARK_BACKGROUND);
+        view.setBorder(BorderFactory.createEmptyBorder(TWENTY, TWENTY, TWENTY, TWENTY));
     }
 
     public void setRecPlaylistController(RecPlaylistController recPlaylistController) {

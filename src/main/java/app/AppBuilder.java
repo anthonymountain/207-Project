@@ -148,12 +148,7 @@ public class AppBuilder {
      */
     public AppBuilder addRecPlaylistView() {
         recPlaylistView = new RecPlaylistView();
-        final ViewBuilder recPlaylistViewBuilder = new ViewBuilder();
-        recPlaylistViewBuilder.addLabel("New Playlist: Placeholder_name")
-                .addLabel("Recommended Playlist, will this show up?")
-                .addButton("IDK", "what's up")
-                .setViewName("Recommended Playlist");
-        cardPanel.add(recPlaylistViewBuilder.build(), "Recommended Playlist");
+        cardPanel.add(recPlaylistView, "Recommended Playlist");
         return this;
     }
 
