@@ -1,9 +1,5 @@
 package view;
 
-import java.awt.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-
 import javax.swing.*;
 
 import interface_adapter.rec_artist.RecArtistController;
@@ -19,11 +15,11 @@ public class RecArtistView {
     private RecArtistController recArtistController;
 
     public RecArtistView() {
-        final ViewBuilder builder = new ViewBuilder("Recommended Artist");
+        final ViewBuilder builder = new ViewBuilder();
 
-        builder.addLabel("New Artist: placeholder_name");
-
-        builder.addButton("recSong", "Recommend Song");
+        builder.addLabel("New Artist: placeholder_name")
+                .addButton("recSong", "Recommend Song")
+                .setViewName("Recommended Artist");
 
         view = builder.build();
     }
