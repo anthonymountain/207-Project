@@ -1,6 +1,7 @@
 package app;
 
 import java.awt.CardLayout;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -8,11 +9,8 @@ import javax.swing.WindowConstants;
 
 import data_access.InMemoryPlaylistDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
-import entity.Track;
-import entity.User;
-import entity.Genre;
-import entity.Artist;
-import entity.Playlist;
+import entity.*;
+import services.TokenService;
 import view.LoginView;
 import view.RecArtistView;
 import view.RecGenreView;
@@ -76,9 +74,12 @@ public class AppBuilder {
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
+    private final TokenService tokenService = new TokenService();
+
     // thought question: is the hard dependency below a problem?
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
-    private final InMemoryPlaylistDataAccessObject playlistDataAccessObject = new InMemoryPlaylistDataAccessObject();
+    private final InMemoryPlaylistDataAccessObject playlistDataAccessObject =
+            new InMemoryPlaylistDataAccessObject(tokenService);
 
     private LoginViewModel loginViewModel;
     private LoggedInViewModel loggedInViewModel;
@@ -154,7 +155,7 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addRecPlaylistView() {
-        recPlaylistView = new RecPlaylistView();
+        recPlaylistView = new RecPlaylistView(new DisplayPlaylist(new ArrayList<>()));
         cardPanel.add(recPlaylistView.getView(), "Recommended Playlist");
         return this;
     }
