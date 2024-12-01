@@ -1,10 +1,9 @@
 package services;
 
+import interface_adapter.spotify_auth.SpotifyApiClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
-
-import interface_adapter.spotify_auth.SpotifyApiClient;
 
 @Service
 public class PlaylistService {

@@ -1,13 +1,11 @@
 package interface_adapter.spotify_auth;
 
-import java.awt.*;
-
-import javax.swing.*;
-
-import org.springframework.stereotype.Component;
-
 import services.SpotifyAuthService;
 import services.TokenService;
+import org.springframework.stereotype.Component;
+
+import javax.swing.*;
+import java.awt.*;
 
 @Component
 public class SpotifyLoginUI {

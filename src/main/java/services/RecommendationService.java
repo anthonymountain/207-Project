@@ -1,12 +1,11 @@
 package services;
 
-import java.util.Random;
-
+import interface_adapter.spotify_auth.SpotifyApiClient;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
-import interface_adapter.spotify_auth.SpotifyApiClient;
+import java.util.Random;
 
 @Service
 public class RecommendationService {
