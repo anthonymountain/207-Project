@@ -1,11 +1,12 @@
 package view;
 
-import view.components.RoundedButton;
-
-import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.*;
+
+import view.components.RoundedButton;
 
 /**
  * A base ViewBuilder for constructing views.
