@@ -44,6 +44,8 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
     private LogoutController logoutController;
     private final JLabel username;
     private JButton logOut;
+    private JButton recArtist;
+    private JButton recPlaylist;
     private JButton recSong;
     private JButton recGenre;
     private final ViewBuilder viewBuilder;
@@ -67,6 +69,8 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
 
         recSong = viewBuilder.getButton("recSong");
         recGenre = viewBuilder.getButton("recGenre");
+        recArtist = viewBuilder.getButton("recArtist");
+        recPlaylist = viewBuilder.getButton("recPlaylist");
         logOut = viewBuilder.getButton("logout");
 
         this.add(Box.createRigidArea(new Dimension(0, TEN)));
@@ -101,6 +105,8 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
         logOut.addActionListener(evt -> handleLogoutAction(viewModel));
         recGenre.addActionListener(evt -> openGenreRecommendationDialog());
         recSong.addActionListener(evt -> openSongRecommendationDialog());
+        recArtist.addActionListener(evt -> openArtistRecommendationDialog());
+        recPlaylist.addActionListener(evt -> openPlaylistRecommendationDialog());
     }
 
     private void handleLogoutAction(LoggedInViewModel viewModel) {
@@ -122,6 +128,26 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
         final JDialog dialog = new JDialog((JFrame) this.getTopLevelAncestor(), "Song Recommendation", true);
         final RecSongView recSongView = new RecSongView();
         dialog.getContentPane().add(recSongView.getView());
+        dialog.pack();
+        dialog.setResizable(false);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }
+
+    private void openArtistRecommendationDialog() {
+        final JDialog dialog = new JDialog((JFrame) this.getTopLevelAncestor(), "Artist Recommendation", true);
+        final RecArtistView recArtistView = new RecArtistView();
+        dialog.getContentPane().add(recArtistView.getView());
+        dialog.pack();
+        dialog.setResizable(false);
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
+    }
+
+    private void openPlaylistRecommendationDialog() {
+        final JDialog dialog = new JDialog((JFrame) this.getTopLevelAncestor(), "Playlist Recommendation", true);
+        final RecPlaylistView recPlaylistView = new RecPlaylistView();
+        dialog.getContentPane().add(recPlaylistView.getView());
         dialog.pack();
         dialog.setResizable(false);
         dialog.setLocationRelativeTo(this);
