@@ -52,6 +52,8 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
     private JButton recSong;
     private JButton recGenre;
     private final ViewBuilder viewBuilder;
+
+    private LogoutController logoutController;
     private RecPlaylistController recPlaylistController;
     private RecArtistController recArtistController;
     private RecSongController recSongController;
@@ -122,44 +124,19 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
     }
 
     private void openGenreRecommendationDialog() {
-        final JDialog dialog = new JDialog((JFrame) this.getTopLevelAncestor(), "Genre Recommendation", true);
-        final RecGenreView recGenreView = new RecGenreView();
-        dialog.getContentPane().add(recGenreView.getView());
-        dialog.pack();
-        dialog.setResizable(false);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
+        recGenreController.execute();
     }
 
     private void openSongRecommendationDialog() {
         recSongController.execute(null, null, 0, null, null);
-        final JDialog dialog = new JDialog((JFrame) this.getTopLevelAncestor(), "Song Recommendation", true);
-        final RecSongView recSongView = new RecSongView();
-        dialog.getContentPane().add(recSongView.getView());
-        dialog.pack();
-        dialog.setResizable(false);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
     }
 
     private void openArtistRecommendationDialog() {
-        final JDialog dialog = new JDialog((JFrame) this.getTopLevelAncestor(), "Artist Recommendation", true);
-        final RecArtistView recArtistView = new RecArtistView();
-        dialog.getContentPane().add(recArtistView.getView());
-        dialog.pack();
-        dialog.setResizable(false);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
+        recArtistController.execute();
     }
 
     private void openPlaylistRecommendationDialog() {
-        final JDialog dialog = new JDialog((JFrame) this.getTopLevelAncestor(), "Playlist Recommendation", true);
-        final RecPlaylistView recPlaylistView = new RecPlaylistView();
-        dialog.getContentPane().add(recPlaylistView.getView());
-        dialog.pack();
-        dialog.setResizable(false);
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
+        recPlaylistController.execute();
     }
 
     @Override
