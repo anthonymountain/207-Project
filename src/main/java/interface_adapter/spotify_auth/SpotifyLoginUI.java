@@ -1,7 +1,7 @@
 package interface_adapter.spotify_auth;
 
-import com.example.app.application.services.SpotifyAuthService;
-import com.example.app.application.services.TokenService;
+import services.SpotifyAuthService;
+import services.TokenService;
 import org.springframework.stereotype.Component;
 
 import javax.swing.*;

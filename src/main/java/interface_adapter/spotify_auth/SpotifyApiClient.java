@@ -1,6 +1,8 @@
 package interface_adapter.spotify_auth;
 
+import java.io.IOException;
 import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -11,9 +13,14 @@ import org.springframework.stereotype.Component;
 
 import services.TokenService;
 
+/**
+ * This is a JavaDoc comment. The Spotify API Client helps us make API calls.
+ */
 @Component
 public class SpotifyApiClient {
 
+    public static final String AUTHORIZATION = "Authorization";
+    public static final String BEARER = "Bearer ";
     private final HttpClient httpClient;
     private final TokenService tokenService;
 
@@ -29,6 +36,7 @@ public class SpotifyApiClient {
      * @param seedGenres  Comma-separated genres.
      * @param seedTracks  Comma-separated track IDs.
      * @return A JSON string containing Spotify's recommendations.
+     * @throws RuntimeException to catch stuff.
      */
     public String getRecommendations(String seedArtists, String seedGenres, String seedTracks) {
         try {
@@ -40,14 +48,21 @@ public class SpotifyApiClient {
 
             final HttpRequest request = HttpRequest.newBuilder()
                     .uri(uri)
-                    .header("Authorization", "Bearer " + accessToken)
+                    .header(AUTHORIZATION, BEARER + accessToken)
                     .GET()
                     .build();
 
             final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             return response.body();
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to get recommendations", e);
+        } 
+        catch (IOException ex) {
+            throw new RuntimeException("Failed to get recommendationsx", ex);
+        }
+        catch (InterruptedException ex) {
+            throw new RuntimeException("Help, it got interruptedx", ex);
+        }
+        catch (URISyntaxException ex) {
+            throw new RuntimeException("Something with the URI happenedx", ex);
         }
     }
 
@@ -57,6 +72,7 @@ public class SpotifyApiClient {
      * @param userId       Spotify user ID.
      * @param playlistName Name of the new playlist.
      * @return A JSON string containing the newly created playlist's details.
+     * @throws RuntimeException for fun.
      */
     public String createPlaylist(String userId, String playlistName) {
         try {
@@ -71,15 +87,22 @@ public class SpotifyApiClient {
 
             final HttpRequest request = HttpRequest.newBuilder()
                     .uri(uri)
-                    .header("Authorization", "Bearer " + accessToken)
+                    .header(AUTHORIZATION, BEARER + accessToken)
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(payload.toString()))
                     .build();
 
             final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             return response.body();
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to create playlist", e);
+        }
+        catch (IOException ex) {
+            throw new RuntimeException("Failed to create playlists", ex);
+        }
+        catch (InterruptedException ex) {
+            throw new RuntimeException("Help, it got interrupted", ex);
+        }
+        catch (URISyntaxException ex) {
+            throw new RuntimeException("Something with the URI happened", ex);
         }
     }
 
@@ -88,6 +111,7 @@ public class SpotifyApiClient {
      *
      * @param playlistId Spotify playlist ID.
      * @param trackUris  JSON array of track URIs to add to the playlist.
+     * @throws RuntimeException for funsies.
      */
     public void addTracksToPlaylist(String playlistId, JSONArray trackUris) {
         try {
@@ -100,14 +124,21 @@ public class SpotifyApiClient {
 
             final HttpRequest request = HttpRequest.newBuilder()
                     .uri(uri)
-                    .header("Authorization", "Bearer " + accessToken)
+                    .header(AUTHORIZATION, BEARER + accessToken)
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(payload.toString()))
                     .build();
 
             httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to add tracks to playlist", e);
+        }
+        catch (IOException ex) {
+            throw new RuntimeException("Failed to add tracks", ex);
+        }
+        catch (InterruptedException ex) {
+            throw new RuntimeException("Help, it got interrupted", ex);
+        }
+        catch (URISyntaxException ex) {
+            throw new RuntimeException("Something with the URI happened", ex);
         }
     }
 
@@ -115,6 +146,7 @@ public class SpotifyApiClient {
      * Get the current user's profile.
      *
      * @return A JSON string containing the user's profile details.
+     * @throws RuntimeException again.
      */
     public String getCurrentUserProfile() {
         try {
@@ -124,14 +156,21 @@ public class SpotifyApiClient {
 
             final HttpRequest request = HttpRequest.newBuilder()
                     .uri(uri)
-                    .header("Authorization", "Bearer " + accessToken)
+                    .header(AUTHORIZATION, BEARER + accessToken)
                     .GET()
                     .build();
 
             final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             return response.body();
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to get current user profile", e);
+        }
+        catch (IOException ex) {
+            throw new RuntimeException("Failed to get current user profile", ex);
+        }
+        catch (InterruptedException ex) {
+            throw new RuntimeException("Help, it got interruptedy", ex);
+        }
+        catch (URISyntaxException ex) {
+            throw new RuntimeException("Something with the URI happenedy", ex);
         }
     }
 
@@ -141,6 +180,7 @@ public class SpotifyApiClient {
      * @param artistId Artist ID.
      * @param market   Market (e.g., "US").
      * @return A JSON string containing the artist's top tracks.
+     * @throws RuntimeException yaddi yadda.
      */
     public String getArtistTopTracks(String artistId, String market) {
         try {
@@ -151,15 +191,21 @@ public class SpotifyApiClient {
 
             final HttpRequest request = HttpRequest.newBuilder()
                     .uri(uri)
-                    .header("Authorization", "Bearer " + accessToken)
+                    .header(AUTHORIZATION, BEARER + accessToken)
                     .GET()
                     .build();
 
             final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             return response.body();
-        } 
-        catch (Exception e) {
-            throw new RuntimeException("Failed to get artist's top tracks", e);
+        }
+        catch (IOException ex) {
+            throw new RuntimeException("Failed to get artist's top tracks", ex);
+        }
+        catch (InterruptedException ex) {
+            throw new RuntimeException("Help, it got interruptedz", ex);
+        }
+        catch (URISyntaxException ex) {
+            throw new RuntimeException("Something with the URI happenedz", ex);
         }
     }
 }

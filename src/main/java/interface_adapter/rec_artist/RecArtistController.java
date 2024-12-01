@@ -2,7 +2,7 @@ package interface_adapter.rec_artist;
 
 import java.util.ArrayList;
 
-import entity.Song;
+import entity.Track;
 import use_case.rec_artist.RecArtistInputBoundary;
 import use_case.rec_artist.RecArtistInputData;
 
@@ -23,8 +23,8 @@ public class RecArtistController {
      * Note: Daniel thinks this execute() method is useless
      *              Also, Daniel believes that the InputData should be empty (cuz we don't need to input anything).
      */
-    public void execute(String name, ArrayList<Song> songs) {
-        final RecArtistInputData recArtistInputData = new RecArtistInputData(name, songs);
+    public void execute(String name, ArrayList<Track> songs) {
+        final RecArtistInputData recArtistInputData = new RecArtistInputData("", name, songs, null);
 
         recArtistUseCaseInteractor.execute(recArtistInputData);
     }
@@ -34,9 +34,9 @@ public class RecArtistController {
      */
     public void execute() {
         final String name = "";
-        final ArrayList<Song> songs = null;
+        final ArrayList<Track> songs = null;
 
-        recArtistUseCaseInteractor.execute(new RecArtistInputData(name, songs));
+        recArtistUseCaseInteractor.execute(new RecArtistInputData("", name, songs, null));
     }
 
     /**
