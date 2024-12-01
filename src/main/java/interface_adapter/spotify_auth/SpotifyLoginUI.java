@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * IDK what JavaDoc to put here cuz I didn't create this class.
+ */
 @Component
 public class SpotifyLoginUI {
 

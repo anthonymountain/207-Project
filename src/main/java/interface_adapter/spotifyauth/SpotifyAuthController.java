@@ -30,7 +30,7 @@ public class SpotifyAuthController {
             @RequestParam(required = false) String seedGenre,
             @RequestParam(required = false) String seedTrack
     ) {
-        return recommendationService.getRandomRecommendation(accessToken, seedArtist, seedGenre, seedTrack);
+        return recommendationService.getRandomRecommendation(seedArtist, seedGenre, seedTrack);
     }
 
     @PostMapping("/playlist/recommendations")
@@ -39,7 +39,7 @@ public class SpotifyAuthController {
             @RequestParam String userId,
             @RequestBody JSONArray recommendedTracks
     ) {
-        return playlistService.createPlaylistForRecommendations(accessToken, userId, recommendedTracks);
+        return playlistService.createPlaylistForRecommendations(userId, recommendedTracks);
     }
 
     @PostMapping("/playlist/artist")
@@ -49,6 +49,6 @@ public class SpotifyAuthController {
             @RequestParam String artistId,
             @RequestBody JSONArray topTracks
     ) {
-        return playlistService.createArtistPlaylist(accessToken, userId, artistId, topTracks);
+        return playlistService.createArtistPlaylist(userId, artistId, topTracks);
     }
 }
