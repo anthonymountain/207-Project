@@ -9,9 +9,8 @@ public interface RecPlaylistDataAccessInterface {
 
     /**
      * Recommends a playlist for the user.
-     * @param playlist the playlist.
      */
-    Playlist recommend();
+    Playlist getRecommendations();
     // add duplicate check
     // add previous recommended song retrieval (from list)
     // add recommendation saving (to list)

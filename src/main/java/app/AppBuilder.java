@@ -8,56 +8,55 @@ import javax.swing.WindowConstants;
 
 import data_access.InMemoryPlaylistDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
-import entity.*;
+import entity.Track;
+import entity.User;
+import entity.Genre;
+import entity.Artist;
+import entity.Playlist;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.change_password.ChangePasswordController;
-import interface_adapter.change_password.ChangePasswordPresenter;
-import interface_adapter.change_password.LoggedInViewModel;
-import interface_adapter.login.LoginController;
-import interface_adapter.login.LoginPresenter;
-import interface_adapter.login.LoginViewModel;
+import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
-import interface_adapter.rec_genre.RecGenreController;
-import interface_adapter.rec_genre.RecGenrePresenter;
-import interface_adapter.rec_genre.RecGenreViewModel;
 import interface_adapter.rec_artist.RecArtistController;
 import interface_adapter.rec_artist.RecArtistPresenter;
 import interface_adapter.rec_artist.RecArtistViewModel;
+import interface_adapter.rec_genre.RecGenreController;
+import interface_adapter.rec_genre.RecGenrePresenter;
+import interface_adapter.rec_genre.RecGenreViewModel;
 import interface_adapter.rec_playlist.RecPlaylistController;
 import interface_adapter.rec_playlist.RecPlaylistPresenter;
 import interface_adapter.rec_playlist.RecPlaylistViewModel;
 import interface_adapter.rec_song.RecSongController;
 import interface_adapter.rec_song.RecSongPresenter;
 import interface_adapter.rec_song.RecSongViewModel;
-import interface_adapter.signup.SignupController;
-import interface_adapter.signup.SignupPresenter;
-import interface_adapter.signup.SignupViewModel;
-import use_case.change_password.ChangePasswordInputBoundary;
-import use_case.change_password.ChangePasswordInteractor;
-import use_case.change_password.ChangePasswordOutputBoundary;
+import interface_adapter.spotify_auth.LoginController;
+import interface_adapter.spotify_auth.LoginPresenter;
+import interface_adapter.spotify_auth.LoginViewModel;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
 import use_case.logout.LogoutInputBoundary;
 import use_case.logout.LogoutInteractor;
 import use_case.logout.LogoutOutputBoundary;
-import use_case.rec_genre.RecGenreInputBoundary;
-import use_case.rec_genre.RecGenreInteractor;
-import use_case.rec_genre.RecGenreOutputBoundary;
 import use_case.rec_artist.RecArtistInputBoundary;
 import use_case.rec_artist.RecArtistInteractor;
 import use_case.rec_artist.RecArtistOutputBoundary;
+import use_case.rec_genre.RecGenreInputBoundary;
+import use_case.rec_genre.RecGenreInteractor;
+import use_case.rec_genre.RecGenreOutputBoundary;
 import use_case.rec_playlist.RecPlaylistInputBoundary;
 import use_case.rec_playlist.RecPlaylistInteractor;
 import use_case.rec_playlist.RecPlaylistOutputBoundary;
 import use_case.rec_song.RecSongInputBoundary;
 import use_case.rec_song.RecSongInteractor;
 import use_case.rec_song.RecSongOutputBoundary;
-import use_case.signup.SignupInputBoundary;
-import use_case.signup.SignupInteractor;
-import use_case.signup.SignupOutputBoundary;
-import view.*;
+import view.LoggedInView;
+import view.LoginView;
+import view.RecArtistView;
+import view.RecGenreView;
+import view.RecPlaylistView;
+import view.RecSongView;
+import view.ViewManager;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -74,10 +73,6 @@ public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
     // thought question: is the hard dependency below a problem?
-    private final GenreFactory genreFactory = new CommonGenreFactory();
-    private final ArtistFactory artistFactory = new CommonArtistFactory();
-    private final SongFactory songFactory = new CommonSongFactory();
-    private final UserFactory userFactory = new CommonUserFactory();
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
@@ -85,8 +80,6 @@ public class AppBuilder {
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
     private final InMemoryPlaylistDataAccessObject playlistDataAccessObject = new InMemoryPlaylistDataAccessObject();
 
-    private SignupView signupView;
-    private SignupViewModel signupViewModel;
     private LoginViewModel loginViewModel;
     private LoggedInViewModel loggedInViewModel;
     private LoggedInView loggedInView;
@@ -98,35 +91,10 @@ public class AppBuilder {
     private RecArtistViewModel recArtistViewModel;
     private RecArtistView recArtistView;
     private RecPlaylistView recPlaylistView;
-    private RecPlaylistViewModel recPlaylistViewModel;
+    private RecPlaylistViewModel recPlaylistViewModel = new RecPlaylistViewModel();
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
-    }
-
-    /**
-     * Adds the Signup View to the application.
-     * @return this builder
-     */
-    public AppBuilder addSignupView() {
-    //        View myView = new View.ViewBuilder()
-    //                .setTitle("Main Window")
-    //                .setLayout("GridLayout")
-    //                .addButton("OK")
-    //                .addButton("Cancel")
-    //                .addLabel("Username:")
-    //                .addLabel("Password:")
-    //                .build();
-    //
-    //        // Access the built View object
-    //        System.out.println("Title: " + myView.getTitle());
-    //        System.out.println("Layout: " + myView.getLayout());
-    //        System.out.println("Buttons: " + myView.getButtons());
-    //        System.out.println("Labels: " + myView.getLabels());
-        signupViewModel = new SignupViewModel();
-        signupView = new SignupView(signupViewModel);
-        cardPanel.add(signupView, signupView.getViewName());
-        return this;
     }
 
     /**
@@ -192,21 +160,6 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the Signup Use Case to the application.
-     * @return this builder
-     */
-    public AppBuilder addSignupUseCase() {
-        final SignupOutputBoundary signupOutputBoundary = new SignupPresenter(viewManagerModel,
-                signupViewModel, loginViewModel);
-        final SignupInputBoundary userSignupInteractor = new SignupInteractor(
-                userDataAccessObject, signupOutputBoundary, userFactory);
-
-        final SignupController controller = new SignupController(userSignupInteractor);
-        signupView.setSignupController(controller);
-        return this;
-    }
-
-    /**
      * Adds the Login Use Case to the application.
      * @return this builder
      */
@@ -218,23 +171,6 @@ public class AppBuilder {
 
         final LoginController loginController = new LoginController(loginInteractor);
         loginView.setLoginController(loginController);
-        return this;
-    }
-
-    /**
-     * Adds the Change Password Use Case to the application.
-     * @return this builder
-     */
-    public AppBuilder addChangePasswordUseCase() {
-        //        final ChangePasswordOutputBoundary changePasswordOutputBoundary =
-        //                new ChangePasswordPresenter(loggedInViewModel);
-        //
-        //        final ChangePasswordInputBoundary changePasswordInteractor =
-        //                new ChangePasswordInteractor(userDataAccessObject, changePasswordOutputBoundary, userFactory);
-        //
-        //        final ChangePasswordController changePasswordController =
-        //                new ChangePasswordController(changePasswordInteractor);
-        //        loggedInView.setChangePasswordController(changePasswordController);
         return this;
     }
 
@@ -262,10 +198,12 @@ public class AppBuilder {
         final RecSongOutputBoundary recSongOutputBoundary = new RecSongPresenter(viewManagerModel, recSongViewModel);
 
         final RecSongInputBoundary recSongInteractor =
-                new RecSongInteractor(userDataAccessObject, recSongOutputBoundary, songFactory);
+                new RecSongInteractor(userDataAccessObject, recSongOutputBoundary);
 
         final RecSongController recSongController = new RecSongController(recSongInteractor);
+        // Prob unnecessary, since we only call the RecSongController from the loggedInView
         recSongView.setRecSongController(recSongController);
+        loggedInView.setRecSongController(recSongController);
         return this;
     }
 
@@ -274,16 +212,22 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addRecGenreUseCase() {
-        if (recGenreViewModel == null) {
-            recGenreViewModel = new RecGenreViewModel();
-        }
+        // Initialize RecGenreViewModel and ViewManagerModel before use
+        final RecGenreViewModel recGenreViewModel = new RecGenreViewModel();
+        final ViewManagerModel viewManagerModel = new ViewManagerModel();
 
-        final RecGenreOutputBoundary recGenreOutputBoundary = new RecGenrePresenter(recGenreViewModel, viewManagerModel);
+        // Pass initialized ViewModel and ViewManagerModel to the Presenter
+        final RecGenreOutputBoundary recGenreOutputBoundary =
+             new RecGenrePresenter(recGenreViewModel, viewManagerModel);
 
-        final RecGenreInputBoundary recGenreInteractor =
-                new RecGenreInteractor(userDataAccessObject, recGenreOutputBoundary, genreFactory);
+        // Create Interactor with initialized Presenter
+        final RecGenreInputBoundary recGenreInteractor = 
+            new RecGenreInteractor(userDataAccessObject, recGenreOutputBoundary);
 
+        // Create Controller with initialized Interactor
         final RecGenreController recGenreController = new RecGenreController(recGenreInteractor);
+
+        // Set Controller in the View
         recGenreView.setRecGenreController(recGenreController);
 
         return this;
@@ -298,10 +242,11 @@ public class AppBuilder {
                 recArtistViewModel);
 
         final RecArtistInputBoundary recArtistInteractor =
-                new RecArtistInteractor(userDataAccessObject, recArtistOutputBoundary, artistFactory);
-
+                new RecArtistInteractor(userDataAccessObject, recArtistOutputBoundary);
         final RecArtistController recArtistController = new RecArtistController(recArtistInteractor);
+        // Prob unnecessary, we only make calls to the RecArtistController from the LoggedinView
         recArtistView.setRecArtistController(recArtistController);
+        loggedInView.setRecArtistController(recArtistController);
         return this;
     }
 
@@ -317,7 +262,10 @@ public class AppBuilder {
                 new RecPlaylistInteractor(playlistDataAccessObject, recPlaylistOutputBoundary);
 
         final RecPlaylistController recPlaylistController = new RecPlaylistController(recPlaylistInteractor);
+        // Lowkey setting the RecPlaylistController to the recPlaylist View is probably useless
+        // instead we should probably be setting an import playlist controller or something.
         recPlaylistView.setRecPlaylistController(recPlaylistController);
+        loggedInView.setRecPlaylistController(recPlaylistController);
         return this;
     }
 

@@ -1,26 +1,19 @@
 package use_case.rec_genre;
 
+import java.util.ArrayList;
+
 /**
  * The Input Data for the Recommend Genre Use Case.
  */
 public class RecGenreInputData {
 
-    private String type;
-    private String description;
+    private ArrayList<String> genres;
 
     public RecGenreInputData() {
     }
 
-//    public RecGenreInputData(String type, String description) {
-//        this.type = type;
-//        this.description = description;
-//    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getDescription() {
-        return description;
+    public ArrayList<String> getGenres() {
+        return genres;
     }
 }
+

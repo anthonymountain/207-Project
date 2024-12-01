@@ -2,14 +2,14 @@ package interface_adapter.rec_artist;
 
 import java.util.ArrayList;
 
-import entity.Song;
+import entity.Track;
 
 /**
  * This state is for when an artist is recommended.
  */
 public class RecArtistState {
     private String name;
-    private ArrayList<Song> songs;
+    private ArrayList<Track> songs;
 
     // No uses yet
     public RecArtistState(RecArtistState copy) {
@@ -29,11 +29,11 @@ public class RecArtistState {
         this.name = name;
     }
 
-    public ArrayList<Song> getSongs() {
+    public ArrayList<Track> getSongs() {
         return songs;
     }
 
-    public void setSongs(ArrayList<Song> songs) {
+    public void setSongs(ArrayList<Track> songs) {
         this.songs = songs;
     }
 }

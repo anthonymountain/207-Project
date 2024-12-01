@@ -1,5 +1,9 @@
 package interface_adapter.rec_song;
 
+import java.util.ArrayList;
+
+import entity.Album;
+import entity.Artist;
 import use_case.rec_song.RecSongInputBoundary;
 import use_case.rec_song.RecSongInputData;
 
@@ -15,12 +19,14 @@ public class RecSongController {
 
     /**
      * Executes the Recommend Song Use Case.
-     * @param name the song name
-     * @param artist the artist of the song
-     * @param genre the genre of the song
+     * @param id the song's id
+     * @param name the song's name
+     * @param popularity the song's popularity
+     * @param album the song's album
+     * @param artists the song's artists
      */
-    public void execute(String name, String artist, String genre) {
-        final RecSongInputData recSongInputData = new RecSongInputData(name, artist, genre);
+    public void execute(String id, String name, int popularity, Album album, ArrayList<Artist> artists) {
+        final RecSongInputData recSongInputData = new RecSongInputData(id, name, popularity, album, artists);
 
         recSongUseCaseInteractor.execute(recSongInputData);
     }

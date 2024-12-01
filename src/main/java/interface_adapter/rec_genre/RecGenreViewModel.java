@@ -1,9 +1,11 @@
 package interface_adapter.rec_genre;
 
+import java.util.List;
+
 import interface_adapter.ViewModel;
 
 /**
- * The ViewModel for a recommended genre.
+ * The view model for a recommended genre.
  */
 public class RecGenreViewModel extends ViewModel<RecGenreState> {
 
@@ -13,36 +15,12 @@ public class RecGenreViewModel extends ViewModel<RecGenreState> {
     }
 
     /**
-     * Updates the recommended genre in the state.
-     *
-     * @param genreType the type of the recommended genre
+     * Method to update the state with genre data.
+     * 
+     * @param genres List of genres to be set in the state.
      */
-    public void setRecommendedType(String genreType) {
-        final RecGenreState state = getState();
-        state.setType(genreType);
-        notifyStateChanged();
+    public void updateGenres(List<String> genres) {
+        final RecGenreState updatedState = new RecGenreState(genres);
+        setState(updatedState);
     }
-
-    /**
-     * Updates the recommended genre in the state.
-     *
-     * @param genreDescription the description of the recommended genre
-     */
-    public void setRecommendedDescription(String genreDescription) {
-        final RecGenreState state = getState();
-        state.setDescription(genreDescription);
-        notifyStateChanged();
-    }
-
-    /**
-     * Sets the error message.
-     *
-     * @param errorMessage sets the error message
-     */
-    public void setError(String errorMessage) {
-        final RecGenreState state = getState();
-        state.setError(errorMessage);
-        notifyStateChanged();
-    }
-
 }
