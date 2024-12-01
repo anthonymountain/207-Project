@@ -1,16 +1,11 @@
 package view;
 
 import java.awt.*;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
-import java.util.concurrent.Executor;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -21,10 +16,7 @@ import interface_adapter.logout.LogoutController;
 import interface_adapter.rec_artist.RecArtistController;
 import interface_adapter.rec_genre.RecGenreController;
 import interface_adapter.rec_playlist.RecPlaylistController;
-import interface_adapter.rec_playlist.RecPlaylistState;
 import interface_adapter.rec_song.RecSongController;
-import interface_adapter.rec_song.RecSongViewModel;
-import view.components.RoundedButton;
 
 /**
  * The View for the LoggedIn Use Case.

@@ -1,6 +1,5 @@
 package entity;
 
-
 import java.time.Instant;
 
 public class AccessToken {
