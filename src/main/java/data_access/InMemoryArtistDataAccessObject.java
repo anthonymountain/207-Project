@@ -1,6 +1,8 @@
 package data_access;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import entity.Artist;
 import use_case.rec_artist.RecArtistUserDataAccessInterface;

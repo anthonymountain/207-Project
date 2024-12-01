@@ -1,11 +1,12 @@
 package interface_adapter.rec_artist;
 
-import javax.swing.*;
-
 import interface_adapter.ViewManagerModel;
 import use_case.rec_artist.RecArtistOutputBoundary;
 import use_case.rec_artist.RecArtistOutputData;
 import view.RecArtistView;
+import view.RecPlaylistView;
+
+import javax.swing.*;
 
 /**
  * This is a presenter for a recommended artist.
