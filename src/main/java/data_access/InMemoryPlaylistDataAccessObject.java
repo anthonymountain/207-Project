@@ -13,11 +13,11 @@ public class InMemoryPlaylistDataAccessObject implements RecPlaylistDataAccessIn
 
     @Override
     public Playlist getRecommendations() {
-        final SpotifyApiClient spotifyApiClient = new SpotifyApiClient();
-        // Make API call to get recommendation
-        final String recommendationsJSON = spotifyApiClient.getRecommendations("", "", "");
-
-        // Reformat the recommendations from JSON format into tracks that we can put in a playlist.
+//        final SpotifyApiClient spotifyApiClient = new SpotifyApiClient();
+//        // Make API call to get recommendation
+//        final String recommendationsJSON = spotifyApiClient.getRecommendations("", "", "");
+//
+//        // Reformat the recommendations from JSON format into tracks that we can put in a playlist.
 
 
         final Playlist playlist1 = new Playlist();
