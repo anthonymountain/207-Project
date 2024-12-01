@@ -1,11 +1,10 @@
 package view;
 
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 
 import interface_adapter.loggedin.LoggedInState;
 import interface_adapter.loggedin.LoggedInViewModel;
