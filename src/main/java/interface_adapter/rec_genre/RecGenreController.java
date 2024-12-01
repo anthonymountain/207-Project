@@ -1,10 +1,8 @@
 package interface_adapter.rec_genre;
 
-import entity.CommonGenre;
 import use_case.rec_genre.RecGenreInputBoundary;
 import use_case.rec_genre.RecGenreInputData;
 import use_case.rec_genre.RecGenreOutputData;
-import use_case.rec_song.RecSongInputData;
 
 /**
  * Controller for the Recommend Genre Use Case.
@@ -18,13 +16,11 @@ public class RecGenreController {
     }
 
     /**
-     * Executes the Recommend Song Use Case.
-     * @param type the genre type
-     * @param description the description of the genre
+     * Executes the Recommend Genre Use Case.
+     * @return returns the output data for RecGenre.
      */
-    public void execute(String type, String description) {
-        final RecGenreInputData recGenreInputData = new RecGenreInputData(type, description);
-
-        recGenreUseCaseInteractor.execute(recGenreInputData);
+    public RecGenreOutputData execute() {
+        final RecGenreInputData recGenreInputData = new RecGenreInputData();
+        return recGenreUseCaseInteractor.execute(recGenreInputData);
     }
 }

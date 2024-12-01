@@ -3,18 +3,59 @@ package entity;
 import java.util.ArrayList;
 
 /**
- * The representation of a playlist in our program.
+ * Represents a playlist.
  */
-public interface Playlist {
+public class Playlist {
+    private final String id;
+    private final String name;
+    private final ArrayList<Track> tracks;
 
     /**
-     * Returns the name of the song.
+     * Creates a playlist.
+     *
+     * @param id the id of the playlist
+     * @param name the name of the playlist
+     * @param tracks the tracks of the playlist
      */
-    ArrayList<Song> getSongs();
+    public Playlist(String id, String name, ArrayList<Track> tracks) {
+        this.id = id;
+        this.name = name;
+        this.tracks = tracks;
+    }
 
     /**
-     * Adds a song to the playlist.
-     * @param song the song to be added.
+     * Null constructor for Playlist.
      */
-    void addSong(Song song);
+    public Playlist() {
+        this.id = null;
+        this.name = null;
+        this.tracks = new ArrayList<>();
+    }
+
+    /**
+     * Returns the id of the playlist.
+     *
+     * @return the id of the playlist
+     */
+    public String getId() {
+        return id;
+    }
+
+    /**
+     * Returns the name of the playlist.
+     *
+     * @return the name of the playlist
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Returns the tracks of the playlist.
+     *
+     * @return the tracks of the playlist
+     */
+    public ArrayList<Track> getTracks() {
+        return tracks;
+    }
 }

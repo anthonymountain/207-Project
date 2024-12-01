@@ -1,6 +1,6 @@
 package use_case.rec_song;
 
-import entity.Song;
+import entity.Track;
 
 /**
  * DAO for the Recommend Song Use Case.
@@ -9,9 +9,9 @@ public interface RecSongUserDataAccessInterface {
 
     /**
      * Recommends a song for the user.
-     * @param song the new song
+     * @param track the new song
      */
-    void recommendSong(Song song);
+    void recommendSong(Track track);
     // add duplicate check
     // add previous recommended song retrieval (from list)
     // add recommendation saving (to list)
