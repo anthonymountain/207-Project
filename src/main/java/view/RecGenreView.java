@@ -1,10 +1,11 @@
 package view;
 
-import interface_adapter.rec_genre.RecGenreController;
-import use_case.rec_genre.RecGenreOutputData;
+import java.awt.*;
 
 import javax.swing.*;
-import java.awt.*;
+
+import interface_adapter.rec_genre.RecGenreController;
+import use_case.rec_genre.RecGenreOutputData;
 
 /**
  * The View for when the user generates a genre recommendation.
