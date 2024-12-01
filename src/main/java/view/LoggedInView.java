@@ -45,7 +45,6 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
 
     private final String viewName = "logged in";
     private final LoggedInViewModel loggedInViewModel;
-    private LogoutController logoutController;
     private final JLabel username;
     private JButton logOut;
     private JButton recArtist;
@@ -133,6 +132,7 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
     }
 
     private void openSongRecommendationDialog() {
+        recSongController.execute(null, null, 0, null, null);
         final JDialog dialog = new JDialog((JFrame) this.getTopLevelAncestor(), "Song Recommendation", true);
         final RecSongView recSongView = new RecSongView();
         dialog.getContentPane().add(recSongView.getView());
