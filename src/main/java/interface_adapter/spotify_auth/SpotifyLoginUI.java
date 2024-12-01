@@ -1,13 +1,20 @@
 package interface_adapter.spotify_auth;
 
-import com.example.app.application.services.SpotifyAuthService;
-import com.example.app.application.services.TokenService;
-import org.springframework.stereotype.Component;
+import javafx.application.Platform;
+import javafx.embed.swing.JFXPanel;
+import javafx.scene.Scene;
+import javafx.scene.web.WebEngine;
+import javafx.scene.web.WebView;
+import services.SpotifyAuthService;
+import services.TokenService;
+
 
 import javax.swing.*;
 import java.awt.*;
 
-@Component
+/**
+ * A Swing-based UI for logging in to Spotify.
+ */
 public class SpotifyLoginUI {
 
     private final SpotifyAuthService spotifyAuthService;
@@ -17,9 +24,9 @@ public class SpotifyLoginUI {
     private JLabel statusLabel;
     private JButton loginButton;
 
-    public SpotifyLoginUI(SpotifyAuthService spotifyAuthService, TokenService tokenService) {
+    public SpotifyLoginUI(SpotifyAuthService spotifyAuthService) {
         this.spotifyAuthService = spotifyAuthService;
-        this.tokenService = tokenService;
+        this.tokenService = new TokenService();
     }
 
     /**
@@ -49,16 +56,57 @@ public class SpotifyLoginUI {
     }
 
     /**
-     * Initiates the Spotify login process.
+     * Initiates the Spotify login process using JavaFX WebView.
      */
     private void logInToSpotify() {
-        try {
-            spotifyAuthService.initiateLogin();
-            JOptionPane.showMessageDialog(mainFrame, "Login initiated. Complete login in the browser.");
-        } catch (Exception e) {
-            showError("Failed to initiate login: " + e.getMessage());
-        }
+        // Start the JavaFX WebView in a Swing Frame for Spotify login
+        SwingUtilities.invokeLater(() -> {
+            // Create a new JFrame to hold the JavaFX WebView
+            JFrame webViewFrame = new JFrame("Spotify Authorization");
+            webViewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            webViewFrame.setSize(800, 600);
+
+            // Create JavaFX Panel to integrate JavaFX into Swing
+            JFXPanel fxPanel = new JFXPanel();
+            webViewFrame.add(fxPanel);
+            webViewFrame.setVisible(true);
+
+            // Create JavaFX WebView in the JFXPanel
+            Platform.runLater(() -> {
+                WebView webView = new WebView();
+                WebEngine webEngine = webView.getEngine();
+
+                // Set up the listener to capture the access token from the URL
+                webEngine.locationProperty().addListener((observable, oldValue, newValue) -> {
+                    if (newValue.contains("access_token")) {
+                        // Extract the access token from the URL fragment
+                        String[] parts = newValue.split("#");
+                        if (parts.length > 1) {
+                            String[] params = parts[1].split("&");
+                            for (String param : params) {
+                                if (param.startsWith("access_token=")) {
+                                    String accessToken = param.split("=")[1];
+                                    tokenService.storeToken(accessToken, 3600); // Store the token with a 1-hour expiration
+                                    System.out.println("Access Token: " + accessToken);
+                                    statusLabel.setText("Logged in successfully");
+                                    webViewFrame.dispose(); // Close the WebView window after successful login
+                                }
+                            }
+                        }
+                    }
+                });
+
+                // Load the Spotify authorization URL
+                String authUrl = spotifyAuthService.getAuthUrl();
+                webEngine.load(authUrl);
+
+                // Set the scene on the JFXPanel
+                Scene scene = new Scene(webView);
+                fxPanel.setScene(scene);
+            });
+        });
     }
+}
 
     /**
      * Updates the UI to indicate login success and stores the token using TokenService.

@@ -1,36 +1,32 @@
 package services;
 
-import interface_adapter.spotifyauth.SpotifyConfig;
-import org.springframework.stereotype.Service;
+import interface_adapter.spotify_auth.SpotifyConfig;
 
-import java.awt.*;
-import java.net.URI;
-
-@Service
+/**
+ * Service for handling Spotify authentication.
+ * 
+ * @null
+ */
 public class SpotifyAuthService {
 
     private final SpotifyConfig spotifyConfig;
-    private final TokenService tokenService;
 
-    public SpotifyAuthService(SpotifyConfig spotifyConfig, TokenService tokenService) {
-        this.spotifyConfig = spotifyConfig;
-        this.tokenService = tokenService;
-    }
-
-    public void initiateLogin() {
-        final String authUrl = String.format(
-                "https://accounts.spotify.com/authorize?response_type=token&client_id=%s&redirect_uri=%s&scope=%s",
-                spotifyConfig.getClientId(), spotifyConfig.getRedirectUri(), spotifyConfig.getScope()
-        );
-
-        try {
-            Desktop.getDesktop().browse(new URI(authUrl));
-        } catch (Exception ex) {
-            throw new RuntimeException("Failed to open browser for login", ex);
+    public SpotifyAuthService() {
+        this.spotifyConfig = new SpotifyConfig();
         }
-    }
 
-    public void handleCallback(String accessToken, int expiresInSeconds) {
-        tokenService.storeToken(accessToken, expiresInSeconds);
+    /**
+     * Generates the Spotify authorization URL for user login.
+     *
+     * @return The authorization URL.
+     */
+    public String getAuthUrl() {
+        return String.format(
+            "https://accounts.spotify.com/authorize?response_type=token&client_id=%s&redirect_uri=%s&scope=%s",
+            spotifyConfig.getClientId(),
+            spotifyConfig.getRedirectUri(),
+            spotifyConfig.getScope()
+        );
     }
 }
+

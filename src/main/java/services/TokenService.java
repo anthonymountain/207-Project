@@ -12,6 +12,13 @@ public class TokenService {
     private AccessToken accessToken;
 
     /**
+     * Constructor for TokenService.
+     */
+
+    public TokenService() {
+        this.accessToken = null;
+
+    /**
      * Store a new access token.
      * @param token The access token string.
      * @param expiresInSeconds Expiration time in seconds.
