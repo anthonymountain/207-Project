@@ -2,29 +2,35 @@ package data_access;
 
 import entity.Playlist;
 import interface_adapter.spotify_auth.SpotifyApiClient;
+import services.RecommendationService;
+import services.TokenService;
 import use_case.rec_playlist.RecPlaylistDataAccessInterface;
+
+import java.util.ArrayList;
 
 /**
  * This DAO is going to get data for playlists.
  */
 public class InMemoryPlaylistDataAccessObject implements RecPlaylistDataAccessInterface {
 
-    private Playlist playlist;
+    public static final int TEN = 10;
+    private TokenService tokenService;
+
+    public InMemoryPlaylistDataAccessObject(TokenService tokenService) {
+        this.tokenService = tokenService;
+    }
 
     @Override
-    public Playlist getRecommendations() {
-        final SpotifyApiClient spotifyApiClient = new SpotifyApiClient();
+    public ArrayList<String> getRecommendations() {
+        final SpotifyApiClient spotifyApiClient = new SpotifyApiClient(tokenService);
+        final RecommendationService recommendationService = new RecommendationService(spotifyApiClient);
+
         // Make API call to get recommendation
-        final String recommendationsJSON = spotifyApiClient.getRecommendations("", "", "");
+        final ArrayList<String> displayStuff = new ArrayList<>();
+        for (int i = 0; i < TEN; i++) {
+            displayStuff.add(recommendationService.getRandomRecommendation("", "", ""));
+        }
 
-        // Reformat the recommendations from JSON format into tracks that we can put in a playlist.
-
-
-        final Playlist playlist1 = new Playlist();
-        this.playlist = playlist1;
-        // He has a point that the local variable playlist1 is useless.
-        // Returns a playlist
-        // this.playlist = playlist;
-        return null;
+        return displayStuff;
     }
 }

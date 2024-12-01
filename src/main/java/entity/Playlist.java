@@ -1,6 +1,7 @@
 package entity;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Represents a playlist.
@@ -55,7 +56,7 @@ public class Playlist {
      *
      * @return the tracks of the playlist
      */
-    public ArrayList<Track> getTracks() {
+    public List<Track> getTracks() {
         return tracks;
     }
 }
