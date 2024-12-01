@@ -28,8 +28,9 @@ public class RecPlaylistPresenter implements RecPlaylistOutputBoundary {
 
         final JDialog dialog = new JDialog(new JFrame(),
                 "Playlist Recommendation", true);
-        final RecPlaylistView recPlaylistView = new RecPlaylistView(outputData.getPlaylist());
-        dialog.getContentPane().add(recPlaylistView.getView());
+        final RecPlaylistView recPlaylistView = new RecPlaylistView();
+        recPlaylistView.setPlaylist(outputData.getPlaylist());
+        dialog.getContentPane().add(recPlaylistView);
         dialog.pack();
         dialog.setResizable(false);
         // Makes sure the dialog is centred in the screen.

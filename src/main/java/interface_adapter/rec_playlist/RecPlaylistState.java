@@ -45,6 +45,5 @@ public class RecPlaylistState {
 
     public String getList() {
         return "playlist_name";
-        // TODO Implement this
     }
 }

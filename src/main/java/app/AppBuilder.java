@@ -11,17 +11,11 @@ import data_access.InMemoryPlaylistDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
 import entity.*;
 import services.TokenService;
-import view.LoginView;
-import view.RecArtistView;
-import view.RecGenreView;
-import view.RecPlaylistView;
-import view.RecSongView;
-import view.ViewManager;
+import view.*;
 import interface_adapter.spotify_auth.LoginController;
 import interface_adapter.spotify_auth.LoginPresenter;
 import interface_adapter.spotify_auth.LoginViewModel;
 import interface_adapter.loggedin.LoggedInViewModel;
-import view.LoggedInView;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
@@ -74,12 +68,10 @@ public class AppBuilder {
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
-    private final TokenService tokenService = new TokenService();
-
     // thought question: is the hard dependency below a problem?
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
     private final InMemoryPlaylistDataAccessObject playlistDataAccessObject =
-            new InMemoryPlaylistDataAccessObject(tokenService);
+            new InMemoryPlaylistDataAccessObject(null);
 
     private LoginViewModel loginViewModel;
     private LoggedInViewModel loggedInViewModel;
@@ -155,8 +147,13 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addRecPlaylistView() {
-        recPlaylistView = new RecPlaylistView(new DisplayPlaylist(new ArrayList<>()));
-        cardPanel.add(recPlaylistView.getView(), "Recommended Playlist");
+        recPlaylistView = new RecPlaylistView();
+        final ViewBuilder recPlaylistViewBuilder = new ViewBuilder();
+        recPlaylistViewBuilder.addLabel("New Playlist: Placeholder_name")
+                .addLabel("Recommended Playlist, will this show up?")
+                .addButton("IDK", "what's up")
+                .setViewName("Recommended Playlist");
+        cardPanel.add(recPlaylistViewBuilder.build(), "Recommended Playlist");
         return this;
     }
 
