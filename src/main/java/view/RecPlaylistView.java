@@ -4,6 +4,7 @@ import javax.swing.*;
 
 import entity.DisplayPlaylist;
 import entity.Playlist;
+import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.rec_playlist.RecPlaylistController;
 import interface_adapter.rec_playlist.RecPlaylistViewModel;
 
@@ -21,7 +22,7 @@ public class RecPlaylistView extends JLabel {
 
     //    private static final String FONT = "Futura";
     private static final int TWENTY = 20;
-    //    private static final int TEN = 10;
+    private JButton goBack;
 
     private static final Color DARK_BACKGROUND = new Color(24, 24, 32);
 
@@ -30,13 +31,25 @@ public class RecPlaylistView extends JLabel {
 
         builder.addLabel("New Playlist: Placeholder_name")
                 .addLabel("Recommended Playlist, will this show up?")
-                .addButton("IDK", "what's up")
+                .addButton("goback", "Go Back")
                 .setViewName("Recommended Playlist");
         view = builder.build();
         this.add(view);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBackground(DARK_BACKGROUND);
         view.setBorder(BorderFactory.createEmptyBorder(TWENTY, TWENTY, TWENTY, TWENTY));
+
+        goBack = builder.getButton("goback");
+
+    //        initializeButtonActions(null);
+    }
+
+    private void initializeButtonActions(RecPlaylistViewModel viewModel) {
+        goBack.addActionListener(evt -> handleGoBackAction(viewModel));
+    }
+
+    private void handleGoBackAction(RecPlaylistViewModel viewModel) {
+        // Need to implement whole new pathway/clean architecture for this crap.
     }
 
     public void setRecPlaylistController(RecPlaylistController recPlaylistController) {
