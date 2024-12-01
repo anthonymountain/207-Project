@@ -1,11 +1,11 @@
 package interface_adapter.rec_playlist;
 
+import javax.swing.*;
+
 import interface_adapter.ViewManagerModel;
 import use_case.rec_playlist.RecPlaylistOutputBoundary;
 import use_case.rec_playlist.RecPlaylistOutputData;
 import view.RecPlaylistView;
-
-import javax.swing.*;
 
 /**
  * This is a presenter for a recommended song.

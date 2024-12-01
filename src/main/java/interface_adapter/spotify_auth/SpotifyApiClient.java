@@ -1,16 +1,21 @@
 package interface_adapter.spotify_auth;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
+import entity.Artist;
+import entity.Track;
+import services.ArtistService;
 import services.TokenService;
 
 /**
@@ -23,8 +28,10 @@ public class SpotifyApiClient {
     public static final String BEARER = "Bearer ";
     private final HttpClient httpClient;
     private final TokenService tokenService;
+    private final ArtistService artistService;
 
     public SpotifyApiClient(TokenService tokenService) {
+        this.artistService = new ArtistService();
         this.httpClient = HttpClient.newHttpClient();
         this.tokenService = tokenService;
     }
@@ -147,6 +154,64 @@ public class SpotifyApiClient {
         }
         catch (IOException | InterruptedException | URISyntaxException ex) {
             throw new RuntimeException("Failed to get current user profile", ex);
+        }
+    }
+
+    /**
+     * Get the user's top items (artists or tracks).
+     *
+     * @param type The type of items to fetch: either "artists" or "tracks".
+     * @param timeRange The time range for calculating affinities: "short_term", "medium_term", or "long_term".
+     * @param limit The maximum number of items to return.
+     * @return A list of Artist or Track objects.
+     * @throws RuntimeException if the request fails.
+     */
+    public ArrayList<Object> getUserTopItems(String type, String timeRange, int limit) {
+        try {
+            final String accessToken = tokenService.getToken();
+
+            // Prepare the URL
+            final URI uri = new URI(String.format(
+                    "https://api.spotify.com/v1/me/top/%s?time_range=%s&limit=%d",
+                    type, timeRange, limit));
+
+            // Make the API request
+            final HttpRequest request = HttpRequest.newBuilder()
+                    .uri(uri)
+                    .header(AUTHORIZATION, BEARER + accessToken)
+                    .GET()
+                    .build();
+
+            final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            final JSONObject jsonResponse = new JSONObject(response.body());
+
+            // Parse the response based on the type
+            final ArrayList<Object> items = new ArrayList<>();
+            if ("artists".equals(type)) {
+                final JSONArray artistsJsonArray = jsonResponse.getJSONArray("items");
+                for (int i = 0; i < artistsJsonArray.length(); i++) {
+                    final JSONObject artistJson = artistsJsonArray.getJSONObject(i);
+                    final Artist artist = artistService.parseArtistFromJson(artistJson);
+                    items.add(artist);
+                }
+            }
+            //            else if ("tracks".equals(type)) {
+            //                final JSONArray tracksJsonArray = jsonResponse.getJSONArray("items");
+            //                for (int i = 0; i < tracksJsonArray.length(); i++) {
+            //                    final JSONObject trackJson = tracksJsonArray.getJSONObject(i);
+            //                    final Track track = new Track(trackJson);
+            //                    items.add(track);
+            //                }
+            return items;
+        }
+        catch (IOException ex) {
+            throw new RuntimeException("Failed to fetch top items", ex);
+        }
+        catch (InterruptedException ex) {
+            throw new RuntimeException("Request interrupted", ex);
+        }
+        catch (URISyntaxException ex) {
+            throw new RuntimeException("Invalid URI", ex);
         }
     }
 
