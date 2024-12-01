@@ -16,10 +16,10 @@ public class ViewBuilder extends JPanel {
     private static final String FONT = "Futura";
     private static final Color DARK_BACKGROUND = new Color(24, 24, 32);
     private static final Color SPOTIFY_GREEN = new Color(30, 215, 96);
-    private static final Color BUTTON_TEXT_COLOR = Color.WHITE;
+    public static final Color BUTTON_TEXT_COLOR = Color.WHITE;
 
-    private static final Font LABEL_FONT = new Font(FONT, Font.PLAIN, 14);
-    private static final Font BUTTON_FONT = new Font(FONT, Font.PLAIN, 16);
+    public static final Font LABEL_FONT = new Font(FONT, Font.PLAIN, 14);
+    public static final Font BUTTON_FONT = new Font(FONT, Font.PLAIN, 16);
     private static final int MAGIC_NUMBER = 10;
 
     private String viewName;

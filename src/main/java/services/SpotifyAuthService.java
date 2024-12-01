@@ -29,18 +29,9 @@ public class SpotifyAuthService {
         try {
             Desktop.getDesktop().browse(new URI(authUrl));
         }
-        catch (URISyntaxException ex) {
+        catch (URISyntaxException | IOException ex) {
             throw new RuntimeException("input", ex);
         }
-        catch (IOException ex) {
-            throw new RuntimeException("ahhh", ex);
-        }
-        finally {
-            // a
-        }
-//        catch (Exception ex) {
-//            throw new RuntimeException("Failed to open browser for login", ex);
-//        }
     }
 
     public void handleCallback(String accessToken, int expiresInSeconds) {

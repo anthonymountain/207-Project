@@ -1,6 +1,7 @@
 package app;
 
 import java.awt.CardLayout;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -8,11 +9,7 @@ import javax.swing.WindowConstants;
 
 import data_access.InMemoryPlaylistDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
-import entity.Track;
-import entity.User;
-import entity.Genre;
-import entity.Artist;
-import entity.Playlist;
+import entity.*;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.logout.LogoutController;
@@ -32,6 +29,7 @@ import interface_adapter.rec_song.RecSongViewModel;
 import interface_adapter.spotify_auth.LoginController;
 import interface_adapter.spotify_auth.LoginPresenter;
 import interface_adapter.spotify_auth.LoginViewModel;
+import services.TokenService;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
@@ -50,13 +48,7 @@ import use_case.rec_playlist.RecPlaylistOutputBoundary;
 import use_case.rec_song.RecSongInputBoundary;
 import use_case.rec_song.RecSongInteractor;
 import use_case.rec_song.RecSongOutputBoundary;
-import view.LoggedInView;
-import view.LoginView;
-import view.RecArtistView;
-import view.RecGenreView;
-import view.RecPlaylistView;
-import view.RecSongView;
-import view.ViewManager;
+import view.*;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -78,7 +70,8 @@ public class AppBuilder {
 
     // thought question: is the hard dependency below a problem?
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
-    private final InMemoryPlaylistDataAccessObject playlistDataAccessObject = new InMemoryPlaylistDataAccessObject();
+    private final InMemoryPlaylistDataAccessObject playlistDataAccessObject =
+            new InMemoryPlaylistDataAccessObject(null);
 
     private LoginViewModel loginViewModel;
     private LoggedInViewModel loggedInViewModel;
@@ -155,7 +148,7 @@ public class AppBuilder {
      */
     public AppBuilder addRecPlaylistView() {
         recPlaylistView = new RecPlaylistView();
-        cardPanel.add(recPlaylistView.getView(), "Recommended Playlist");
+        cardPanel.add(recPlaylistView, "Recommended Playlist");
         return this;
     }
 
@@ -213,12 +206,12 @@ public class AppBuilder {
      */
     public AppBuilder addRecGenreUseCase() {
         // Initialize RecGenreViewModel and ViewManagerModel before use
-        final RecGenreViewModel recGenreViewModel = new RecGenreViewModel();
-        final ViewManagerModel viewManagerModel = new ViewManagerModel();
+        final RecGenreViewModel genreViewModel = new RecGenreViewModel();
+        final ViewManagerModel managerModel = new ViewManagerModel();
 
         // Pass initialized ViewModel and ViewManagerModel to the Presenter
         final RecGenreOutputBoundary recGenreOutputBoundary =
-             new RecGenrePresenter(recGenreViewModel, viewManagerModel);
+             new RecGenrePresenter(genreViewModel, managerModel);
 
         // Create Interactor with initialized Presenter
         final RecGenreInputBoundary recGenreInteractor = 
