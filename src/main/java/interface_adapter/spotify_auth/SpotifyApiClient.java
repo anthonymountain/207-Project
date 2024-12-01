@@ -9,12 +9,12 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 
-import entity.Artist;
-import entity.Track;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
+import entity.Artist;
+import entity.Track;
 import services.ArtistService;
 import services.TokenService;
 
