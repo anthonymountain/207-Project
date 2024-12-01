@@ -8,6 +8,7 @@ import javax.swing.WindowConstants;
 
 import data_access.InMemoryPlaylistDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
+<<<<<<< Updated upstream
 import entity.Track;
 import entity.User;
 import entity.Genre;
@@ -22,6 +23,9 @@ import view.ViewManager;
 import interface_adapter.spotify_auth.LoginController;
 import interface_adapter.spotify_auth.LoginPresenter;
 import interface_adapter.spotify_auth.LoginViewModel;
+=======
+import interface_adapter.ViewManagerModel;
+>>>>>>> Stashed changes
 import interface_adapter.loggedin.LoggedInViewModel;
 import view.LoggedInView;
 import interface_adapter.ViewManagerModel;
