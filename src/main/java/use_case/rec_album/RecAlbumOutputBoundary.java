@@ -10,6 +10,7 @@ public interface RecAlbumOutputBoundary {
      * @param recAlbumOutputData Output data for the use case.
      */
     void prepareSuccessView(RecAlbumOutputData recAlbumOutputData);
+
     /**
      * Prepares the failure view.
      *
