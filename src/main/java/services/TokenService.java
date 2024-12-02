@@ -14,7 +14,6 @@ public class TokenService {
     /**
      * Constructor for TokenService.
      */
-
     public TokenService() {
         this.accessToken = null;
     }
@@ -49,3 +48,4 @@ public class TokenService {
         return accessToken != null && !accessToken.isExpired();
     }
 }
+

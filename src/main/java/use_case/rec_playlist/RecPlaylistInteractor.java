@@ -2,6 +2,7 @@ package use_case.rec_playlist;
 
 import entity.DisplayPlaylist;
 import entity.Playlist;
+import entity.Track;
 
 import java.util.ArrayList;
 
@@ -26,7 +27,7 @@ public class RecPlaylistInteractor implements RecPlaylistInputBoundary {
         // a Playlist object that will be passed as Output Data.
         //        recPlaylistPresenter.prepareFailView("error, playlist was not generated, please try again.");
         // Note: the below might have to be a Spotify API client call instead.
-        final DisplayPlaylist displayPlaylist = recPlaylistUserDataAccessObject.getRecommendations();
+        final ArrayList<Track> displayPlaylist = recPlaylistUserDataAccessObject.getRecommendations();
         final RecPlaylistOutputData recPlaylistOutputData = new RecPlaylistOutputData(displayPlaylist, false);
         recPlaylistPresenter.prepareSuccessView(recPlaylistOutputData);
     }

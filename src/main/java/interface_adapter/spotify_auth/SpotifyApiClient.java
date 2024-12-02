@@ -257,7 +257,7 @@ public class SpotifyApiClient {
             final String accessToken = tokenService.getToken();
 
             final URI uri = new URI(
-                    String.format("https://api.spotify.com/v1/artists/%s/top-tracks?market=%s", artistId, market));
+                    String.format("https://api.spotify.com/v1/me/top/tracks?offset=5&limit=50"));
             // prob not this.
 
             final HttpRequest request = HttpRequest.newBuilder()
