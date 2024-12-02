@@ -12,12 +12,15 @@ public class RecAlbumInputData {
     private final ArrayList<String> artists;
     @SuppressWarnings({"checkstyle:MemberName", "checkstyle:SuppressWarnings"})
     private final String album_type;
+    private final ArrayList<Object> images;
 
-    public RecAlbumInputData(String id, String name, ArrayList<String> artists, String album_type) {
+    public RecAlbumInputData(String id, String name,
+                             ArrayList<String> artists, String album_type, ArrayList<Object> images) {
         this.id = id;
         this.name = name;
         this.artists = artists;
         this.album_type = album_type;
+        this.images = images;
     }
 
     public String getId() {
@@ -34,6 +37,10 @@ public class RecAlbumInputData {
 
     public String getAlbumType() {
         return album_type;
+    }
+
+    public ArrayList<Object> getImages() {
+        return images;
     }
 
 }
