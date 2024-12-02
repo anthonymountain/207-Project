@@ -4,11 +4,13 @@ import javax.swing.*;
 
 import entity.DisplayPlaylist;
 import entity.Playlist;
+import entity.Track;
 import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.rec_playlist.RecPlaylistController;
 import interface_adapter.rec_playlist.RecPlaylistViewModel;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 
 /**
@@ -18,7 +20,7 @@ public class RecPlaylistView extends JPanel {
 
     private final JPanel view;
     //    private ImportPlaylistController importPlaylistController;
-    private DisplayPlaylist playlist;
+    private ArrayList<Track> playlist;
 
     //    private static final String FONT = "Futura";
     private static final int TWENTY = 20;
@@ -59,10 +61,11 @@ public class RecPlaylistView extends JPanel {
      * This sets the playlist and also makes the labels that puts it in the frame.
      * @param playlist is the playlist dummy.
      */
-    public void setPlaylist(DisplayPlaylist playlist) {
+    public void setPlaylist(ArrayList<Track> playlist) {
         this.playlist = playlist;
         for (int i = 0; i < playlist.size(); i++) {
-            final JLabel playlistLabel = new JLabel(playlist.playlistItem(i));
+            final Track currentTrack = playlist.get(i);
+            final JLabel playlistLabel = new JLabel(currentTrack.getName() + "by " + currentTrack.getArtists().get(0).getName());
             playlistLabel.setFont(ViewBuilder.LABEL_FONT);
             playlistLabel.setForeground(ViewBuilder.BUTTON_TEXT_COLOR);
             playlistLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -70,9 +73,4 @@ public class RecPlaylistView extends JPanel {
             this.add(Box.createRigidArea(new Dimension(0, 10)));
         }
     }
-
-    public DisplayPlaylist getPlaylist() {
-        return playlist;
-    }
-
 }

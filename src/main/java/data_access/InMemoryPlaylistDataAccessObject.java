@@ -1,7 +1,11 @@
 package data_access;
 
+import entity.Artist;
 import entity.DisplayPlaylist;
+import entity.Track;
 import interface_adapter.spotify_auth.SpotifyAuthController;
+import org.json.JSONObject;
+import services.JSONParser;
 import use_case.rec_playlist.RecPlaylistDataAccessInterface;
 
 import java.util.ArrayList;
@@ -19,30 +23,30 @@ public class InMemoryPlaylistDataAccessObject implements RecPlaylistDataAccessIn
     }
 
     @Override
-    public DisplayPlaylist getRecommendations() {
-        //        final SpotifyApiClient spotifyApiClient = new SpotifyApiClient(tokenService);
-        //        final RecommendationService recommendationService = new RecommendationService(spotifyApiClient);
-        //
-        //        // Make API call to get recommendation
-        //        final ArrayList<String> displayStuff = new ArrayList<>();
-        //        for (int i = 0; i < TEN; i++) {
-        //            displayStuff.add(recommendationService.getRandomRecommendation("", "", ""));
-        //        }
+    public ArrayList<Track> getRecommendations() {
 
         // Make API call to get recommendation - to be figured out later.
-        // final seed trackSeed = spotifyAuthController.getUserTopItems();
-        // final String jsonResponse = spotifyAuthController.getRandomRecommendation(trackSeed);
-        // JSONParser jsonParser = new JSONParser();
-        // final Playlist playlist = jsonParser.parse(jsonResponse);
-        // return playlist;
+        //        spotifyAuthController.getUserTopItems()
 
+        // Get artist seed
+        final ArrayList<Artist> artists = new ArrayList<>();
+        final String artistSeed = "";
 
-        // return playlist;
-        //        final ArrayList<String> displayStuff = new ArrayList<>();
-        //        for (int i = 0; i < TEN; i++) {
-        //            displayStuff.add(spotifyAuthController.getRandomRecommendation("", "", "", ""));
-        //        }
-        //        return new DisplayPlaylist(displayStuff);
-        return new DisplayPlaylist(new ArrayList<>());
+        // Make the artist seed
+        for (int i = 0; i < artists.size(); i++) {
+            artistSeed.concat("," + artists.get(i).getId());
+        }
+
+        final ArrayList<Track> displayPlaylist = new ArrayList<>();
+
+        // Get the tracks and add them to the display
+        for (int i = 0; i < 10; i++) {
+            final JSONObject jsonResponse = spotifyAuthController.getRandomRecommendation("", artistSeed, "", "");
+            final JSONParser jsonParser = new JSONParser();
+            final Track track = jsonParser.parse(jsonResponse);
+            displayPlaylist.add(track);
+        }
+
+        return displayPlaylist;
     }
 }
