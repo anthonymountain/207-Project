@@ -11,8 +11,8 @@ public class PlaylistService {
 
     private final SpotifyApiClient spotifyApiClient;
 
-    public PlaylistService(SpotifyApiClient spotifyApiClient) {
-        this.spotifyApiClient = spotifyApiClient;
+    public PlaylistService(TokenService tokenService) {
+        this.spotifyApiClient = new SpotifyApiClient(tokenService);
     }
 
     public String createPlaylistForRecommendations(String userId, JSONArray recommendedTracks) {

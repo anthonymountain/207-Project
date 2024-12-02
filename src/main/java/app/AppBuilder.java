@@ -6,6 +6,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import ch.qos.logback.core.subst.Token;
 import data_access.InMemoryPlaylistDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
 import entity.Track;
@@ -13,18 +14,20 @@ import entity.User;
 import entity.Genre;
 import entity.Artist;
 import entity.Playlist;
+import view.LoggedInView;
 import view.LoginView;
 import view.RecArtistView;
 import view.RecGenreView;
 import view.RecPlaylistView;
 import view.RecSongView;
 import view.ViewManager;
+import view.spotifyLoginView;
 import interface_adapter.spotify_auth.LoginController;
 import interface_adapter.spotify_auth.LoginPresenter;
 import interface_adapter.spotify_auth.LoginViewModel;
+import interface_adapter.spotify_auth.SpotifyAuthController;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.loggedin.LoggedInViewModel;
-import view.LoggedInView;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.rec_artist.RecArtistController;
@@ -57,6 +60,7 @@ import use_case.rec_playlist.RecPlaylistOutputBoundary;
 import use_case.rec_song.RecSongInputBoundary;
 import use_case.rec_song.RecSongInteractor;
 import use_case.rec_song.RecSongOutputBoundary;
+import services.TokenService;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -83,7 +87,10 @@ public class AppBuilder {
 
     // thought question: is the hard dependency below a problem?
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
-    private final InMemoryPlaylistDataAccessObject playlistDataAccessObject = new InMemoryPlaylistDataAccessObject();
+    private final TokenService tokenService = new TokenService();
+    private final spotifyLoginView spotifyLoginView = new spotifyLoginView(tokenService);
+    private final SpotifyAuthController spotifyAuthController = new SpotifyAuthController(tokenService);
+    private final InMemoryPlaylistDataAccessObject playlistDataAccessObject = new InMemoryPlaylistDataAccessObject(spotifyAuthController);
 
     private LoginViewModel loginViewModel;
     private LoggedInViewModel loggedInViewModel;
@@ -100,6 +107,15 @@ public class AppBuilder {
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
+    }
+
+    /**
+     * Adds the Spotify Login View to the application.
+     * @return this builder
+     */
+    public AppBuilder addSpotifyLoginView() {
+        cardPanel.add(spotifyLoginView, spotifyLoginView.getViewName());
+        return this;
     }
 
     /**

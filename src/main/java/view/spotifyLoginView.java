@@ -18,16 +18,17 @@ import java.awt.*;
 /**
  * A Swing-based UI for logging in to Spotify.
  */
-public class SpotifyLoginUI extend JLabel{
+public class spotifyLoginView extends JPanel{
 
     private final SpotifyAuthService spotifyAuthService;
     private final TokenService tokenService;
+    private final String viewName = "log in";
 
     private JFrame mainFrame;
     private JLabel statusLabel;
     private JButton loginButton;
 
-    public SpotifyLoginUI(TokenService tokenService) {
+    public spotifyLoginView(TokenService tokenService) {
         this.spotifyAuthService = new SpotifyAuthService();
         this.tokenService = tokenService;
     }
@@ -139,4 +140,13 @@ public class SpotifyLoginUI extend JLabel{
     private void showError(String message) {
         JOptionPane.showMessageDialog(mainFrame, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
+
+    /**
+     * Returns the name of the view.
+     *
+     * @return The name of the view.
+     */
+    public String getViewName() {
+        return viewName;
+}
 }
