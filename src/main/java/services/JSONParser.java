@@ -26,6 +26,7 @@ public class JSONParser {
             final int popularity = jsonResponse.getInt("popularity");
             final String name = jsonResponse.getString("name");
             final String id = jsonResponse.getString("id");
+            final String uri = jsonResponse.getString("uri");
 
             // Still need to figure out how to parse through the album...
             //            final JSONObject album = jsonResponse.getJSONObject("album");
@@ -36,8 +37,10 @@ public class JSONParser {
             //                final JSONObject artist = artistsArray.getJSONObject(i);
             //                artists.add(artistService.parseArtistFromJson(artist));
             //            }
+            final Track track = new Track(id, name, popularity, null, null);
+            track.setUri(uri);
 
-            return new Track(id, name, popularity, null, null);
+            return track;
         }
         catch (Exception e) {
             throw new RuntimeException(e);
