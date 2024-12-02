@@ -120,7 +120,7 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
     }
 
     private void openSongRecommendationDialog() {
-        recSongController.execute(null, null, 0, null, null);
+        recSongController.execute();
     }
 
     private void openArtistRecommendationDialog() {

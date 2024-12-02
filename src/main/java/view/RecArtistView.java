@@ -1,8 +1,15 @@
 package view;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
-import interface_adapter.rec_artist.RecArtistController;
+import entity.*;
+import interface_adapter.rec_artist.*;
+import interface_adapter.rec_song.RecSongController;
+import interface_adapter.spotify_auth.*;
+import services.*;
 
 /**
  * The View for when the user generates a artist.
@@ -12,15 +19,29 @@ import interface_adapter.rec_artist.RecArtistController;
 public class RecArtistView {
 
     private final JPanel view;
+    private Artist artist;
+    private ArrayList<Artist> artists;
+    private TokenService tokenService = new TokenService();
+    private String token = tokenService.getToken();
+    private SpotifyApiClient spotifyApiClient = new SpotifyApiClient(tokenService);
+    private String user = spotifyApiClient.getCurrentUserProfile();
     private RecArtistController recArtistController;
+    private RecSongController recSongController;
+    private JButton recSong;
 
     public RecArtistView() {
         final ViewBuilder builder = new ViewBuilder();
 
-        builder.addLabel("New Artist: placeholder_name")
+        final String top = spotifyApiClient.getUserTopArtists("artist", 1).get(0).getId();
+        artists = spotifyApiClient.getRelatedArtists(top);
+        artist = artists.get(0);
+
+        builder.addLabel("New Artist: " + this.artist.getName())
                 .addButton("recSong", "Recommend Song")
                 .setViewName("Recommended Artist");
 
+        recSong = builder.getButton("recSong");
+        recSong.addActionListener(evt -> recSongController.execute());
         view = builder.build();
     }
 
