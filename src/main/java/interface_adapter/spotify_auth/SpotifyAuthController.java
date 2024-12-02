@@ -36,7 +36,6 @@ public class SpotifyAuthController {
 
     @PostMapping("/playlist/recommendations")
     public String createPlaylistForRecommendations(
-            @RequestHeader("Authorization") String accessToken,
             @RequestBody JSONArray recommendations,
             @RequestParam String userId
     ) {
@@ -45,19 +44,10 @@ public class SpotifyAuthController {
 
     @PostMapping("/playlist/artist")
     public String createArtistPlaylist(
-            @RequestHeader("Authorization") String accessToken,
             @RequestParam String userId,
             @RequestParam String artistId,
             @RequestBody JSONArray topTracks
     ) {
         return playlistService.createArtistPlaylist(userId, artistId, topTracks);
     }
-
-    public String recGenre(
-        @RequestHeader(
-            
-    ) {
-        return ''
-    }
 }
-
