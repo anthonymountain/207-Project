@@ -142,15 +142,15 @@ public class AppBuilder {
         return this;
     }
 
-    /**
-     * Adds the RecPlaylist View to the application.
-     * @return this builder
-     */
-    public AppBuilder addRecPlaylistView() {
-        recPlaylistView = new RecPlaylistView();
-        cardPanel.add(recPlaylistView, "Recommended Playlist");
-        return this;
-    }
+    //    /**
+    //     * Adds the RecPlaylist View to the application.
+    //     * @return this builder
+    //     */
+    //    public AppBuilder addRecPlaylistView() {
+    //        recPlaylistView = new RecPlaylistView();
+    //        cardPanel.add(recPlaylistView, "Recommended Playlist");
+    //        return this;
+    //    }
 
     /**
      * Adds the Login Use Case to the application.
@@ -257,7 +257,6 @@ public class AppBuilder {
         final RecPlaylistController recPlaylistController = new RecPlaylistController(recPlaylistInteractor);
         // Lowkey setting the RecPlaylistController to the recPlaylist View is probably useless
         // instead we should probably be setting an import playlist controller or something.
-        recPlaylistView.setRecPlaylistController(recPlaylistController);
         loggedInView.setRecPlaylistController(recPlaylistController);
         return this;
     }
