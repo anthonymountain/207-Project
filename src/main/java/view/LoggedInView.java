@@ -1,6 +1,7 @@
 package view;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -10,6 +11,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import entity.Genre;
+import entity.Track;
 import interface_adapter.loggedin.LoggedInState;
 import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.logout.LogoutController;
@@ -124,7 +127,11 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
     }
 
     private void openArtistRecommendationDialog() {
-        recArtistController.execute();
+        private void openArtistRecommendationDialog() {
+            ArrayList<Track> tracks = new ArrayList<>();
+            ArrayList<Genre> genres = new ArrayList<>();
+            recArtistController.execute("sampleId", "sampleName", tracks, genres);
+        }
     }
 
     private void openPlaylistRecommendationDialog() {

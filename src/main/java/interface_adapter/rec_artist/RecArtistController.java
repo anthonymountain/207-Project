@@ -16,13 +16,10 @@ public class RecArtistController {
     /**
      * Handles the user action to recommend an artist.
      *
-     * @param id    The artist's ID.
-     * @param name  The artist's name.
-     * @param tracks A list of track names.
-     * @param genres A list of genre names.
+     * @param inputData the input data for the interactor
      */
-    public void execute(String id, String name, ArrayList<Track> tracks, ArrayList<Genre> genres) {
-        final RecArtistInputData inputData = new RecArtistInputData(id, name, tracks, genres);
+    public void execute(RecArtistInputData inputData) {
         interactor.execute(inputData);
     }
+
 }
