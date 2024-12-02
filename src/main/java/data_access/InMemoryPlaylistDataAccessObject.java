@@ -22,7 +22,7 @@ public class InMemoryPlaylistDataAccessObject implements RecPlaylistDataAccessIn
 
     public InMemoryPlaylistDataAccessObject(SpotifyAuthController spotifyAuthController) {
         this.spotifyAuthController = spotifyAuthController;
-        this.tracks = null;
+        this.tracks = new ArrayList<>();
     }
 
     @Override
@@ -30,9 +30,24 @@ public class InMemoryPlaylistDataAccessObject implements RecPlaylistDataAccessIn
 
         // Make API call to get recommendation - to be figured out later.
         //        spotifyAuthController.getUserTopItems(50)
-        for (int i = 0; i < 10; i++) {
+        final int playlistSize = 10;
+        int counter = 0;
+        boolean addToTracks = true;
+        while (counter < playlistSize) {
             final Track track = spotifyAuthController.getRandomRecommendation("", "", "");
-            tracks.add(track);
+            for (Track value : tracks) {
+                if (value == track) {
+                    addToTracks = false;
+                    break;
+                }
+                else {
+                    addToTracks = true;
+                }
+            }
+            if (addToTracks) {
+                tracks.add(track);
+                counter++;
+            }
         }
         return tracks;
 
