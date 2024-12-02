@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import entity.Album;
 import entity.Artist;
-import entity.Genre;
-import entity.Track;
 import use_case.rec_song.RecSongInputBoundary;
 import use_case.rec_song.RecSongInputData;
 
@@ -20,16 +18,17 @@ public class RecSongController {
     }
 
     /**
-     * Sends the RecSongInputData to the Interactor.
+     * Executes the Recommend Song Use Case.
+     * @param id the song's id
+     * @param name the song's name
+     * @param popularity the song's popularity
+     * @param album the song's album
+     * @param artists the song's artists
      */
-    public void execute() {
-        final String id = "";
-        final String name = "";
-        final int popularity = 0;
-        final Album album = null;
-        final ArrayList<Artist> artists = null;
+    public void execute(String id, String name, int popularity, Album album, ArrayList<Artist> artists) {
+        final RecSongInputData recSongInputData = new RecSongInputData(id, name, popularity, album, artists);
 
-        recSongUseCaseInteractor.execute(new RecSongInputData(id, name, popularity, album, artists));
+        recSongUseCaseInteractor.execute(recSongInputData);
     }
 
     /**

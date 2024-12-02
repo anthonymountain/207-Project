@@ -132,41 +132,6 @@ public class SpotifyApiClient {
     }
 
     /**
-     * Returns an artist's related artists.
-     * @param artistId the ID of the artist.
-     * @return the related artists.
-     * @throws RuntimeException because why not.
-     */
-    public ArrayList<Artist> getRelatedArtists(String artistId) {
-        try {
-            final String accessToken = tokenService.getToken();
-            final URI uri = new URI(String.format("https://api.spotify.com/v1/artists/%s/related-artists", artistId));
-
-            final HttpRequest request = HttpRequest.newBuilder()
-                    .uri(uri)
-                    .header(AUTHORIZATION, BEARER + accessToken)
-                    .GET()
-                    .build();
-
-            final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            final JSONObject jsonResponse = new JSONObject(response.body());
-
-            final JSONArray artistsJsonArray = jsonResponse.getJSONArray("artists");
-            final ArrayList<Artist> relatedArtists = new ArrayList<>();
-
-            for (int i = 0; i < artistsJsonArray.length(); i++) {
-                final JSONObject artistJson = artistsJsonArray.getJSONObject(i);
-                final Artist artist = artistService.parseArtistFromJson(artistJson);
-                relatedArtists.add(artist);
-            }
-            return relatedArtists;
-        }
-        catch (IOException | InterruptedException | URISyntaxException ex) {
-            throw new RuntimeException("Failed to fetch related artists", ex);
-        }
-    }
-
-    /**
      * Get the current user's profile.
      *
      * @return A JSON string containing the user's profile details.
@@ -195,18 +160,22 @@ public class SpotifyApiClient {
     /**
      * Get the user's top items (artists or tracks).
      *
+     * @param type The type of items to fetch: either "artists" or "tracks".
+     * @param timeRange The time range for calculating affinities: "short_term", "medium_term", or "long_term".
      * @param limit The maximum number of items to return.
      * @return A list of Artist or Track objects.
      * @throws RuntimeException if the request fails.
      */
-    public ArrayList<Artist> getUserTopArtists(int limit) {
+    public ArrayList<Object> getUserTopItems(String type, String timeRange, int limit) {
         try {
             final String accessToken = tokenService.getToken();
 
+            // Prepare the URL
             final URI uri = new URI(String.format(
                     "https://api.spotify.com/v1/me/top/%s?time_range=%s&limit=%d",
-                    "artist", limit));
+                    type, timeRange, limit));
 
+            // Make the API request
             final HttpRequest request = HttpRequest.newBuilder()
                     .uri(uri)
                     .header(AUTHORIZATION, BEARER + accessToken)
@@ -216,58 +185,24 @@ public class SpotifyApiClient {
             final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             final JSONObject jsonResponse = new JSONObject(response.body());
 
-            final ArrayList<Artist> artists = new ArrayList<Artist>();
-            final JSONArray artistsJsonArray = jsonResponse.getJSONArray("items");
-            for (int i = 0; i < artistsJsonArray.length(); i++) {
-                final JSONObject artistJson = artistsJsonArray.getJSONObject(i);
-                final Artist artist = artistService.parseArtistFromJson(artistJson);
-                artists.add(artist);
+            // Parse the response based on the type
+            final ArrayList<Object> items = new ArrayList<>();
+            if ("artists".equals(type)) {
+                final JSONArray artistsJsonArray = jsonResponse.getJSONArray("items");
+                for (int i = 0; i < artistsJsonArray.length(); i++) {
+                    final JSONObject artistJson = artistsJsonArray.getJSONObject(i);
+                    final Artist artist = artistService.parseArtistFromJson(artistJson);
+                    items.add(artist);
+                }
             }
-            return artists;
-        }
-        catch (IOException ex) {
-            throw new RuntimeException("Failed to fetch top items", ex);
-        }
-        catch (InterruptedException ex) {
-            throw new RuntimeException("Request interrupted", ex);
-        }
-        catch (URISyntaxException ex) {
-            throw new RuntimeException("Invalid URI", ex);
-        }
-    }
-
-    /**
-     * Get the user's top items (artists or tracks).
-     *
-     * @param limit The maximum number of items to return.
-     * @return A list of Artist or Track objects.
-     * @throws RuntimeException if the request fails.
-     */
-    public ArrayList<Track> getUserTopTracks(int limit) {
-        try {
-            final String accessToken = tokenService.getToken();
-
-            final URI uri = new URI(String.format(
-                    "https://api.spotify.com/v1/me/top/%s?time_range=%s&limit=%d",
-                    "track", limit));
-
-            final HttpRequest request = HttpRequest.newBuilder()
-                    .uri(uri)
-                    .header(AUTHORIZATION, BEARER + accessToken)
-                    .GET()
-                    .build();
-
-            final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            final JSONObject jsonResponse = new JSONObject(response.body());
-
-            final ArrayList<Track> tracks = new ArrayList<Track>();
-            final JSONArray tracksJsonArray = jsonResponse.getJSONArray("items");
-            for (int i = 0; i < tracksJsonArray.length(); i++) {
-                final JSONObject trackJson = tracksJsonArray.getJSONObject(i);
-                final Track track = new Track(trackJson);
-                tracks.add(track);
-            }
-            return tracks;
+            //            else if ("tracks".equals(type)) {
+            //                final JSONArray tracksJsonArray = jsonResponse.getJSONArray("items");
+            //                for (int i = 0; i < tracksJsonArray.length(); i++) {
+            //                    final JSONObject trackJson = tracksJsonArray.getJSONObject(i);
+            //                    final Track track = new Track(trackJson);
+            //                    items.add(track);
+            //                }
+            return items;
         }
         catch (IOException ex) {
             throw new RuntimeException("Failed to fetch top items", ex);
