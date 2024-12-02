@@ -28,7 +28,6 @@ public class SpotifyAuthController {
 
     @GetMapping("/recommendation")
     public JSONObject getRandomRecommendation(
-            @RequestHeader("Authorization") String accessToken,
             @RequestParam(required = false) String seedArtist,
             @RequestParam(required = false) String seedGenre,
             @RequestParam(required = false) String seedTrack
@@ -38,7 +37,6 @@ public class SpotifyAuthController {
 
     @PostMapping("/playlist/recommendations")
     public String createPlaylistForRecommendations(
-            @RequestHeader("Authorization") String accessToken,
             @RequestBody JSONArray recommendations,
             @RequestParam String userId
     ) {
@@ -47,7 +45,6 @@ public class SpotifyAuthController {
 
     @PostMapping("/playlist/artist")
     public String createArtistPlaylist(
-            @RequestHeader("Authorization") String accessToken,
             @RequestParam String userId,
             @RequestParam String artistId,
             @RequestBody JSONArray topTracks

@@ -37,11 +37,13 @@ public class InMemoryPlaylistDataAccessObject implements RecPlaylistDataAccessIn
             artistSeed.concat("," + artists.get(i).getId());
         }
 
+        final String seedGenre = "classical,country";
+        final String seedTrack = "0c6xIDDpzE81m2q797ordA";
         final ArrayList<Track> displayPlaylist = new ArrayList<>();
 
         // Get the tracks and add them to the display
         for (int i = 0; i < 10; i++) {
-            final JSONObject jsonResponse = spotifyAuthController.getRandomRecommendation("", artistSeed, "", "");
+            final JSONObject jsonResponse = spotifyAuthController.getRandomRecommendation(artistSeed, seedGenre, seedTrack);
             final JSONParser jsonParser = new JSONParser();
             final Track track = jsonParser.parse(jsonResponse);
             displayPlaylist.add(track);

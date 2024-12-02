@@ -27,6 +27,7 @@ public class RecommendationService {
      */
     public JSONObject getRandomRecommendation(String seedArtist, String seedGenre, String seedTrack) {
         final String response = spotifyApiClient.getRecommendations(seedArtist, seedGenre, seedTrack);
+        System.out.println(response + "hello");
         final JSONObject jsonResponse = new JSONObject(response);
         final JSONArray tracks = jsonResponse.getJSONArray("tracks");
 
