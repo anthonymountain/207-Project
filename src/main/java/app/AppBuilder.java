@@ -114,7 +114,7 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addSpotifyLoginView() {
-        cardPanel.add(spotifyLoginView, spotifyLoginView.getViewName());
+        spotifyLoginView.showUI();
         return this;
     }
 
