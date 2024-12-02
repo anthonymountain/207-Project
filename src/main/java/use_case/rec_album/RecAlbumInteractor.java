@@ -1,4 +1,4 @@
 package use_case.rec_album;
 
-public class RecAlbumInteractor {
+public class RecAlbumInteractor implements{
 }
