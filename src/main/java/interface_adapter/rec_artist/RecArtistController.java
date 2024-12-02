@@ -2,37 +2,24 @@ package interface_adapter.rec_artist;
 
 import java.util.ArrayList;
 
-import entity.Genre;
-import entity.Track;
+import entity.*;
 import use_case.rec_artist.RecArtistInputBoundary;
 import use_case.rec_artist.RecArtistInputData;
 
-/**
- * Controller for the Recommend Artist Use Case.
- */
 public class RecArtistController {
-    private final RecArtistInputBoundary recArtistUseCaseInteractor;
+    private final RecArtistInputBoundary interactor;
 
-    public RecArtistController(RecArtistInputBoundary recArtistUseCaseInteractor) {
-        this.recArtistUseCaseInteractor = recArtistUseCaseInteractor;
+    public RecArtistController(RecArtistInputBoundary interactor) {
+        this.interactor = interactor;
     }
 
     /**
-     * Sends the RecArtistInputData to the Interactor.
+     * Handles the user action to recommend an artist.
+     *
+     * @param inputData the input data for the interactor
      */
-    public void execute() {
-        final String id = "";
-        final String name = "";
-        final ArrayList<Track> songs = null;
-        final ArrayList<Genre> genres = null;
-
-        recArtistUseCaseInteractor.execute(new RecArtistInputData(id, name, songs, genres));
+    public void execute(RecArtistInputData inputData) {
+        interactor.execute(inputData);
     }
 
-    /**
-     * Recommend a song from the artist.
-     * Not implemented.
-     */
-    public void recSong() {
-    }
 }
