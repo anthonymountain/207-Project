@@ -1,11 +1,12 @@
 package view;
 
-import view.components.RoundedButton;
-
-import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 import java.util.Map;
+
+import javax.swing.*;
+
+import view.components.RoundedButton;
 
 /**
  * A base ViewBuilder for constructing views.
@@ -15,10 +16,11 @@ public class ViewBuilder extends JPanel {
     private static final String FONT = "Futura";
     private static final Color DARK_BACKGROUND = new Color(24, 24, 32);
     private static final Color SPOTIFY_GREEN = new Color(30, 215, 96);
-    private static final Color BUTTON_TEXT_COLOR = Color.WHITE;
+    public static final Color BUTTON_TEXT_COLOR = Color.WHITE;
 
-    private static final Font LABEL_FONT = new Font(FONT, Font.PLAIN, 14);
-    private static final Font BUTTON_FONT = new Font(FONT, Font.PLAIN, 16);
+    public static final Font LABEL_FONT = new Font(FONT, Font.PLAIN, 14);
+    public static final Font BUTTON_FONT = new Font(FONT, Font.PLAIN, 16);
+    private static final int MAGIC_NUMBER = 10;
 
     private String viewName;
     private final Map<String, JButton> buttonsMap;
@@ -38,9 +40,11 @@ public class ViewBuilder extends JPanel {
 
         // Buttons panel
         buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS)); // Vertical alignment
+        buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS));
+        // Vertical alignment
         buttonsPanel.setBackground(DARK_BACKGROUND);
-        this.add(buttonsPanel, BorderLayout.CENTER); // Center the buttons in the panel
+        this.add(buttonsPanel, BorderLayout.CENTER);
+        // Center the buttons in the panel
     }
 
     /**
@@ -54,7 +58,7 @@ public class ViewBuilder extends JPanel {
         label.setForeground(BUTTON_TEXT_COLOR);
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainPanel.add(label);
-        mainPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Add spacing
+        mainPanel.add(Box.createRigidArea(new Dimension(0, MAGIC_NUMBER)));
         return this;
     }
 
@@ -73,7 +77,7 @@ public class ViewBuilder extends JPanel {
 
         buttonsMap.put(buttonKey, button);
 
-        buttonsPanel.add(Box.createRigidArea(new Dimension(0, 10))); // Add spacing
+        buttonsPanel.add(Box.createRigidArea(new Dimension(0, MAGIC_NUMBER)));
         buttonsPanel.add(button);
         return this;
     }
@@ -102,6 +106,7 @@ public class ViewBuilder extends JPanel {
     public JPanel build() {
         this.add(mainPanel);
         this.add(buttonsPanel);
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         return this;
     }
 }

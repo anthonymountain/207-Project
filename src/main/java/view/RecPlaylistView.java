@@ -14,7 +14,10 @@ import java.awt.*;
  * This View pops up when a playlist is recommended.
  */
 public class RecPlaylistView extends JLabel {
+<<<<<<< HEAD
 
+=======
+>>>>>>> main
 
     private final JPanel view;
     private RecPlaylistController recPlaylistController;
