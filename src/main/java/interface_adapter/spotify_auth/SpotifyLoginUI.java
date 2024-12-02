@@ -106,7 +106,6 @@ public class SpotifyLoginUI {
             });
         });
     }
-}
 
     /**
      * Updates the UI to indicate login success and stores the token using TokenService.

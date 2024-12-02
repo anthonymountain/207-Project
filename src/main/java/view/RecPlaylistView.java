@@ -6,6 +6,7 @@ import entity.DisplayPlaylist;
 import entity.Playlist;
 import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.rec_playlist.RecPlaylistController;
+import interface_adapter.rec_playlist.RecPlaylistViewModel;
 
 import java.awt.*;
 
@@ -14,10 +15,6 @@ import java.awt.*;
  * This View pops up when a playlist is recommended.
  */
 public class RecPlaylistView extends JLabel {
-<<<<<<< HEAD
-
-=======
->>>>>>> main
 
     private final JPanel view;
     private RecPlaylistController recPlaylistController;
