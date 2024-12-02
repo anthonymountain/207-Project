@@ -25,20 +25,26 @@ public class RecommendationService {
      * @param seedTrack helps recommend based off track
      * @return the tracks in a String format.
      */
-    public JSONObject getRandomRecommendation(String seedArtist, String seedGenre, String seedTrack) {
-        final String response = spotifyApiClient.getRecommendations(seedArtist, seedGenre, seedTrack);
-        System.out.println(response + "hello");
+    public Track getRandomRecommendation(String seedArtist, String seedGenre, String seedTrack) {
+        final String response = spotifyApiClient.getUserTopItems("", "");
         final JSONObject jsonResponse = new JSONObject(response);
-        final JSONArray tracks = jsonResponse.getJSONArray("tracks");
+        final JSONArray tracks = jsonResponse.getJSONArray("items");
+        final JSONParser jsonParser = new JSONParser();
 
-        if (tracks.isEmpty()) {
-            return null;
-        }
-        else {
-            final Random random = new Random();
-            return tracks.getJSONObject(random.nextInt(tracks.length()));
-            //            return randomTrack.getString("name") + " by " + randomTrack.getJSONArray("artists")
-            //                    .getJSONObject(0).getString("name");
-        }
+        final Random random = new Random();
+        final JSONObject track = tracks.getJSONObject(random.nextInt(tracks.length()));
+        return jsonParser.parse(track);
+
+//        if (tracks.isEmpty()) {
+//            //            return null;
+//        }
+//        else {
+//            final Random random = new Random();
+//            final JSONObject track = tracks.getJSONObject(random.nextInt(tracks.length()));
+//            return jsonParser.parse(track);
+//            //            return randomTrack.getString("name") + " by " + randomTrack.getJSONArray("artists")
+//            //                    .getJSONObject(0).getString("name");
+//        }
+
     }
 }

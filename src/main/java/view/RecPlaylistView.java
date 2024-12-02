@@ -65,7 +65,8 @@ public class RecPlaylistView extends JPanel {
         this.playlist = playlist;
         for (int i = 0; i < playlist.size(); i++) {
             final Track currentTrack = playlist.get(i);
-            final JLabel playlistLabel = new JLabel(currentTrack.getName() + "by " + currentTrack.getArtists().get(0).getName());
+            //            final JLabel playlistLabel = new JLabel(currentTrack.getName() + "by " + currentTrack.getArtists().get(0).getName());
+            final JLabel playlistLabel = new JLabel(currentTrack.getName());
             playlistLabel.setFont(ViewBuilder.LABEL_FONT);
             playlistLabel.setForeground(ViewBuilder.BUTTON_TEXT_COLOR);
             playlistLabel.setAlignmentX(Component.CENTER_ALIGNMENT);

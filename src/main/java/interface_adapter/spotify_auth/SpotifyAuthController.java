@@ -1,11 +1,10 @@
 package interface_adapter.spotify_auth;
 
+import entity.Track;
 import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,7 +26,7 @@ public class SpotifyAuthController {
     }
 
     @GetMapping("/recommendation")
-    public JSONObject getRandomRecommendation(
+    public Track getRandomRecommendation(
             @RequestParam(required = false) String seedArtist,
             @RequestParam(required = false) String seedGenre,
             @RequestParam(required = false) String seedTrack

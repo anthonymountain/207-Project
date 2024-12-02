@@ -30,14 +30,14 @@ public class JSONParser {
             // Still need to figure out how to parse through the album...
             //            final JSONObject album = jsonResponse.getJSONObject("album");
 
-            final ArrayList<Artist> artists = new ArrayList<>();
-            // Iterate through the artists array
-            for (int i = 0; i < artistsArray.length(); i++) {
-                final JSONObject artist = artistsArray.getJSONObject(i);
-                artists.add(artistService.parseArtistFromJson(artist));
-            }
+            //            final ArrayList<Artist> artists = new ArrayList<>();
+            //            // Iterate through the artists array
+            //            for (int i = 0; i < artistsArray.length(); i++) {
+            //                final JSONObject artist = artistsArray.getJSONObject(i);
+            //                artists.add(artistService.parseArtistFromJson(artist));
+            //            }
 
-            return new Track(id, name, popularity, null, artists);
+            return new Track(id, name, popularity, null, null);
         }
         catch (Exception e) {
             throw new RuntimeException(e);
