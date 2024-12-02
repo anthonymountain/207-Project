@@ -1,5 +1,6 @@
 package view;
 
+import interface_adapter.ViewManagerModel;
 import javafx.application.Platform;
 import javafx.embed.swing.JFXPanel;
 import javafx.scene.Scene;
@@ -23,14 +24,16 @@ public class spotifyLoginView extends JPanel{
     private final SpotifyAuthService spotifyAuthService;
     private final TokenService tokenService;
     private final String viewName = "spotify log in";
+    private final ViewManagerModel viewManagerModel;
 
     private JFrame mainFrame;
     private JLabel statusLabel;
     private JButton loginButton;
 
-    public spotifyLoginView(TokenService tokenService) {
+    public spotifyLoginView(TokenService tokenService, ViewManagerModel viewManagerModel) {
         this.spotifyAuthService = new SpotifyAuthService();
         this.tokenService = tokenService;
+        this.viewManagerModel = viewManagerModel;
     }
 
     /**
@@ -39,6 +42,7 @@ public class spotifyLoginView extends JPanel{
     public void showUI() {
         // Initialize Main Frame
         mainFrame = new JFrame("Spotify Login");
+        mainFrame.setLocationRelativeTo(null);
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(400, 200);
         mainFrame.setLayout(new BorderLayout());
@@ -94,6 +98,9 @@ public class spotifyLoginView extends JPanel{
                                     System.out.println("Access Token: " + accessToken);
                                     statusLabel.setText("Logged in successfully");
                                     webViewFrame.dispose(); // Close the WebView window after successful login
+                                    // Makes it go to the LoggedInView
+                                    viewManagerModel.setState("logged in");
+                                    viewManagerModel.firePropertyChanged();
                                 }
                             }
                         }

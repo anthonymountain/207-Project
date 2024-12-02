@@ -89,7 +89,7 @@ public class AppBuilder {
     // thought question: is the hard dependency below a problem?
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
     private final TokenService tokenService = new TokenService();
-    private final spotifyLoginView spotifyLoginView = new spotifyLoginView(tokenService);
+    private final spotifyLoginView spotifyLoginView = new spotifyLoginView(tokenService, viewManagerModel);
     private final SpotifyAuthController spotifyAuthController = new SpotifyAuthController(tokenService);
     private final InMemoryPlaylistDataAccessObject playlistDataAccessObject = new InMemoryPlaylistDataAccessObject(spotifyAuthController);
 
@@ -249,7 +249,6 @@ public class AppBuilder {
 
         // Set Controller in the View
         recGenreView.setRecGenreController(recGenreController);
-
         return this;
     }
 
@@ -283,7 +282,6 @@ public class AppBuilder {
         final RecPlaylistController recPlaylistController = new RecPlaylistController(recPlaylistInteractor);
         // Lowkey setting the RecPlaylistController to the recPlaylist View is probably useless
         // instead we should probably be setting an import playlist controller or something.
-        recPlaylistView.setRecPlaylistController(recPlaylistController);
         loggedInView.setRecPlaylistController(recPlaylistController);
         return this;
     }
