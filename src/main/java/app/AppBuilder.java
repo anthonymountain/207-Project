@@ -1,6 +1,7 @@
 package app;
 
 import java.awt.CardLayout;
+import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -88,7 +89,7 @@ public class AppBuilder {
     // thought question: is the hard dependency below a problem?
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
     private final TokenService tokenService = new TokenService();
-    private final spotifyLoginView spotifyLoginView = new spotifyLoginView(tokenService);
+    private final spotifyLoginView spotifyLoginView = new spotifyLoginView(tokenService, viewManagerModel);
     private final SpotifyAuthController spotifyAuthController = new SpotifyAuthController(tokenService);
     private final InMemoryPlaylistDataAccessObject playlistDataAccessObject = new InMemoryPlaylistDataAccessObject(spotifyAuthController);
 
@@ -170,15 +171,15 @@ public class AppBuilder {
         return this;
     }
 
-    /**
-     * Adds the RecPlaylist View to the application.
-     * @return this builder
-     */
-    public AppBuilder addRecPlaylistView() {
-        recPlaylistView = new RecPlaylistView();
-        cardPanel.add(recPlaylistView, "Recommended Playlist");
-        return this;
-    }
+    //    /**
+    //     * Adds the RecPlaylist View to the application.
+    //     * @return this builder
+    //     */
+    //    public AppBuilder addRecPlaylistView() {
+    //        recPlaylistView = new RecPlaylistView();
+    //        cardPanel.add(recPlaylistView, "Recommended Playlist");
+    //        return this;
+    //    }
 
     /**
      * Adds the Login Use Case to the application.
@@ -248,7 +249,6 @@ public class AppBuilder {
 
         // Set Controller in the View
         recGenreView.setRecGenreController(recGenreController);
-
         return this;
     }
 
@@ -264,6 +264,7 @@ public class AppBuilder {
                 new RecArtistInteractor(userDataAccessObject, recArtistOutputBoundary);
         final RecArtistController recArtistController = new RecArtistController(recArtistInteractor);
         recArtistView.setRecArtistController(recArtistController);
+        loggedInView.setRecArtistController(recArtistController);
         return this;
     }
 
@@ -279,7 +280,9 @@ public class AppBuilder {
                 new RecPlaylistInteractor(playlistDataAccessObject, recPlaylistOutputBoundary);
 
         final RecPlaylistController recPlaylistController = new RecPlaylistController(recPlaylistInteractor);
-        recPlaylistView.setRecPlaylistController(recPlaylistController);
+        // Lowkey setting the RecPlaylistController to the recPlaylist View is probably useless
+        // instead we should probably be setting an import playlist controller or something.
+        loggedInView.setRecPlaylistController(recPlaylistController);
         return this;
     }
 

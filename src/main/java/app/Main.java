@@ -2,6 +2,8 @@ package app;
 
 import javax.swing.JFrame;
 
+//hi adwait
+
 /**
  * The Main class of our application.
  */
@@ -24,7 +26,7 @@ public class Main {
                                             .addRecGenreUseCase()
                                             .addRecSongUseCase()
                                             .addRecArtistView()
-                                            .addRecPlaylistView()
+                                            //                                            .addRecPlaylistView()
                                             .addLoginUseCase()
                                             .addLogoutUseCase()
                                             .addRecSongUseCase()
