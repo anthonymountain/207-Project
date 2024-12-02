@@ -1,12 +1,13 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
-import entity.Track;
+import entity.*;
 import interface_adapter.spotify_auth.SpotifyApiClient;
 
 @Service
@@ -39,5 +40,13 @@ public class RecommendationService {
             return randomTrack.getString("name") + " by " + randomTrack.getJSONArray("artists")
                     .getJSONObject(0).getString("name");
         }
+    }
+
+    public ArrayList<Artist> getUserTopArtist(int limit) {
+        return spotifyApiClient.getUserTopArtists(limit);
+    }
+
+    public ArrayList<Track> getUserTopTracks(int limit) {
+        return spotifyApiClient.getUserTopTracks(limit);
     }
 }
