@@ -82,7 +82,7 @@ public class spotifyLoginView extends JPanel{
 
                 // Set up the listener to capture the access token from the URL
                 webEngine.locationProperty().addListener((observable, oldValue, newValue) -> {
-                    if (newValue.contains("access_token")) {
+                    if (newValue.contains("playgen://callback")) {
                         // Extract the access token from the URL fragment
                         String[] parts = newValue.split("#");
                         if (parts.length > 1) {
