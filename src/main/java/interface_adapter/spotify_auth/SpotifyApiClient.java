@@ -140,7 +140,6 @@ public class SpotifyApiClient {
     public ArrayList<Artist> getRelatedArtists(String artistId) {
         try {
             final String accessToken = tokenService.getToken();
-
             final URI uri = new URI(String.format("https://api.spotify.com/v1/artists/%s/related-artists", artistId));
 
             final HttpRequest request = HttpRequest.newBuilder()

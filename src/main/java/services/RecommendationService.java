@@ -1,5 +1,6 @@
 package services;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -47,7 +48,7 @@ public class RecommendationService {
      * @param limit the number of items to get.
      * @return the list of artists.
      */
-    public ArrayList<Artist> getUserTopArtist(int limit) {
+    public ArrayList<Artist> getUserTopArtists(int limit) {
         return spotifyApiClient.getUserTopArtists(limit);
     }
 
@@ -58,5 +59,14 @@ public class RecommendationService {
      */
     public ArrayList<Track> getUserTopTracks(int limit) {
         return spotifyApiClient.getUserTopTracks(limit);
+    }
+
+    /**
+     * Retrieve the artist's related artists.
+     * @param artistId the ID of the artist.
+     * @return related artists.
+     */
+    public ArrayList<Artist> getRelatedArtists(String artistId) {
+        return spotifyApiClient.getRelatedArtists(artistId);
     }
 }
