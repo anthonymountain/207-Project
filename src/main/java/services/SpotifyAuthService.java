@@ -1,12 +1,13 @@
 package services;
 
-import interface_adapter.spotify_auth.SpotifyConfig;
-import org.springframework.stereotype.Service;
-
 import java.awt.*;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
+
+import org.springframework.stereotype.Service;
+
+import interface_adapter.spotify_auth.SpotifyConfig;
 
 @Service
 public class SpotifyAuthService {

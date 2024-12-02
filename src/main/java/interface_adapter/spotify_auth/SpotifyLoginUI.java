@@ -1,11 +1,13 @@
 package interface_adapter.spotify_auth;
 
-import services.SpotifyAuthService;
-import services.TokenService;
-import org.springframework.stereotype.Component;
+import java.awt.*;
 
 import javax.swing.*;
-import java.awt.*;
+
+import org.springframework.stereotype.Component;
+
+import services.SpotifyAuthService;
+import services.TokenService;
 
 /**
  * IDK what JavaDoc to put here cuz I didn't create this class.

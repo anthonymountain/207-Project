@@ -10,13 +10,8 @@ import javax.swing.WindowConstants;
 import data_access.InMemoryPlaylistDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
 import entity.*;
-import services.TokenService;
-import view.*;
-import interface_adapter.spotify_auth.LoginController;
-import interface_adapter.spotify_auth.LoginPresenter;
-import interface_adapter.spotify_auth.LoginViewModel;
-import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.ViewManagerModel;
+import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.logout.LogoutController;
 import interface_adapter.logout.LogoutPresenter;
 import interface_adapter.rec_artist.RecArtistController;
@@ -31,6 +26,10 @@ import interface_adapter.rec_playlist.RecPlaylistViewModel;
 import interface_adapter.rec_song.RecSongController;
 import interface_adapter.rec_song.RecSongPresenter;
 import interface_adapter.rec_song.RecSongViewModel;
+import interface_adapter.spotify_auth.LoginController;
+import interface_adapter.spotify_auth.LoginPresenter;
+import interface_adapter.spotify_auth.LoginViewModel;
+import services.TokenService;
 import use_case.login.LoginInputBoundary;
 import use_case.login.LoginInteractor;
 import use_case.login.LoginOutputBoundary;
@@ -49,6 +48,7 @@ import use_case.rec_playlist.RecPlaylistOutputBoundary;
 import use_case.rec_song.RecSongInputBoundary;
 import use_case.rec_song.RecSongInteractor;
 import use_case.rec_song.RecSongOutputBoundary;
+import view.*;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -206,12 +206,12 @@ public class AppBuilder {
      */
     public AppBuilder addRecGenreUseCase() {
         // Initialize RecGenreViewModel and ViewManagerModel before use
-        final RecGenreViewModel recGenreViewModel = new RecGenreViewModel();
-        final ViewManagerModel viewManagerModel = new ViewManagerModel();
+        final RecGenreViewModel genreViewModel = new RecGenreViewModel();
+        final ViewManagerModel managerModel = new ViewManagerModel();
 
         // Pass initialized ViewModel and ViewManagerModel to the Presenter
         final RecGenreOutputBoundary recGenreOutputBoundary =
-             new RecGenrePresenter(recGenreViewModel, viewManagerModel);
+             new RecGenrePresenter(genreViewModel, managerModel);
 
         // Create Interactor with initialized Presenter
         final RecGenreInputBoundary recGenreInteractor = 
