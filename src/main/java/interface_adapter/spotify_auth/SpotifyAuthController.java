@@ -27,7 +27,6 @@ public class SpotifyAuthController {
 
     @GetMapping("/recommendation")
     public String getRandomRecommendation(
-            @RequestHeader("Authorization") String accessToken,
             @RequestParam(required = false) String seedArtist,
             @RequestParam(required = false) String seedGenre,
             @RequestParam(required = false) String seedTrack
@@ -53,4 +52,12 @@ public class SpotifyAuthController {
     ) {
         return playlistService.createArtistPlaylist(userId, artistId, topTracks);
     }
+
+    public String recGenre(
+        @RequestHeader(
+            
+    ) {
+        return ''
+    }
 }
+
