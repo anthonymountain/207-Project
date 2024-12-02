@@ -30,6 +30,14 @@ public class InMemoryPlaylistDataAccessObject implements RecPlaylistDataAccessIn
         //        }
 
         // Make API call to get recommendation - to be figured out later.
+        // final seed trackSeed = spotifyAuthController.getUserTopItems();
+        // final String jsonResponse = spotifyAuthController.getRandomRecommendation(trackSeed);
+        // JSONParser jsonParser = new JSONParser();
+        // final Playlist playlist = jsonParser.parse(jsonResponse);
+        // return playlist;
+
+
+        // return playlist;
         //        final ArrayList<String> displayStuff = new ArrayList<>();
         //        for (int i = 0; i < TEN; i++) {
         //            displayStuff.add(spotifyAuthController.getRandomRecommendation("", "", "", ""));

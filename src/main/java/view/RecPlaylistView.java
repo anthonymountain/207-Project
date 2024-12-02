@@ -14,15 +14,15 @@ import java.awt.*;
 /**
  * This View pops up when a playlist is recommended.
  */
-public class RecPlaylistView extends JLabel {
+public class RecPlaylistView extends JPanel {
 
     private final JPanel view;
-    private RecPlaylistController recPlaylistController;
+    //    private ImportPlaylistController importPlaylistController;
     private DisplayPlaylist playlist;
 
     //    private static final String FONT = "Futura";
     private static final int TWENTY = 20;
-    private JButton goBack;
+    private JButton importPlaylist;
 
     private static final Color DARK_BACKGROUND = new Color(24, 24, 32);
 
@@ -31,30 +31,29 @@ public class RecPlaylistView extends JLabel {
 
         builder.addLabel("New Playlist: Placeholder_name")
                 .addLabel("Recommended Playlist, will this show up?")
-                .addButton("goback", "Go Back")
+                .addButton("importplaylist", "Import Playlist")
                 .setViewName("Recommended Playlist");
         view = builder.build();
         this.add(view);
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.setBackground(DARK_BACKGROUND);
         view.setBorder(BorderFactory.createEmptyBorder(TWENTY, TWENTY, TWENTY, TWENTY));
 
-        goBack = builder.getButton("goback");
+        importPlaylist = builder.getButton("goback");
 
-    //        initializeButtonActions(null);
+    //        initializeButtonActions();
     }
 
-    private void initializeButtonActions(RecPlaylistViewModel viewModel) {
-        goBack.addActionListener(evt -> handleGoBackAction(viewModel));
+    private void initializeButtonActions () {
+        importPlaylist.addActionListener(evt -> handleImportPlaylistAction());
     }
 
-    private void handleGoBackAction(RecPlaylistViewModel viewModel) {
-        // Need to implement whole new pathway/clean architecture for this crap.
+    private void handleImportPlaylistAction () {
+        // importPlaylistController.execute();
     }
 
-    public void setRecPlaylistController(RecPlaylistController recPlaylistController) {
-        this.recPlaylistController = recPlaylistController;
-    }
+    //    public void setImportPlaylistController(ImportPlaylistController importPlaylistController) {
+    //        this.importPlaylistController = importPlaylistController;
+    //    }
 
     /**
      * This sets the playlist and also makes the labels that puts it in the frame.

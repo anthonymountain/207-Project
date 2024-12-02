@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import services.PlaylistService;
 import services.RecommendationService;
+import services.TokenService;
 
 import java.util.ArrayList;
 
@@ -22,9 +23,9 @@ public class SpotifyAuthController {
     private final RecommendationService recommendationService;
     private final PlaylistService playlistService;
 
-    public SpotifyAuthController(RecommendationService recommendationService, PlaylistService playlistService) {
-        this.recommendationService = recommendationService;
-        this.playlistService = playlistService;
+    public SpotifyAuthController(TokenService tokenService) {
+        this.recommendationService = new RecommendationService(tokenService);
+        this.playlistService = new PlaylistService(tokenService);
     }
 
     @GetMapping("/recommendation")

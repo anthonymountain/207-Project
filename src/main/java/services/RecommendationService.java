@@ -16,8 +16,8 @@ public class RecommendationService {
 
     private final SpotifyApiClient spotifyApiClient;
 
-    public RecommendationService(SpotifyApiClient spotifyApiClient) {
-        this.spotifyApiClient = spotifyApiClient;
+    public RecommendationService(TokenService tokenService) {
+        this.spotifyApiClient = new SpotifyApiClient(tokenService);
     }
 
     /**
