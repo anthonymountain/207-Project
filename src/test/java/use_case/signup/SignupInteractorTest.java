@@ -1,4 +1,4 @@
-package use_case.signup;
+package test.java.use_case.signup;
 
 import data_access.InMemoryUserDataAccessObject;
 import org.junit.jupiter.api.Test;

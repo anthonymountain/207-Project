@@ -16,6 +16,7 @@ public class Main {
 
         final AppBuilder appBuilder = new AppBuilder();
         final JFrame application = appBuilder
+                                            .addSpotifyLoginView()
                                             .addLoginView()
                                             .addLoggedInView()
                                             .addRecGenreView()
@@ -23,7 +24,7 @@ public class Main {
                                             .addRecGenreUseCase()
                                             .addRecSongUseCase()
                                             .addRecArtistView()
-                                            .addRecPlaylistView()
+                                            //                                            .addRecPlaylistView()
                                             .addLoginUseCase()
                                             .addLogoutUseCase()
                                             .addRecSongUseCase()

@@ -6,6 +6,7 @@ import use_case.rec_playlist.RecPlaylistOutputData;
 import view.RecPlaylistView;
 
 import javax.swing.*;
+import java.awt.*;
 
 /**
  * This is a presenter for a recommended song.
@@ -23,17 +24,18 @@ public class RecPlaylistPresenter implements RecPlaylistOutputBoundary {
     @Override
     public void prepareSuccessView(RecPlaylistOutputData outputData) {
         // Tells the ViewManager to switch to the RecPlaylistView.
-        //        this.viewManagerModel.setState(recPlaylistViewModel.getViewName());
-        //        this.viewManagerModel.firePropertyChanged();
+//        this.viewManagerModel.setState(recPlaylistViewModel.getViewName());
+//        this.viewManagerModel.firePropertyChanged();
 
         final JDialog dialog = new JDialog(new JFrame(),
                 "Playlist Recommendation", true);
         final RecPlaylistView recPlaylistView = new RecPlaylistView();
         recPlaylistView.setPlaylist(outputData.getPlaylist());
-        dialog.getContentPane().add(recPlaylistView.getView());
+        dialog.getContentPane().add(recPlaylistView);
         dialog.pack();
         dialog.setResizable(false);
-        //        dialog.setLocationRelativeTo(dialog);
+        // Makes sure the dialog is centred in the screen.
+        dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }
 

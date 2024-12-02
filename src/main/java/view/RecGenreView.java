@@ -1,10 +1,11 @@
 package view;
 
-import interface_adapter.rec_genre.RecGenreController;
-import use_case.rec_genre.RecGenreOutputData;
+import java.awt.*;
 
 import javax.swing.*;
-import java.awt.*;
+
+import interface_adapter.rec_genre.RecGenreController;
+import use_case.rec_genre.RecGenreOutputData;
 
 /**
  * The View for when the user generates a genre recommendation.
@@ -57,20 +58,5 @@ public class RecGenreView {
      */
     public void setRecGenreController(RecGenreController recGenreController) {
         this.recGenreController = recGenreController;
-        if (recGenreController != null) {
-            final RecGenreOutputData recommendedGenre = recGenreController.execute();
-            updateGenreLabel(recommendedGenre.toString());
-        }
-    }
-
-    /**
-     * Updates the genre label with a new recommended genre.
-     *
-     * @param genre the new genre to display
-     */
-    private void updateGenreLabel(String genre) {
-        if (genreLabel != null) {
-            genreLabel.setText("New Genre: " + genre);
-        }
     }
 }

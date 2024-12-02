@@ -1,48 +1,19 @@
 package services;
 
-import interface_adapter.spotify_auth.SpotifyConfig;
-import org.springframework.stereotype.Service;
-
-import java.awt.*;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
-
-@Service
+/**
+ * Service for handling Spotify authentication.
+ * 
+ * @null
+ */
 public class SpotifyAuthService {
 
-    private final SpotifyConfig spotifyConfig;
-    private final TokenService tokenService;
-
-    public SpotifyAuthService(SpotifyConfig spotifyConfig, TokenService tokenService) {
-        this.spotifyConfig = spotifyConfig;
-        this.tokenService = tokenService;
-    }
-
-    public void initiateLogin() {
-        final String authUrl = String.format(
-                "https://accounts.spotify.com/authorize?response_type=token&client_id=%s&redirect_uri=%s&scope=%s",
-                spotifyConfig.getClientId(), spotifyConfig.getRedirectUri(), spotifyConfig.getScope()
-        );
-
-        try {
-            Desktop.getDesktop().browse(new URI(authUrl));
-        }
-        catch (URISyntaxException ex) {
-            throw new RuntimeException("input", ex);
-        }
-        catch (IOException ex) {
-            throw new RuntimeException("ahhh", ex);
-        }
-        finally {
-            // a
-        }
-//        catch (Exception ex) {
-//            throw new RuntimeException("Failed to open browser for login", ex);
-//        }
-    }
-
-    public void handleCallback(String accessToken, int expiresInSeconds) {
-        tokenService.storeToken(accessToken, expiresInSeconds);
+    /**
+     * Generates the Spotify authorization URL for user login.
+     *
+     * @return The authorization URL.
+     */
+    public String getAuthUrl() {
+        String authurl = "https://accounts.spotify.com/en/authorize?client_id=3528cb11e8884baba8cdadeb30563f2e&redirect_uri=http:%2F%2Flocalhost:3000%2Fcallback%2F&scope=playlist-modify-public user-top-read user-read-email user-read-private &response_type=token&show_dialog=true";
+        return authurl;
     }
 }

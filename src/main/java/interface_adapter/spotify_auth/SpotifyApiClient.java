@@ -9,12 +9,12 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.ArrayList;
 
-import entity.Artist;
-import entity.Track;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Component;
 
+import entity.Artist;
+import entity.Track;
 import services.ArtistService;
 import services.TokenService;
 
@@ -62,14 +62,8 @@ public class SpotifyApiClient {
             final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             return response.body();
         } 
-        catch (IOException ex) {
+        catch (IOException | InterruptedException | URISyntaxException ex) {
             throw new RuntimeException("Failed to get recommendationsx", ex);
-        }
-        catch (InterruptedException ex) {
-            throw new RuntimeException("Help, it got interruptedx", ex);
-        }
-        catch (URISyntaxException ex) {
-            throw new RuntimeException("Something with the URI happenedx", ex);
         }
     }
 
@@ -102,14 +96,8 @@ public class SpotifyApiClient {
             final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             return response.body();
         }
-        catch (IOException ex) {
+        catch (IOException | InterruptedException | URISyntaxException ex) {
             throw new RuntimeException("Failed to create playlists", ex);
-        }
-        catch (InterruptedException ex) {
-            throw new RuntimeException("Help, it got interrupted", ex);
-        }
-        catch (URISyntaxException ex) {
-            throw new RuntimeException("Something with the URI happened", ex);
         }
     }
 
@@ -138,14 +126,8 @@ public class SpotifyApiClient {
 
             httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         }
-        catch (IOException ex) {
+        catch (IOException | InterruptedException | URISyntaxException ex) {
             throw new RuntimeException("Failed to add tracks", ex);
-        }
-        catch (InterruptedException ex) {
-            throw new RuntimeException("Help, it got interrupted", ex);
-        }
-        catch (URISyntaxException ex) {
-            throw new RuntimeException("Something with the URI happened", ex);
         }
     }
 
@@ -170,14 +152,8 @@ public class SpotifyApiClient {
             final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             return response.body();
         }
-        catch (IOException ex) {
+        catch (IOException | InterruptedException | URISyntaxException ex) {
             throw new RuntimeException("Failed to get current user profile", ex);
-        }
-        catch (InterruptedException ex) {
-            throw new RuntimeException("Help, it got interruptedy", ex);
-        }
-        catch (URISyntaxException ex) {
-            throw new RuntimeException("Something with the URI happenedy", ex);
         }
     }
 
@@ -263,14 +239,38 @@ public class SpotifyApiClient {
             final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
             return response.body();
         }
-        catch (IOException ex) {
-            throw new RuntimeException("Failed to get artist's top tracks", ex);
+        catch (IOException | InterruptedException | URISyntaxException ex) {
+            throw new RuntimeException("Failed to get artist top tracks", ex);
         }
-        catch (InterruptedException ex) {
-            throw new RuntimeException("Help, it got interruptedz", ex);
+    }
+
+    /**
+     * Get the user's top items so we have a seed for getRecommendations().
+     *
+     * @param artistId Artist ID.
+     * @param market   Market (e.g., "US").
+     * @return A JSON string containing the artist's top tracks.
+     * @throws RuntimeException yaddi yadda.
+     */
+    public String getUserTopItems(String artistId, String market) {
+        try {
+            final String accessToken = tokenService.getToken();
+
+            final URI uri = new URI(
+                    String.format("https://api.spotify.com/v1/artists/%s/top-tracks?market=%s", artistId, market));
+            // prob not this.
+
+            final HttpRequest request = HttpRequest.newBuilder()
+                    .uri(uri)
+                    .header(AUTHORIZATION, BEARER + accessToken)
+                    .GET()
+                    .build();
+
+            final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            return response.body();
         }
-        catch (URISyntaxException ex) {
-            throw new RuntimeException("Something with the URI happenedz", ex);
+        catch (IOException | InterruptedException | URISyntaxException ex) {
+            throw new RuntimeException("Failed to get user top items", ex);
         }
     }
 }
