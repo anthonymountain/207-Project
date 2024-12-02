@@ -3,15 +3,13 @@ package data_access;
 import java.util.HashMap;
 import java.util.Map;
 
-import entity.Artist;
-import entity.Genre;
-import entity.Track;
-import entity.User;
+import entity.*;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
 import use_case.rec_artist.RecArtistUserDataAccessInterface;
 import use_case.rec_genre.RecGenreUserDataAccessInterface;
 import use_case.rec_song.RecSongUserDataAccessInterface;
+import use_case.rec_album.RecAlbumUserDataAccessInterface;
 
 /**
  * In-memory implementation of the DAO for storing user data. This implementation does
@@ -21,7 +19,7 @@ public class InMemoryUserDataAccessObject implements LoginUserDataAccessInterfac
         LogoutUserDataAccessInterface,
         RecGenreUserDataAccessInterface,
         RecSongUserDataAccessInterface,
-        RecArtistUserDataAccessInterface {
+        RecArtistUserDataAccessInterface, RecAlbumUserDataAccessInterface {
 
     private final Map<String, User> users = new HashMap<>();
 
@@ -29,6 +27,7 @@ public class InMemoryUserDataAccessObject implements LoginUserDataAccessInterfac
     private Track recommendedSong;
     private Genre recommendedGenre;
     private Artist recommendedArtist;
+    private Album recommendedAlbum;
 
     @Override
     public boolean existsByName(String identifier) {
@@ -69,4 +68,10 @@ public class InMemoryUserDataAccessObject implements LoginUserDataAccessInterfac
     public void recommendArtist(Artist artist) {
         this.recommendedArtist = artist;
     }
+
+    @Override
+    public void recommendAlbum(Album album) {
+        this.recommendedAlbum = album;
+    }
+
 }
