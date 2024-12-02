@@ -9,6 +9,7 @@ import services.JSONParser;
 import use_case.rec_playlist.RecPlaylistDataAccessInterface;
 
 import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -17,7 +18,7 @@ import java.util.Random;
 public class InMemoryPlaylistDataAccessObject implements RecPlaylistDataAccessInterface {
 
     public static final int TEN = 10;
-    private final ArrayList<Track> tracks;
+    private ArrayList<Track> tracks;
     private SpotifyAuthController spotifyAuthController;
 
     public InMemoryPlaylistDataAccessObject(SpotifyAuthController spotifyAuthController) {
@@ -28,20 +29,18 @@ public class InMemoryPlaylistDataAccessObject implements RecPlaylistDataAccessIn
     @Override
     public ArrayList<Track> getRecommendations() {
 
-        // Make API call to get recommendation - to be figured out later.
-        //        spotifyAuthController.getUserTopItems(50)
+        // Make API call to get recommendation
+        tracks = new ArrayList<>();
         final int playlistSize = 10;
         int counter = 0;
-        boolean addToTracks = true;
+        boolean addToTracks;
         while (counter < playlistSize) {
+            addToTracks = true;
             final Track track = spotifyAuthController.getRandomRecommendation("", "", "");
             for (Track value : tracks) {
-                if (value == track) {
+                if (Objects.equals(value.getName(), track.getName())) {
                     addToTracks = false;
                     break;
-                }
-                else {
-                    addToTracks = true;
                 }
             }
             if (addToTracks) {

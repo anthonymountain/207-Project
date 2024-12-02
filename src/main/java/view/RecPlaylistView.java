@@ -32,14 +32,15 @@ public class RecPlaylistView extends JPanel {
         final ViewBuilder builder = new ViewBuilder();
 
         builder.addLabel("New Playlist: Recommended Playlist")
-//                .addButton("importplaylist", "Import Playlist")
+                .addButton("importplaylist", "Import Playlist")
                 .setViewName("Recommended Playlist");
         view = builder.build();
+        this.setLayout(new GridLayout(0, 1));
         this.add(view);
         this.setBackground(DARK_BACKGROUND);
-        view.setBorder(BorderFactory.createEmptyBorder(TWENTY, TWENTY, TWENTY, TWENTY));
+//        view.setBorder(BorderFactory.createEmptyBorder(TWENTY, TWENTY, TWENTY, TWENTY));
 
-        importPlaylist = builder.getButton("goback");
+        importPlaylist = builder.getButton("importplaylist");
 
     //        initializeButtonActions();
     }
@@ -62,6 +63,9 @@ public class RecPlaylistView extends JPanel {
      */
     public void setPlaylist(ArrayList<Track> playlist) {
         this.playlist = playlist;
+        final JPanel playlistPanel = new JPanel();
+        playlistPanel.setBackground(DARK_BACKGROUND);
+
         for (int i = 0; i < playlist.size(); i++) {
             final Track currentTrack = playlist.get(i);
             //            final JLabel playlistLabel = new JLabel(currentTrack.getName() + "by " + currentTrack.getArtists().get(0).getName());
@@ -69,8 +73,11 @@ public class RecPlaylistView extends JPanel {
             playlistLabel.setFont(ViewBuilder.LABEL_FONT);
             playlistLabel.setForeground(ViewBuilder.BUTTON_TEXT_COLOR);
             playlistLabel.setAlignmentY(Component.TOP_ALIGNMENT);
-            this.add(playlistLabel);
-            this.add(Box.createRigidArea(new Dimension(10, 10)));
+            playlistPanel.add(playlistLabel);
+            playlistPanel.add(Box.createRigidArea(new Dimension(10, 10)));
         }
+        playlistPanel.setLayout(new GridLayout(0, 1));
+        this.add(playlistPanel);
+
     }
 }
