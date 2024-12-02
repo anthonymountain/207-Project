@@ -1,7 +1,5 @@
 package services;
 
-import interface_adapter.spotify_auth.SpotifyConfig;
-
 /**
  * Service for handling Spotify authentication.
  * 
@@ -9,23 +7,13 @@ import interface_adapter.spotify_auth.SpotifyConfig;
  */
 public class SpotifyAuthService {
 
-    private final SpotifyConfig spotifyConfig;
-
-    public SpotifyAuthService() {
-        this.spotifyConfig = new SpotifyConfig();
-        }
-
     /**
      * Generates the Spotify authorization URL for user login.
      *
      * @return The authorization URL.
      */
     public String getAuthUrl() {
-        return String.format(
-            "https://accounts.spotify.com/authorize?response_type=token&client_id=%s&redirect_uri=%s&scope=%s",
-            spotifyConfig.getClientId(),
-            spotifyConfig.getRedirectUri(),
-            spotifyConfig.getScope()
-        );
+        String authurl = "https://accounts.spotify.com/en/authorize?client_id=3528cb11e8884baba8cdadeb30563f2e&redirect_uri=http:%2F%2Flocalhost:3000%2Fcallback%2F&scope=playlist-modify-public user-top-read user-read-email user-read-private &response_type=token&show_dialog=true";
+        return authurl;
     }
 }

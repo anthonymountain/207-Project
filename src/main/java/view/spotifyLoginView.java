@@ -82,7 +82,7 @@ public class spotifyLoginView extends JPanel{
 
                 // Set up the listener to capture the access token from the URL
                 webEngine.locationProperty().addListener((observable, oldValue, newValue) -> {
-                    if (newValue.contains("playgen://callback")) {
+                    if (newValue.contains("access_token")) {
                         // Extract the access token from the URL fragment
                         String[] parts = newValue.split("#");
                         if (parts.length > 1) {
@@ -90,7 +90,7 @@ public class spotifyLoginView extends JPanel{
                             for (String param : params) {
                                 if (param.startsWith("access_token=")) {
                                     String accessToken = param.split("=")[1];
-                                    tokenService.storeToken(accessToken, 3600); // Store the token with a 1-hour expiration
+                                    updateAccessToken(accessToken, 3600); // Store the token with a 1-hour expiration
                                     System.out.println("Access Token: " + accessToken);
                                     statusLabel.setText("Logged in successfully");
                                     webViewFrame.dispose(); // Close the WebView window after successful login
@@ -127,6 +127,7 @@ public class spotifyLoginView extends JPanel{
 
             JOptionPane.showMessageDialog(mainFrame, "Access token stored. You can now use the app.");
             mainFrame.dispose(); // Close the login window
+
         } catch (Exception e) {
             showError("Failed to store access token: " + e.getMessage());
         }
