@@ -66,7 +66,12 @@ public class InMemoryUserDataAccessObject implements LoginUserDataAccessInterfac
     }
 
     @Override
-    public void recommendArtist(Artist artist) {
+    public void setArtist(Artist artist) {
         this.recommendedArtist = artist;
+    }
+
+    @Override
+    public Artist getArtist() {
+        return this.recommendedArtist;
     }
 }

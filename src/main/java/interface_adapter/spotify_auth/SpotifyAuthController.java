@@ -38,7 +38,7 @@ public class SpotifyAuthController {
         return recommendationService.getRandomRecommendation(seedArtist, seedGenre, seedTrack);
     }
 
-    @GetMapping("/artists")
+    @GetMapping("/artists/top")
     public ArrayList<Artist> getUserTopArtists(
             @RequestParam(required = false) String type,
             @RequestParam(required = false) int limit
@@ -46,7 +46,7 @@ public class SpotifyAuthController {
         return recommendationService.getUserTopArtists(limit);
     }
 
-    @GetMapping("/artists")
+    @GetMapping("/tracks/top")
     public ArrayList<Track> getUserTopTracks(
             @RequestParam String type,
             @RequestParam int limit

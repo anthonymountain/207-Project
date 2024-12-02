@@ -132,41 +132,6 @@ public class SpotifyApiClient {
     }
 
     /**
-     * Returns an artist's related artists.
-     * @param artistId the ID of the artist.
-     * @return the related artists.
-     * @throws RuntimeException because why not.
-     */
-    public ArrayList<Artist> getRelatedArtists(String artistId) {
-        try {
-            final String accessToken = tokenService.getToken();
-            final URI uri = new URI(String.format("https://api.spotify.com/v1/artists/%s/related-artists", artistId));
-
-            final HttpRequest request = HttpRequest.newBuilder()
-                    .uri(uri)
-                    .header(AUTHORIZATION, BEARER + accessToken)
-                    .GET()
-                    .build();
-
-            final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            final JSONObject jsonResponse = new JSONObject(response.body());
-
-            final JSONArray artistsJsonArray = jsonResponse.getJSONArray("artists");
-            final ArrayList<Artist> relatedArtists = new ArrayList<>();
-
-            for (int i = 0; i < artistsJsonArray.length(); i++) {
-                final JSONObject artistJson = artistsJsonArray.getJSONObject(i);
-                final Artist artist = artistService.parseArtistFromJson(artistJson);
-                relatedArtists.add(artist);
-            }
-            return relatedArtists;
-        }
-        catch (IOException | InterruptedException | URISyntaxException ex) {
-            throw new RuntimeException("Failed to fetch related artists", ex);
-        }
-    }
-
-    /**
      * Get the current user's profile.
      *
      * @return A JSON string containing the user's profile details.

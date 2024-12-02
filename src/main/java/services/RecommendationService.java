@@ -60,13 +60,4 @@ public class RecommendationService {
     public ArrayList<Track> getUserTopTracks(int limit) {
         return spotifyApiClient.getUserTopTracks(limit);
     }
-
-    /**
-     * Retrieve the artist's related artists.
-     * @param artistId the ID of the artist.
-     * @return related artists.
-     */
-    public ArrayList<Artist> getRelatedArtists(String artistId) {
-        return spotifyApiClient.getRelatedArtists(artistId);
-    }
 }
