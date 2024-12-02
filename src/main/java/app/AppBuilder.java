@@ -257,10 +257,11 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addRecArtistUseCase() {
-        final RecArtistOutputBoundary recArtistOutputBoundary = new RecArtistPresenter(recArtistView);
+        final RecArtistOutputBoundary recArtistOutputBoundary = new RecArtistPresenter(viewManagerModel,
+                recArtistViewModel);
 
         final RecArtistInputBoundary recArtistInteractor =
-                new RecArtistInteractor(userDataAccessObject, recArtistOutputBoundary, null);
+                new RecArtistInteractor(userDataAccessObject, recArtistOutputBoundary);
         final RecArtistController recArtistController = new RecArtistController(recArtistInteractor);
         recArtistView.setRecArtistController(recArtistController);
         loggedInView.setRecArtistController(recArtistController);

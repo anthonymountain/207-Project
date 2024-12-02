@@ -1,6 +1,5 @@
 package interface_adapter.spotify_auth;
 
-import entity.*;
 import org.json.JSONArray;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import services.PlaylistService;
 import services.RecommendationService;
 import services.TokenService;
-
-import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api")
@@ -36,32 +33,6 @@ public class SpotifyAuthController {
             @RequestParam(required = false) String seedTrack
     ) {
         return recommendationService.getRandomRecommendation(seedArtist, seedGenre, seedTrack);
-    }
-
-    @GetMapping("/artists")
-    public ArrayList<Artist> getUserTopArtists(
-            @RequestHeader("Authorization") String accessToken,
-            @RequestParam(required = false) String type,
-            @RequestParam(required = false) int limit
-    ) {
-        return recommendationService.getUserTopArtists(limit);
-    }
-
-    @GetMapping("/artists")
-    public ArrayList<Track> getUserTopTracks(
-            @RequestHeader("Authorization") String accessToken,
-            @RequestParam(required = false) String type,
-            @RequestParam(required = false) int limit
-    ) {
-        return recommendationService.getUserTopTracks(limit);
-    }
-
-    @GetMapping
-    public ArrayList<Artist> getRelatedArtists(
-            @RequestHeader("Authorization") String accessToken,
-            @RequestParam String artistId
-    ) {
-        return recommendationService.getRelatedArtists(artistId);
     }
 
     @PostMapping("/playlist/recommendations")
