@@ -42,10 +42,20 @@ public class RecommendationService {
         }
     }
 
+    /**
+     * Retrieves the user's top artists.
+     * @param limit the number of items to get.
+     * @return the list of artists.
+     */
     public ArrayList<Artist> getUserTopArtist(int limit) {
         return spotifyApiClient.getUserTopArtists(limit);
     }
 
+    /**
+     * Retrieves the user's top tracks.
+     * @param limit the number of items to get.
+     * @return the list of tracks.
+     */
     public ArrayList<Track> getUserTopTracks(int limit) {
         return spotifyApiClient.getUserTopTracks(limit);
     }
