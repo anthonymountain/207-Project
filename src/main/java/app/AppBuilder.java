@@ -228,7 +228,7 @@ public class AppBuilder {
                 new RecSongInteractor(userDataAccessObject, recSongOutputBoundary);
 
         final RecSongController recSongController = new RecSongController(recSongInteractor);
-        recSongView.setRecSongController(recSongController);
+        loggedInView.setRecSongController(recSongController);
         return this;
     }
 
@@ -262,7 +262,7 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addRecArtistUseCase() {
-        this.recArtistOutputBoundary = new RecArtistPresenter(recArtistView);
+        this.recArtistOutputBoundary = new RecArtistPresenter(viewManagerModel, recArtistViewModel, recArtistView);
 
         this.recArtistInteractor =
                 new RecArtistInteractor(artistDataAccessObject, recArtistOutputBoundary, spotifyAuthController);

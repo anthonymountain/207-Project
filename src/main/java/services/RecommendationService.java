@@ -22,9 +22,10 @@ public class RecommendationService {
 
     /**
      * This gets random recommendations.
+     *
      * @param seedArtist helps recommend based off artists
-     * @param seedGenre helps recommend based off genre
-     * @param seedTrack helps recommend based off track
+     * @param seedGenre  helps recommend based off genre
+     * @param seedTrack  helps recommend based off track
      * @return the tracks in a String format.
      */
     public String getRandomRecommendation(String seedArtist, String seedGenre, String seedTrack) {
@@ -34,8 +35,7 @@ public class RecommendationService {
 
         if (tracks.isEmpty()) {
             return "No recommendations found.";
-        }
-        else {
+        } else {
             final Random random = new Random();
             final JSONObject randomTrack = tracks.getJSONObject(random.nextInt(tracks.length()));
             return randomTrack.getString("name") + " by " + randomTrack.getJSONArray("artists")
@@ -45,6 +45,7 @@ public class RecommendationService {
 
     /**
      * Retrieves the user's top artists.
+     *
      * @param limit the number of items to get.
      * @return the list of artists.
      */
@@ -54,6 +55,7 @@ public class RecommendationService {
 
     /**
      * Retrieves the user's top tracks.
+     *
      * @param limit the number of items to get.
      * @return the list of tracks.
      */

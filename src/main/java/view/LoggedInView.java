@@ -122,20 +122,11 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
     }
 
     private void openSongRecommendationDialog() {
-        recSongController.execute();
+        recSongController.execute(null, null, 0, null, null);
     }
 
     private void openArtistRecommendationDialog() {
         recArtistController.execute();
-
-        final RecArtistView recArtistView = new RecArtistView();
-        recArtistView.setRecArtistController(recArtistController);
-
-        final JDialog dialog = new JDialog((JFrame) null, "Recommended Artist", true);
-        dialog.getContentPane().add(recArtistView.getView());
-        dialog.pack();
-        dialog.setLocationRelativeTo(this);
-        dialog.setVisible(true);
     }
 
     private void openPlaylistRecommendationDialog() {

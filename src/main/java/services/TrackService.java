@@ -13,7 +13,6 @@ public class TrackService {
 
     /**
      * Parses the JSON object response from the API.
-     *
      * @param trackJson the response from the API.
      * @return the Track entity.
      */

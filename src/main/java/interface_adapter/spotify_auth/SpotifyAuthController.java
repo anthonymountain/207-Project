@@ -5,7 +5,6 @@ import org.json.JSONArray;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -29,13 +28,12 @@ public class SpotifyAuthController {
     }
 
     @GetMapping("/recommendation")
-    public String getRandomRecommendation(
-            @RequestHeader("Authorization") String accessToken,
+    public Track getRandomRecommendation(
             @RequestParam(required = false) String seedArtist,
             @RequestParam(required = false) String seedGenre,
             @RequestParam(required = false) String seedTrack
     ) {
-        return recommendationService.getRandomRecommendation(seedArtist, seedGenre, seedTrack);
+        return new Track("", "", 0, null, null);
     }
 
     @GetMapping("/artists/top")
@@ -56,7 +54,6 @@ public class SpotifyAuthController {
 
     @PostMapping("/playlist/recommendations")
     public String createPlaylistForRecommendations(
-            @RequestHeader("Authorization") String accessToken,
             @RequestBody JSONArray recommendations,
             @RequestParam String userId
     ) {
@@ -65,7 +62,6 @@ public class SpotifyAuthController {
 
     @PostMapping("/playlist/artist")
     public String createArtistPlaylist(
-            @RequestHeader("Authorization") String accessToken,
             @RequestParam String userId,
             @RequestParam String artistId,
             @RequestBody JSONArray topTracks
