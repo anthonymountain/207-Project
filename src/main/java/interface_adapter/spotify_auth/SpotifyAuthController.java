@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import services.PlaylistService;
 import services.RecommendationService;
+import services.TokenService;
 
 @RestController
 @RequestMapping("/api")
@@ -19,9 +20,9 @@ public class SpotifyAuthController {
     private final RecommendationService recommendationService;
     private final PlaylistService playlistService;
 
-    public SpotifyAuthController(RecommendationService recommendationService, PlaylistService playlistService) {
-        this.recommendationService = recommendationService;
-        this.playlistService = playlistService;
+    public SpotifyAuthController(TokenService tokenService) {
+        this.recommendationService = new RecommendationService(tokenService);
+        this.playlistService = new PlaylistService(tokenService);
     }
 
     @GetMapping("/recommendation")
@@ -31,7 +32,7 @@ public class SpotifyAuthController {
             @RequestParam(required = false) String seedGenre,
             @RequestParam(required = false) String seedTrack
     ) {
-        return recommendationService.getRandomRecommendation(accessToken, seedArtist, seedGenre, seedTrack);
+        return recommendationService.getRandomRecommendation(seedArtist, seedGenre, seedTrack);
     }
 
     @PostMapping("/playlist/recommendations")
@@ -40,7 +41,7 @@ public class SpotifyAuthController {
             @RequestBody JSONArray recommendations,
             @RequestParam String userId
     ) {
-        return playlistService.createPlaylistForRecommendations(accessToken, userId, recommendations);
+        return playlistService.createPlaylistForRecommendations(userId, recommendations);
     }
 
     @PostMapping("/playlist/artist")
@@ -50,6 +51,6 @@ public class SpotifyAuthController {
             @RequestParam String artistId,
             @RequestBody JSONArray topTracks
     ) {
-        return playlistService.createArtistPlaylist(accessToken, userId, artistId, topTracks);
+        return playlistService.createArtistPlaylist(userId, artistId, topTracks);
     }
 }

@@ -21,9 +21,9 @@ public class AccessToken {
 
     @Override
     public String toString() {
-        return "AccessToken{" +
-                "token='" + token + '\'' +
-                ", expiry=" + expiry +
-                '}';
+        return "AccessToken{"
+                + "token='" + token + '\''
+                + ", expiry=" + expiry
+                + '}';
     }
 }

@@ -1,5 +1,6 @@
 package use_case.rec_playlist;
 
+import entity.DisplayPlaylist;
 import entity.Playlist;
 
 /**
@@ -7,15 +8,15 @@ import entity.Playlist;
  */
 public class RecPlaylistOutputData {
 
-    private final Playlist playlist;
+    private final DisplayPlaylist playlist;
     private final boolean useCaseFailed;
 
-    public RecPlaylistOutputData(Playlist playlist, boolean useCaseFailed) {
+    public RecPlaylistOutputData(DisplayPlaylist playlist, boolean useCaseFailed) {
         this.playlist = playlist;
         this.useCaseFailed = useCaseFailed;
     }
 
-    public Playlist getPlaylist() {
+    public DisplayPlaylist getPlaylist() {
         return playlist;
     }
 
