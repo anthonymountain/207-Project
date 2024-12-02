@@ -22,7 +22,7 @@ public class spotifyLoginView extends JPanel{
 
     private final SpotifyAuthService spotifyAuthService;
     private final TokenService tokenService;
-    private final String viewName = "log in";
+    private final String viewName = "spotify log in";
 
     private JFrame mainFrame;
     private JLabel statusLabel;

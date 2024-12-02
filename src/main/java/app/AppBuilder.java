@@ -293,7 +293,7 @@ public class AppBuilder {
 
         application.add(cardPanel);
 
-        viewManagerModel.setState(loggedInView.getViewName());
+        viewManagerModel.setState(spotifyLoginView.getViewName());
         viewManagerModel.firePropertyChanged();
 
         return application;
