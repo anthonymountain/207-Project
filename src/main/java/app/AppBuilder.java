@@ -223,7 +223,7 @@ public class AppBuilder {
                 new RecSongInteractor(userDataAccessObject, recSongOutputBoundary);
 
         final RecSongController recSongController = new RecSongController(recSongInteractor);
-        recSongView.setRecSongController(recSongController);
+        loggedInView.setRecSongController(recSongController);
         return this;
     }
 

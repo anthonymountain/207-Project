@@ -23,10 +23,6 @@ public class RecPlaylistPresenter implements RecPlaylistOutputBoundary {
 
     @Override
     public void prepareSuccessView(RecPlaylistOutputData outputData) {
-        // Tells the ViewManager to switch to the RecPlaylistView.
-//        this.viewManagerModel.setState(recPlaylistViewModel.getViewName());
-//        this.viewManagerModel.firePropertyChanged();
-
         final JDialog dialog = new JDialog(new JFrame(),
                 "Playlist Recommendation", true);
         final RecPlaylistView recPlaylistView = new RecPlaylistView();
