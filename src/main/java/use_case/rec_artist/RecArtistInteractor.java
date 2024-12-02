@@ -25,26 +25,28 @@ public class RecArtistInteractor implements RecArtistInputBoundary {
     @Override
     public void execute(RecArtistInputData recArtistInputData) {
         try {
-            // get top artist's ID
-            final String artistId = spotifyAuthController.getUserTopArtists("artist", 1).get(0).getId();
+            // fetch top artists
+            final ArrayList<Artist> artists = spotifyAuthController.getUserTopArtists("artist", 50);
 
-            // fetching artist's related artists
-            final ArrayList<Artist> relatedArtists = spotifyAuthController.getRelatedArtists(artistId);
-            if (relatedArtists.isEmpty()) {
-                throw new SpotifyApiException("No related artists found for the top artist.");
-            }
-            final Artist recommendedArtist = relatedArtists.get(0);
+            // choose a random artist
+            final int random = (int) (Math.random() * artists.size());
+            final Artist artist = artists.get(random);
 
-            // save recommended artist
-            recArtistUserDataAccessObject.recommendArtist(recommendedArtist);
+            // Save the artist in the DAO
+            recArtistUserDataAccessObject.setArtist(artist, spotifyAuthController);
 
-            // call presenter to prepare view
-            final RecArtistOutputData outputData = new RecArtistOutputData(recommendedArtist.getName(), false);
+            // Notify the presenter
+            final RecArtistOutputData outputData = new RecArtistOutputData(artist.getName(), false);
             recArtistPresenter.prepareSuccessView(outputData);
         }
         catch (SpotifyApiException exception) {
-            recArtistPresenter.prepareFailView("Error: " + exception.getMessage());
+            recArtistPresenter.prepareFailView("Error: Unable to recommend artist. " + exception.getMessage());
         }
+    }
+
+    @Override
+    public Artist getArtist() {
+        return recArtistUserDataAccessObject.getArtist();
     }
 
 }

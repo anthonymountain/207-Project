@@ -29,7 +29,7 @@ public class RecGenreView {
         final ViewBuilder viewBuilder = new ViewBuilder();
 
         // Add a header label
-        viewBuilder.addLabel("Recommended Genre");
+        viewBuilder.addLabel("genreName", "Recommended Genre");
 
         // Create the genre label and add it directly here
         genreLabel = new JLabel("New Genre: placeholder_name");

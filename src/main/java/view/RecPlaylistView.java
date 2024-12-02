@@ -29,8 +29,8 @@ public class RecPlaylistView extends JPanel {
     public RecPlaylistView() {
         final ViewBuilder builder = new ViewBuilder();
 
-        builder.addLabel("New Playlist: Placeholder_name")
-                .addLabel("Recommended Playlist, will this show up?")
+        builder.addLabel("playlistName", "New Playlist: Placeholder_name")
+                .addLabel("something?", "Recommended Playlist, will this show up?")
                 .addButton("importplaylist", "Import Playlist")
                 .setViewName("Recommended Playlist");
         view = builder.build();

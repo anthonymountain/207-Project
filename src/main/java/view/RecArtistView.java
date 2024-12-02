@@ -1,28 +1,31 @@
 package view;
 
 import javax.swing.*;
+
+import entity.*;
 import interface_adapter.rec_artist.*;
+import interface_adapter.spotify_auth.SpotifyAuthController;
+import use_case.rec_artist.*;
 
 /**
  * The View for when the user generates an artist.
  */
 public class RecArtistView {
-
     private final JPanel view;
-    private JLabel artistNameLabel;
-    private JButton recSong;
+    private final ViewBuilder builder;
     private RecArtistController recArtistController;
 
     public RecArtistView() {
-        final ViewBuilder builder = new ViewBuilder();
 
-        artistNameLabel = new JLabel("New Artist: Loading...");
-        builder.addLabel(artistNameLabel)
-                .addButton("recSong", "Recommend Song")
+        this.builder = new ViewBuilder();
+
+        // fetch the recommended artist from the controller
+        final Artist artist = recArtistController.getArtist();
+
+        // Build the view
+        builder.addLabel("artistName", "Recommended Artist: " + artist.getName())
                 .setViewName("Recommended Artist");
 
-        recSong = builder.getButton("recSong");
-        recSong.addActionListener(evt -> recArtistController.execute());
         view = builder.build();
     }
 
@@ -32,13 +35,5 @@ public class RecArtistView {
 
     public void setRecArtistController(RecArtistController recArtistController) {
         this.recArtistController = recArtistController;
-    }
-
-    /**
-     * Updates the artist name to put in the label in place of the placeholder.
-     * @param artistName the name to be added
-     */
-    public void updateArtistName(String artistName) {
-        artistNameLabel.setText("New Artist: " + artistName);
     }
 }

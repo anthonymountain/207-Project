@@ -48,11 +48,11 @@ public class RecArtistInputData {
 
     @Override
     public String toString() {
-        return "RecArtistInputData{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", tracks=" + tracks +
-                ", genres=" + genres +
-                '}';
+        return "RecArtistInputData{"
+                + "id='" + id + '\''
+                + ", name='" + name + '\''
+                + ", tracks=" + tracks
+                + ", genres=" + genres
+                + '}';
     }
 }

@@ -3,19 +3,22 @@ package data_access;
 import java.util.ArrayList;
 
 import entity.Artist;
+import interface_adapter.spotify_auth.SpotifyAuthController;
 import use_case.rec_artist.RecArtistUserDataAccessInterface;
 
 /**
- * In-memory implementation of the DAO for storing artist data. This implementation does
- * NOT persist data between runs of the program.
+ * In-memory implementation of the DAO for storing artist data.
  */
 public class InMemoryArtistDataAccessObject implements RecArtistUserDataAccessInterface {
-
-    private final ArrayList<Artist> recommended = new ArrayList<Artist>();
-    private Artist topArtist = new Artist();
+    private Artist recommendedArtist;
 
     @Override
-    public void recommendArtist(Artist artist) {
-        this.topArtist = artist;
+    public void setArtist(Artist artist, SpotifyAuthController spotifyAuthController) {
+        this.recommendedArtist = artist;
+    }
+
+    @Override
+    public Artist getArtist() {
+        return this.recommendedArtist;
     }
 }

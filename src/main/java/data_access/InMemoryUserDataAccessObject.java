@@ -7,6 +7,7 @@ import entity.Artist;
 import entity.Genre;
 import entity.Track;
 import entity.User;
+import interface_adapter.spotify_auth.SpotifyAuthController;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
 import use_case.rec_artist.RecArtistUserDataAccessInterface;
@@ -66,7 +67,7 @@ public class InMemoryUserDataAccessObject implements LoginUserDataAccessInterfac
     }
 
     @Override
-    public void setArtist(Artist artist) {
+    public void setArtist(Artist artist, SpotifyAuthController spotifyAuthController) {
         this.recommendedArtist = artist;
     }
 

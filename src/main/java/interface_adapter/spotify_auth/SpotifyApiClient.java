@@ -17,6 +17,7 @@ import entity.Artist;
 import entity.Track;
 import services.ArtistService;
 import services.TokenService;
+import services.TrackService;
 
 /**
  * This is a JavaDoc comment. The Spotify API Client helps us make API calls.
@@ -29,9 +30,11 @@ public class SpotifyApiClient {
     private final HttpClient httpClient;
     private final TokenService tokenService;
     private final ArtistService artistService;
+    private final TrackService trackService;
 
     public SpotifyApiClient(TokenService tokenService) {
         this.artistService = new ArtistService();
+        this.trackService = new TrackService();
         this.httpClient = HttpClient.newHttpClient();
         this.tokenService = tokenService;
     }
@@ -229,7 +232,7 @@ public class SpotifyApiClient {
             final JSONArray tracksJsonArray = jsonResponse.getJSONArray("items");
             for (int i = 0; i < tracksJsonArray.length(); i++) {
                 final JSONObject trackJson = tracksJsonArray.getJSONObject(i);
-                final Track track = new Track(trackJson);
+                final Track track = trackService.parseTrackFromJson(trackJson);
                 tracks.add(track);
             }
             return tracks;

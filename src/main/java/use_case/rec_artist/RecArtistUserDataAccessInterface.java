@@ -1,6 +1,7 @@
 package use_case.rec_artist;
 
 import entity.Artist;
+import interface_adapter.spotify_auth.SpotifyAuthController;
 
 /**
  * DAO for the Recommend Artist Use Case.
@@ -8,11 +9,14 @@ import entity.Artist;
 public interface RecArtistUserDataAccessInterface {
 
     /**
-     * Recommends an Artist for the user.
-     * @param artist the new Artist
+     * Set the artist to recommend.
+     * @param artist to be recommended.
+     * @param spotifyAuthController the authorization controller.
      */
-    void recommendArtist(Artist artist);
-    // add duplicate check
-    // add previous recommended Artist retrieval (from list)
-    // add recommendation saving (to list)
+    void setArtist(Artist artist, SpotifyAuthController spotifyAuthController);
+
+    /**
+     * Recommends an Artist for the user.
+     */
+    Artist getArtist();
 }

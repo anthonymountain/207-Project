@@ -23,6 +23,7 @@ public class ViewBuilder extends JPanel {
     private static final int MAGIC_NUMBER = 10;
 
     private String viewName;
+    private final Map<String, JLabel> labelsMap = new HashMap<>();
     private final Map<String, JButton> buttonsMap;
     private final JPanel buttonsPanel;
     private final JPanel mainPanel;
@@ -49,14 +50,19 @@ public class ViewBuilder extends JPanel {
 
     /**
      * Adds a label.
+     * @param labelKey the key for the label.
      * @param labelText the text for the label.
      * @return this builder
      */
-    public ViewBuilder addLabel(String labelText) {
+    public ViewBuilder addLabel(String labelKey, String labelText) {
         final JLabel label = new JLabel(labelText);
         label.setFont(LABEL_FONT);
         label.setForeground(BUTTON_TEXT_COLOR);
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        // Store label in the map with the key
+        labelsMap.put(labelKey, label);
+
         mainPanel.add(label);
         mainPanel.add(Box.createRigidArea(new Dimension(0, MAGIC_NUMBER)));
         return this;
@@ -108,5 +114,17 @@ public class ViewBuilder extends JPanel {
         this.add(buttonsPanel);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         return this;
+    }
+
+    /**
+     * Updates the text of an existing label by its key.
+     * @param labelKey the key for the label.
+     * @param labelText the new text for the label.
+     */
+    public void updateLabel(String labelKey, String labelText) {
+        final JLabel label = labelsMap.get(labelKey);
+        if (label != null) {
+            label.setText(labelText);
+        }
     }
 }

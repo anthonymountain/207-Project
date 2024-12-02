@@ -24,10 +24,10 @@ public class RecSongView {
         final ViewBuilder viewBuilder = new ViewBuilder();
 
         // Add a header label
-        viewBuilder.addLabel("Recommended Song");
+        viewBuilder.addLabel("title", "Recommended Song");
 
         // Add the song label (placeholder for now)
-        viewBuilder.addLabel("New Song: placeholder_name");
+        viewBuilder.addLabel("songName", "New Song: placeholder_name");
 
         // Add "Add to Playlist" button
         viewBuilder.addButton("addToPlaylist", "Add to Playlist");

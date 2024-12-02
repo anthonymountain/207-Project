@@ -3,14 +3,9 @@ package view;
 import java.awt.*;
 import java.util.ArrayList;
 
-import javax.swing.BorderFactory;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
+import javax.swing.*;
 
+import entity.Artist;
 import entity.Genre;
 import entity.Track;
 import interface_adapter.loggedin.LoggedInState;
@@ -20,6 +15,9 @@ import interface_adapter.rec_artist.RecArtistController;
 import interface_adapter.rec_genre.RecGenreController;
 import interface_adapter.rec_playlist.RecPlaylistController;
 import interface_adapter.rec_song.RecSongController;
+import interface_adapter.spotify_auth.SpotifyAuthController;
+import use_case.rec_artist.RecArtistInputData;
+import use_case.rec_artist.RecArtistInteractor;
 
 /**
  * The View for the LoggedIn Use Case.
@@ -53,6 +51,7 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
     private RecArtistController recArtistController;
     private RecSongController recSongController;
     private RecGenreController recGenreController;
+    private SpotifyAuthController spotifyAuthController;
 
     public LoggedInView(LoggedInViewModel loggedInViewModel) {
         this.loggedInViewModel = loggedInViewModel;
@@ -63,7 +62,7 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
         username = setupLabels();
 
         viewBuilder = new ViewBuilder();
-        viewBuilder.addLabel("Currently logged in: ")
+        viewBuilder.addLabel("user", "Currently logged in: ")
                 .addButton("recSong", "Recommend Song")
                 .addButton("recArtist", "Recommend Artist")
                 .addButton("recGenre", "Recommend Genre")
@@ -127,11 +126,16 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
     }
 
     private void openArtistRecommendationDialog() {
-        private void openArtistRecommendationDialog() {
-            ArrayList<Track> tracks = new ArrayList<>();
-            ArrayList<Genre> genres = new ArrayList<>();
-            recArtistController.execute("sampleId", "sampleName", tracks, genres);
-        }
+        recArtistController.execute();
+
+        final RecArtistView recArtistView = new RecArtistView();
+        recArtistView.setRecArtistController(recArtistController);
+
+        final JDialog dialog = new JDialog((JFrame) null, "Recommended Artist", true);
+        dialog.getContentPane().add(recArtistView.getView());
+        dialog.pack();
+        dialog.setLocationRelativeTo(this);
+        dialog.setVisible(true);
     }
 
     private void openPlaylistRecommendationDialog() {

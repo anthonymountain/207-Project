@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import ch.qos.logback.core.subst.Token;
+import data_access.InMemoryArtistDataAccessObject;
 import data_access.InMemoryPlaylistDataAccessObject;
 import data_access.InMemoryUserDataAccessObject;
 import entity.Track;
@@ -15,6 +16,7 @@ import entity.User;
 import entity.Genre;
 import entity.Artist;
 import entity.Playlist;
+import use_case.rec_artist.RecArtistOutputData;
 import view.LoggedInView;
 import view.LoginView;
 import view.RecArtistView;
@@ -92,6 +94,9 @@ public class AppBuilder {
     private final spotifyLoginView spotifyLoginView = new spotifyLoginView(tokenService, viewManagerModel);
     private final SpotifyAuthController spotifyAuthController = new SpotifyAuthController(tokenService);
     private final InMemoryPlaylistDataAccessObject playlistDataAccessObject = new InMemoryPlaylistDataAccessObject(spotifyAuthController);
+    private final InMemoryArtistDataAccessObject artistDataAccessObject = new InMemoryArtistDataAccessObject();
+    private RecArtistOutputBoundary recArtistOutputBoundary;
+    private RecArtistInteractor recArtistInteractor = new RecArtistInteractor(artistDataAccessObject, recArtistOutputBoundary, spotifyAuthController);
 
     private LoginViewModel loginViewModel;
     private LoggedInViewModel loggedInViewModel;
@@ -257,10 +262,10 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addRecArtistUseCase() {
-        final RecArtistOutputBoundary recArtistOutputBoundary = new RecArtistPresenter(recArtistView);
+        this.recArtistOutputBoundary = new RecArtistPresenter(recArtistView);
 
-        final RecArtistInputBoundary recArtistInteractor =
-                new RecArtistInteractor(userDataAccessObject, recArtistOutputBoundary, null);
+        this.recArtistInteractor =
+                new RecArtistInteractor(artistDataAccessObject, recArtistOutputBoundary, spotifyAuthController);
         final RecArtistController recArtistController = new RecArtistController(recArtistInteractor);
         recArtistView.setRecArtistController(recArtistController);
         loggedInView.setRecArtistController(recArtistController);
