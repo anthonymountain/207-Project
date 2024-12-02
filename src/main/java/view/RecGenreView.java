@@ -58,20 +58,5 @@ public class RecGenreView {
      */
     public void setRecGenreController(RecGenreController recGenreController) {
         this.recGenreController = recGenreController;
-        if (recGenreController != null) {
-            final RecGenreOutputData recommendedGenre = recGenreController.execute();
-            updateGenreLabel(recommendedGenre.toString());
-        }
-    }
-
-    /**
-     * Updates the genre label with a new recommended genre.
-     *
-     * @param genre the new genre to display
-     */
-    private void updateGenreLabel(String genre) {
-        if (genreLabel != null) {
-            genreLabel.setText("New Genre: " + genre);
-        }
     }
 }

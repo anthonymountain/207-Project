@@ -221,6 +221,7 @@ public class AppBuilder {
         final RecGenreController recGenreController = new RecGenreController(recGenreInteractor);
 
         // Set Controller in the View
+        loggedInView.setRecGenreController(recGenreController);
         recGenreView.setRecGenreController(recGenreController);
 
         return this;

@@ -7,13 +7,14 @@ import java.util.ArrayList;
  */
 public class RecGenreInputData {
 
-    private ArrayList<String> genres;
+    private final ArrayList<String> genres;
 
-    public RecGenreInputData() {
+    public RecGenreInputData(ArrayList<String> genres) {
+        this.genres = genres;
     }
 
     public ArrayList<String> getGenres() {
-        return genres;
+        return this.genres;
     }
 }
 

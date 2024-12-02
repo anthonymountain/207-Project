@@ -6,10 +6,10 @@ import entity.Genre;
  * The Recommend Genre Interactor.
  */
 public class RecGenreInteractor implements RecGenreInputBoundary {
-    private final RecGenreUserDataAccessInterface recGenreUserDataAccessObject;
+    private final RecGenreDataAccessInterface recGenreUserDataAccessObject;
     private final RecGenreOutputBoundary recGenrePresenter;
 
-    public RecGenreInteractor(RecGenreUserDataAccessInterface recGenreUserDataAccessInterface,
+    public RecGenreInteractor(RecGenreDataAccessInterface recGenreUserDataAccessInterface,
                               RecGenreOutputBoundary recGenreOutputBoundary) {
         this.recGenreUserDataAccessObject = recGenreUserDataAccessInterface;
         this.recGenrePresenter = recGenreOutputBoundary;

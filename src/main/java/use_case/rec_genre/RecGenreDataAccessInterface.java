@@ -5,7 +5,7 @@ import entity.Genre;
 /**
  * DAO for the Recommend Song Use Case.
  */
-public interface RecGenreUserDataAccessInterface {
+public interface RecGenreDataAccessInterface {
 
     /**
      * Recommends a song for the user.
