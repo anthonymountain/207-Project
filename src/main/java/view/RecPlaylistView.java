@@ -6,6 +6,7 @@ import entity.DisplayPlaylist;
 import entity.Playlist;
 import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.rec_playlist.RecPlaylistController;
+import interface_adapter.rec_playlist.RecPlaylistViewModel;
 
 import java.awt.*;
 
