@@ -196,18 +196,17 @@ public class SpotifyApiClient {
     /**
      * Get the user's top items (artists or tracks).
      *
-     * @param type The type of items to fetch: either "artists" or "tracks".
      * @param limit The maximum number of items to return.
      * @return A list of Artist or Track objects.
      * @throws RuntimeException if the request fails.
      */
-    public ArrayList<Artist> getUserTopArtists(String type, int limit) {
+    public ArrayList<Artist> getUserTopArtists(int limit) {
         try {
             final String accessToken = tokenService.getToken();
 
             final URI uri = new URI(String.format(
                     "https://api.spotify.com/v1/me/top/%s?time_range=%s&limit=%d",
-                    type, limit));
+                    "artist", limit));
 
             final HttpRequest request = HttpRequest.newBuilder()
                     .uri(uri)
@@ -219,13 +218,11 @@ public class SpotifyApiClient {
             final JSONObject jsonResponse = new JSONObject(response.body());
 
             final ArrayList<Artist> artists = new ArrayList<Artist>();
-            if ("artists".equals(type)) {
-                final JSONArray artistsJsonArray = jsonResponse.getJSONArray("items");
-                for (int i = 0; i < artistsJsonArray.length(); i++) {
-                    final JSONObject artistJson = artistsJsonArray.getJSONObject(i);
-                    final Artist artist = artistService.parseArtistFromJson(artistJson);
-                    artists.add(artist);
-                }
+            final JSONArray artistsJsonArray = jsonResponse.getJSONArray("items");
+            for (int i = 0; i < artistsJsonArray.length(); i++) {
+                final JSONObject artistJson = artistsJsonArray.getJSONObject(i);
+                final Artist artist = artistService.parseArtistFromJson(artistJson);
+                artists.add(artist);
             }
             return artists;
         }
@@ -240,52 +237,49 @@ public class SpotifyApiClient {
         }
     }
 
-    //    /**
-    //     * Get the user's top items (artists or tracks).
-    //     *
-    //     * @param type The type of items to fetch: either "artists" or "tracks".
-    //     * @param limit The maximum number of items to return.
-    //     * @return A list of Artist or Track objects.
-    //     * @throws RuntimeException if the request fails.
-    //     */
-    //    public ArrayList<Track> getUserTopTracks(String type, int limit) {
-    //        try {
-    //            final String accessToken = tokenService.getToken();
-    //
-    //            final URI uri = new URI(String.format(
-    //                    "https://api.spotify.com/v1/me/top/%s?time_range=%s&limit=%d",
-    //                    type, limit));
-    //
-    //            final HttpRequest request = HttpRequest.newBuilder()
-    //                    .uri(uri)
-    //                    .header(AUTHORIZATION, BEARER + accessToken)
-    //                    .GET()
-    //                    .build();
-    //
-    //            final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-    //            final JSONObject jsonResponse = new JSONObject(response.body());
-    //
-    //            final ArrayList<Track> tracks = new ArrayList<Track>();
-    //            if ("tracks".equals(type)) {
-    //                final JSONArray tracksJsonArray = jsonResponse.getJSONArray("items");
-    //                for (int i = 0; i < tracksJsonArray.length(); i++) {
-    //                    final JSONObject trackJson = tracksJsonArray.getJSONObject(i);
-    //                    final Track track = new Track(trackJson);
-    //                    tracks.add(track);
-    //                }
-    //            }
-    //            return tracks;
-    //        }
-    //        catch (IOException ex) {
-    //            throw new RuntimeException("Failed to fetch top items", ex);
-    //        }
-    //        catch (InterruptedException ex) {
-    //            throw new RuntimeException("Request interrupted", ex);
-    //        }
-    //        catch (URISyntaxException ex) {
-    //            throw new RuntimeException("Invalid URI", ex);
-    //        }
-    //    }
+    /**
+     * Get the user's top items (artists or tracks).
+     *
+     * @param limit The maximum number of items to return.
+     * @return A list of Artist or Track objects.
+     * @throws RuntimeException if the request fails.
+     */
+    public ArrayList<Track> getUserTopTracks(int limit) {
+        try {
+            final String accessToken = tokenService.getToken();
+
+            final URI uri = new URI(String.format(
+                    "https://api.spotify.com/v1/me/top/%s?time_range=%s&limit=%d",
+                    "track", limit));
+
+            final HttpRequest request = HttpRequest.newBuilder()
+                    .uri(uri)
+                    .header(AUTHORIZATION, BEARER + accessToken)
+                    .GET()
+                    .build();
+
+            final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            final JSONObject jsonResponse = new JSONObject(response.body());
+
+            final ArrayList<Track> tracks = new ArrayList<Track>();
+            final JSONArray tracksJsonArray = jsonResponse.getJSONArray("items");
+            for (int i = 0; i < tracksJsonArray.length(); i++) {
+                final JSONObject trackJson = tracksJsonArray.getJSONObject(i);
+                final Track track = new Track(trackJson);
+                tracks.add(track);
+            }
+            return tracks;
+        }
+        catch (IOException ex) {
+            throw new RuntimeException("Failed to fetch top items", ex);
+        }
+        catch (InterruptedException ex) {
+            throw new RuntimeException("Request interrupted", ex);
+        }
+        catch (URISyntaxException ex) {
+            throw new RuntimeException("Invalid URI", ex);
+        }
+    }
 
     /**
      * Get an artist's top tracks.
