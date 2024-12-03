@@ -11,6 +11,7 @@ public class Track {
     private final int popularity;
     private final Album album;
     private final ArrayList<Artist> artists;
+    private String uri;
 
     /**
      * Creates a track.
@@ -27,6 +28,7 @@ public class Track {
         this.popularity = popularity;
         this.album = album;
         this.artists = artists;
+        this.uri = "";
     }
 
     /**
@@ -84,5 +86,13 @@ public class Track {
      */
     public Album getAlbum() {
         return album;
+    }
+
+    public void setUri(String uri) {
+        this.uri = uri;
+    }
+
+    public String getUri() {
+        return uri;
     }
 }
