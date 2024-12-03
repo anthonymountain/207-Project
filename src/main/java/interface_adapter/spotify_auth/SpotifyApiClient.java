@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import entity.Artist;
 import entity.Track;
+import entity.Album;
 import services.ArtistService;
 import services.TokenService;
 
@@ -272,5 +273,8 @@ public class SpotifyApiClient {
         catch (IOException | InterruptedException | URISyntaxException ex) {
             throw new RuntimeException("Failed to get user top items", ex);
         }
+    }
+
+    public ArrayList<Album> getNewReleases() {
     }
 }
