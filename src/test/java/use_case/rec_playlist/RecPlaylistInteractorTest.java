@@ -11,7 +11,6 @@ public class RecPlaylistInteractorTest {
 
     @Test
     public void successPlaylistRecommendedTest(){
-        // Nothin just yet
         // Just making sure that we get a playlist from our API calls
         RecPlaylistInputData recPlaylistInputData = new RecPlaylistInputData();
         RecPlaylistDataAccessInterface recPlaylistRepository = new InMemoryPlaylistDataAccessObject();
