@@ -24,13 +24,22 @@ public class ViewBuilder extends JPanel {
 
     private String viewName;
     private final Map<String, JButton> buttonsMap;
+    private final Map<String, JLabel> labelMap;
+    private final JPanel headerPanel;
     private final JPanel buttonsPanel;
     private final JPanel mainPanel;
+    private Dimension preferredSize;
 
     public ViewBuilder() {
         this.buttonsMap = new HashMap<>();
+        this.labelMap = new HashMap<>();
         this.setLayout(new BorderLayout());
         this.setBackground(DARK_BACKGROUND);
+
+        headerPanel = new JPanel();
+        headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
+        headerPanel.setBackground(DARK_BACKGROUND);
+        this.add(headerPanel, BorderLayout.NORTH);
 
         // Main content area
         mainPanel = new JPanel();
@@ -48,6 +57,35 @@ public class ViewBuilder extends JPanel {
     }
 
     /**
+     * Sets the preferred size of the view.
+     * @param width the width of the view.
+     * @param height the height of the view.
+     * @return this builder
+     */
+    public ViewBuilder setPreferredSize(int width, int height) {
+        this.preferredSize = new Dimension(width, height);
+        return this;
+    }
+
+    /**
+     * Adds a label to the header area (e.g., for the artist's name).
+     * @param labelText the text for the label.
+     * @return this builder
+     */
+    public ViewBuilder addHeaderLabel(String labelText) {
+        final JLabel label = new JLabel(labelText);
+        label.setFont(LABEL_FONT.deriveFont(Font.BOLD, 18));
+        label.setForeground(BUTTON_TEXT_COLOR);
+        label.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        labelMap.put(labelText, label);
+
+        headerPanel.add(Box.createRigidArea(new Dimension(0, MAGIC_NUMBER)));
+        headerPanel.add(label);
+        return this;
+    }
+
+    /**
      * Adds a label.
      * @param labelText the text for the label.
      * @return this builder
@@ -57,6 +95,9 @@ public class ViewBuilder extends JPanel {
         label.setFont(LABEL_FONT);
         label.setForeground(BUTTON_TEXT_COLOR);
         label.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        labelMap.put(labelText, label);
+
         mainPanel.add(label);
         mainPanel.add(Box.createRigidArea(new Dimension(0, MAGIC_NUMBER)));
         return this;
@@ -100,12 +141,26 @@ public class ViewBuilder extends JPanel {
     }
 
     /**
+     * Returns the label.
+     * @param name the name of the label to retrieve.
+     * @return the label.
+     */
+    public JLabel getLabel(String name) {
+        return labelMap.get(name);
+    }
+
+    /**
      * Builds the view.
      * @return the view.
      */
     public JPanel build() {
+        if (this.preferredSize != null) {
+            this.setPreferredSize(this.preferredSize);
+        }
+
+        this.add(headerPanel, BorderLayout.NORTH);
         this.add(mainPanel);
-        this.add(buttonsPanel);
+        this.add(buttonsPanel, BorderLayout.SOUTH);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         return this;
     }

@@ -2,11 +2,11 @@ package services;
 
 import java.util.ArrayList;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
-import entity.Artist;
-import entity.Genre;
+import entity.*;
 
 @Service
 public class ArtistService {
@@ -26,6 +26,6 @@ public class ArtistService {
             genres.add(new Genre(genreList));
         });
 
-        return new Artist(id, name, new ArrayList<>(), genres);
+        return new Artist(id, name, genres);
     }
 }
