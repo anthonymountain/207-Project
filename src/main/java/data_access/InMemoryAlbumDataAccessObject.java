@@ -5,7 +5,7 @@ import interface_adapters.spotify_auth.SpotifyAuthController;
 import use_case.rec_album.RecAlbumUserDataAccessInterface;
 
 
-public class InMemoryAlbumDataAccessObject implements RecAlbumDataAccessInterface {
+public class InMemoryAlbumDataAccessObject implements RecAlbumUserDataAccessInterface {
     private final SpotifyAuthController spotifyAuthController;
 
     public InMemoryAlbumDataAccessObject(SpotifyAuthController spotifyAuthController) {
