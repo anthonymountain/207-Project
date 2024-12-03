@@ -23,7 +23,7 @@ public class Main {
                                             .addRecSongView()
                                             .addRecGenreUseCase()
                                             .addRecSongUseCase()
-                                            .addRecArtistView()
+                                            //                                            .addRecArtistView()
                                             //                                            .addRecPlaylistView()
                                             .addLoginUseCase()
                                             .addLogoutUseCase()
