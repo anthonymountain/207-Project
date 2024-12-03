@@ -1,17 +1,11 @@
 package data_access;
 
 import entity.Album;
-import interface_adapters.spotify_auth.SpotifyAuthController;
+
 import use_case.rec_album.RecAlbumUserDataAccessInterface;
+
+import java.util.ArrayList;
 
 
 public class InMemoryAlbumDataAccessObject implements RecAlbumUserDataAccessInterface {
-    private final SpotifyAuthController spotifyAuthController;
-
-    public InMemoryAlbumDataAccessObject(SpotifyAuthController spotifyAuthController) {
-        this.spotifyAuthController = spotifyAuthController;
-    }
-
-    @Override
-    public Album recommendAlbum(Album album) {
-}
+    private final ArrayList<Album> recommended = new ArrayList<Album>();
