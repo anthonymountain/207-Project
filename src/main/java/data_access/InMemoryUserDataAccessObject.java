@@ -3,10 +3,12 @@ package data_access;
 import java.util.HashMap;
 import java.util.Map;
 
-import entity.*;
+import entity.Artist;
+import entity.Genre;
+import entity.Track;
+import entity.User;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
-import use_case.rec_artist.RecArtistUserDataAccessInterface;
 import use_case.rec_genre.RecGenreUserDataAccessInterface;
 import use_case.rec_song.RecSongUserDataAccessInterface;
 import use_case.rec_album.RecAlbumUserDataAccessInterface;
@@ -17,6 +19,7 @@ import use_case.rec_album.RecAlbumUserDataAccessInterface;
  */
 public class InMemoryUserDataAccessObject implements LoginUserDataAccessInterface,
         LogoutUserDataAccessInterface,
+        RecGenreUserDataAccessInterface {
         RecGenreUserDataAccessInterface,
         RecSongUserDataAccessInterface,
         RecArtistUserDataAccessInterface, RecAlbumUserDataAccessInterface {

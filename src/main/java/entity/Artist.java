@@ -8,7 +8,6 @@ import java.util.ArrayList;
 public class Artist {
     private final String id;
     private final String name;
-    private final ArrayList<Track> tracks;
     private final ArrayList<Genre> genres;
 
     /**
@@ -16,14 +15,12 @@ public class Artist {
      *
      * @param id the id of the artist
      * @param name the name of the artist
-     * @param tracks the tracks of the artist
      * @param genres the genres of the artist
      */
 
-    public Artist(String id, String name, ArrayList<Track> tracks, ArrayList<Genre> genres) {
+    public Artist(String id, String name, ArrayList<Genre> genres) {
         this.id = id;
         this.name = name;
-        this.tracks = tracks;
         this.genres = genres;
     }
 
@@ -31,9 +28,8 @@ public class Artist {
      * Null constructor for Artist.
      */
     public Artist() {
-        this.id = null;
-        this.name = null;
-        this.tracks = new ArrayList<>();
+        this.id = "";
+        this.name = "";
         this.genres = new ArrayList<>();
     }
 
@@ -53,15 +49,6 @@ public class Artist {
      */
     public String getName() {
         return name;
-    }
-
-    /**
-     * Returns the tracks of the artist.
-     *
-     * @return the tracks of the artist
-     */
-    public ArrayList<Track> getTracks() {
-        return tracks;
     }
 
     /**
