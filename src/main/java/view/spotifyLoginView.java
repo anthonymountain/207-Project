@@ -72,7 +72,7 @@ public class spotifyLoginView extends JPanel{
             // Create a new JFrame to hold the JavaFX WebView
             JFrame webViewFrame = new JFrame("Spotify Authorization");
             webViewFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            webViewFrame.setSize(800, 600);
+            webViewFrame.setSize(800, 800);
 
             // Create JavaFX Panel to integrate JavaFX into Swing
             JFXPanel fxPanel = new JFXPanel();

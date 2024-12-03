@@ -1,23 +1,29 @@
 package use_case.rec_artist;
 
+import entity.Artist;
+
 /**
  * Output Data for the RecArtist Use Case.
  */
 public class RecArtistOutputData {
 
-    private final String name;
+    private final Artist artist;
     private final boolean useCaseFailed;
 
-    public RecArtistOutputData(String name, boolean useCaseFailed) {
-        this.name = name;
+    public RecArtistOutputData(Artist artist, boolean useCaseFailed) {
+        this.artist = artist;
         this.useCaseFailed = useCaseFailed;
     }
 
     public String getName() {
-        return name;
+        return artist.getName();
     }
 
     public boolean isUseCaseFailed() {
         return useCaseFailed;
+    }
+
+    public Artist getArtist() {
+        return this.artist;
     }
 }
