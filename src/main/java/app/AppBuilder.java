@@ -117,15 +117,15 @@ public class AppBuilder {
         return this;
     }
 
-    /**
-     * Adds the RecSong View to the application.
-     * @return this builder
-     */
-    public AppBuilder addRecSongView() {
-        this.recSongView = new RecSongView();
-        cardPanel.add(recSongView.getView(), "Recommended Song");
-        return this;
-    }
+    //    /**
+    //     * Adds the RecSong View to the application.
+    //     * @return this builder
+    //     */
+    //    public AppBuilder addRecSongView() {
+    //        this.recSongView = new RecSongView();
+    //        cardPanel.add(recSongView.getView(), "Recommended Song");
+    //        return this;
+    //    }
 
     //    /**
     //     * Adds the RecArtist View to the application.
@@ -179,21 +179,6 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the RecSong Use Case to the application.
-     * @return this builder
-     */
-    public AppBuilder addRecSongUseCase() {
-        final RecSongOutputBoundary recSongOutputBoundary = new RecSongPresenter(viewManagerModel, recSongViewModel);
-
-        final RecSongInputBoundary recSongInteractor =
-                new RecSongInteractor(songDataAccessObject, recSongOutputBoundary);
-
-        final RecSongController recSongController = new RecSongController(recSongInteractor);
-        loggedInView.setRecSongController(recSongController);
-        return this;
-    }
-
-    /**
      * Adds the RecGenre Use Case to the application.
      * @return this builder
      */
@@ -215,6 +200,21 @@ public class AppBuilder {
 
         // Set Controller in the View
         recGenreView.setRecGenreController(recGenreController);
+        return this;
+    }
+
+    /**
+     * Adds the RecSong Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addRecSongUseCase() {
+        final RecSongOutputBoundary recSongOutputBoundary = new RecSongPresenter(viewManagerModel, recSongViewModel);
+
+        final RecSongInputBoundary recSongInteractor =
+                new RecSongInteractor(songDataAccessObject, recSongOutputBoundary);
+
+        final RecSongController recSongController = new RecSongController(recSongInteractor);
+        loggedInView.setRecSongController(recSongController);
         return this;
     }
 

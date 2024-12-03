@@ -29,6 +29,7 @@ public class RecArtistView extends JPanel {
 
     public RecArtistView() {
         builder.addLabel("Recommended Artist:")
+
                 .addButton("recSong", "Recommend Song")
                 .setViewName("Recommended Artist");
 
@@ -59,7 +60,7 @@ public class RecArtistView extends JPanel {
      */
     public void setArtist(Artist artist) {
         this.artist = artist;
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         final JPanel artistPanel = new JPanel();
         artistPanel.setBackground(DARK_BACKGROUND);
 
