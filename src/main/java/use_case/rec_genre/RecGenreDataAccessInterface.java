@@ -1,5 +1,8 @@
 package use_case.rec_genre;
 
+import java.util.ArrayList;
+
+import entity.Artist;
 import entity.Genre;
 
 /**
@@ -12,7 +15,16 @@ public interface RecGenreDataAccessInterface {
      * @param genre the new song
      */
     void recommendGenre(Genre genre);
-    // add duplicate check
-    // add previous recommended song retrieval (from list)
-    // add recommendation saving (to list)
+
+    /**
+     * Retrive the genre.
+     * @return the genre.
+     */
+    Genre getGenre();
+
+    /**
+     * Retrieve the user's top artists.
+     * @return the user's top artists.
+     */
+    ArrayList<Artist> getUserTopArtists();
 }
