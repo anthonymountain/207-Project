@@ -4,42 +4,47 @@ import java.awt.*;
 
 import javax.swing.*;
 
+import entity.Artist;
+import entity.Genre;
+import interface_adapter.rec_artist.RecArtistController;
 import interface_adapter.rec_genre.RecGenreController;
+import interface_adapter.rec_genre.RecGenreViewModel;
 import use_case.rec_genre.RecGenreOutputData;
 
 /**
  * The View for when the user generates a genre recommendation.
  */
-public class RecGenreView {
+public class RecGenreView extends JPanel {
 
     private static final String FONT = "Futura";
+    private static final int TEN = 10;
+    private static final int FOUR_HUNDERED = 400;
     private static final Color DARK_BACKGROUND = new Color(24, 24, 32);
     private static final Color SPOTIFY_GREEN = new Color(30, 215, 96);
     private static final Color BUTTON_TEXT_COLOR = Color.WHITE;
 
+    private final ViewBuilder builder = new ViewBuilder();
+
     private final JPanel view;
-    private JLabel genreLabel;
     private RecGenreController recGenreController;
+    private JButton recGenre;
+    private Genre genre;
 
     /**
-     * Constructs the view for the recommended genre using ViewBuilder.
+     * Constructs the view for Recommend Genre.
      */
     public RecGenreView() {
-        // Create a ViewBuilder instance
-        final ViewBuilder viewBuilder = new ViewBuilder();
+        builder.addLabel("Recommend Genre")
+            .addButton("recSong", "Recommend Genre")
+            .setViewName("Recommended Genre");
 
-        // Add a header label
-        viewBuilder.addLabel("Recommended Genre");
+        builder.setPreferredSize(FOUR_HUNDERED, FOUR_HUNDERED);
+        view = builder.build();
+        this.add(view);
+        this.setBackground(DARK_BACKGROUND);
+        view.setBorder(BorderFactory.createEmptyBorder(TEN, TEN, TEN, TEN));
 
-        // Create the genre label and add it directly here
-        genreLabel = new JLabel("New Genre: placeholder_name");
-        genreLabel.setFont(new Font(FONT, Font.PLAIN, 14));
-        genreLabel.setForeground(BUTTON_TEXT_COLOR);
-        genreLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        viewBuilder.add(genreLabel);
-
-        // Build the view
-        this.view = viewBuilder.build();
+        recGenre = builder.getButton("recSong");
     }
 
     /**
@@ -53,10 +58,17 @@ public class RecGenreView {
 
     /**
      * Sets the controller for managing genre recommendations.
-     *
-     * @param recGenreController the genre recommendation controller
+     * @param recGenreViewModel the ViewModel to set the view.
      */
-    public void setRecGenreController(RecGenreController recGenreController) {
-        this.recGenreController = recGenreController;
+    public void setGenre(RecGenreViewModel recGenreViewModel) {
+        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        final JPanel artistPanel = new JPanel();
+        artistPanel.setBackground(DARK_BACKGROUND);
+
+        builder.addHeaderLabel(recGenreViewModel.getArtistName());
+        final JLabel artistLabel = builder.getLabel(RecGenreViewModel.getArtistName());
+        artistLabel.setFont(ViewBuilder.LABEL_FONT);
+        artistLabel.setForeground(ViewBuilder.BUTTON_TEXT_COLOR);
+        artistLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
     }
 }
