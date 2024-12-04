@@ -21,12 +21,13 @@ public class RecGenreView extends JPanel {
 
     private final JPanel view;
     private RecGenreController recGenreController;
-    private JButton recGenre;
 
     /**
      * Constructs the view for Recommend Genre.
+     * @param recGenreController the controller for this use case
      */
-    public RecGenreView() {
+    public RecGenreView(RecGenreController recGenreController) {
+        this.recGenreController = recGenreController;
         builder.addLabel("Recommend Genre")
             .addButton("recSong", "Recommend Genre")
             .setViewName("Recommended Genre");
@@ -37,7 +38,7 @@ public class RecGenreView extends JPanel {
         this.setBackground(DARK_BACKGROUND);
         view.setBorder(BorderFactory.createEmptyBorder(TEN, TEN, TEN, TEN));
 
-        recGenre = builder.getButton("recSong");
+        final JButton recGenre = builder.getButton("recSong");
 
         recGenre.addActionListener(evt -> {
             if (recGenreController != null) {
