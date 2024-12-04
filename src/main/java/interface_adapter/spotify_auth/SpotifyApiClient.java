@@ -315,6 +315,46 @@ public class SpotifyApiClient {
         }
     }
 
-    public ArrayList<Album> getNewReleases() {
-    }
+    /**
+     * Get the user's top items so we have a seed for getRecommendations().
+     *
+     * @return A JSON string containing the user's top items.
+     * @throws RuntimeException yaddi yadda.
+     */
+    public String getNewReleases() {
+        try {
+            final String accessToken = tokenService.getToken();
+
+            final URI uri = new URI(
+                    String.format("https://api.spotify.com/v1/browse/new-releases"));
+            // prob not this.
+
+            final HttpRequest request = HttpRequest.newBuilder()
+                    .uri(uri)
+                    .header(AUTHORIZATION, BEARER + accessToken)
+                    .GET()
+                    .build();
+
+            final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            return response.body();
+
+            final ArrayList<Album> albums = new ArrayList<Album>();
+            final JSONArray albumsJsonArray = jsonResponse.getJSONArray("items");
+            for (int i = 0; i < albumsJsonArray.length(); i++) {
+                final JSONObject albumJson = albumsJsonArray.getJSONObject(i);
+                final Track album = albumService.parseAlbumFromJson(albumJson);
+                albums.add(album);
+            }
+            return albums;
+        }
+        catch (IOException ex) {
+            throw new RuntimeException("Failed to fetch top items", ex);
+        }
+        catch (InterruptedException ex) {
+            throw new RuntimeException("Request interrupted", ex);
+        }
+        catch (URISyntaxException ex) {
+            throw new RuntimeException("Invalid URI", ex);
+        }
+
 }

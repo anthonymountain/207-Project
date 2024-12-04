@@ -24,14 +24,14 @@ public class AlbumService {
      * Gets the most popular new release.
      * @return the most popular new release.
      */
-    public Album getMostPopularNewRelease() {
-        final ArrayList<Album> response = spotifyApiClient.getNewReleases();
+    public Album getMostPopularNewRelease(JSONObject albumJson) {
+
         final ArtistService artistService = new ArtistService();
         final TrackService trackService = new TrackService();
         final JSONObject jsonObject = new JSONObject(response);
         final JSONArray albums = jsonObject.getJSONObject("albums").getJSONArray("items");
 
-        Album mostPopularAlbum = null;
+        Album mostPopularAlbum;
         int highestPopularity = -1;
 
         for (int i = 0; i < albums.length(); i++) {
