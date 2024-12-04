@@ -1,13 +1,11 @@
 package app;
 
 import java.awt.CardLayout;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import ch.qos.logback.core.subst.Token;
 import data_access.*;
 import entity.*;
 import interface_adapter.ViewManagerModel;
@@ -42,12 +40,7 @@ import view.*;
 public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
-    private final User user = new User();
-    private final Track track = new Track();
-    private final Genre genre = new Genre();
-    private final Artist artist = new Artist();
-    private final Playlist playlist = new Playlist();
-    // thought question: is the hard dependency below a problem?
+
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
