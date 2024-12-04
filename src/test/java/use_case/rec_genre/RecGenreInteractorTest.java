@@ -1,90 +1,136 @@
 package use_case.rec_genre;
 
-import data_access.InMemoryUserDataAccessObject;
-import entity.CommonGenreFactory;
-import entity.Genre;
 import entity.Genre;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
-class RecGenreInteractorTest {
+/**
+ * Unit tests for RecGenreInteractor without using Mockito.
+ */
+public class RecGenreInteractorTest {
+
+    private TestRecGenreDataAccess testDataAccess;
+    private TestRecGenrePresenter testPresenter;
     private RecGenreInteractor interactor;
-    private TestRecGenreUserDataAccess dataAccess;
-    private TestRecGenreOutputBoundary presenter;
 
     @BeforeEach
-    void setUp() {
-        GenreFactory genreFactory = new CommonGenreFactory();
-        dataAccess = new TestRecGenreUserDataAccess();
-        presenter = new TestRecGenreOutputBoundary();
-
-        interactor = new RecGenreInteractor(dataAccess, presenter, genreFactory);
+    public void setUp() {
+        testDataAccess = new TestRecGenreDataAccess();
+        testPresenter = new TestRecGenrePresenter();
+        interactor = new RecGenreInteractor(testDataAccess, testPresenter);
     }
 
     @Test
-    void testExecuteSuccess() {
-        // Arrange
-        RecGenreInputData inputData = new RecGenreInputData("Rock", "Energetic music");
+    public void testExecute_NoGenresFound() {
+        // Test with no genres available
+        testDataAccess.setGenre(null);
 
-        // Act
+        // Execute the use case
+        RecGenreInputData inputData = new RecGenreInputData();
         interactor.execute(inputData);
 
-        // Assert
-        // Verify that the Genre was created and recommended
-        assertNotNull(dataAccess.recommendedGenre);
-        assertEquals("Rock", dataAccess.recommendedGenre.getType());
-        assertEquals("Energetic music", dataAccess.recommendedGenre.getDescription());
-
-        // Verify that the presenter received the correct output
-        assertNotNull(presenter.outputData);
-        assertEquals(dataAccess.recommendedGenre, presenter.outputData.getGenre());
+        // Assert failure message
+        assertEquals("No preferred genres found for user.", testPresenter.getFailureMessage());
     }
 
     @Test
-    void testExecuteWithNullInput() {
-        // Act & Assert
-        assertThrows(NullPointerException.class, () -> interactor.execute(null));
-    }
+    public void testExecute_EmptyGenreList() {
+        // Test with an empty genre list
+        testDataAccess.setGenre(new Genre(new ArrayList<>())) ;
 
-    @Test
-    void testExecuteWithIncompleteInput() {
-        // Arrange
-        RecGenreInputData inputData = new RecGenreInputData(null, null);
-
-        // Act
+        // Execute the use case
+        RecGenreInputData inputData = new RecGenreInputData();
         interactor.execute(inputData);
 
-        // Assert
-        // Verify that an incomplete Genre is passed to dataAccess
-        assertNotNull(dataAccess.recommendedGenre);
-        assertNull(dataAccess.recommendedGenre.getType());
-        assertNull(dataAccess.recommendedGenre.getDescription());
-
-        // Verify that the presenter still receives an output
-        assertNotNull(presenter.outputData);
-        assertEquals(dataAccess.recommendedGenre, presenter.outputData.getGenre());
+        // Assert failure message
+        assertEquals("No preferred genres found for user.", testPresenter.getFailureMessage());
     }
 
-    // Stub class for testing RecGenreUserDataAccessInterface
-    private static class TestRecGenreUserDataAccess implements RecGenreUserDataAccessInterface {
-        Genre recommendedGenre;
+    @Test
+    public void testExecute_EmptyGenresInUserPreferences() {
+        // Test with a genre that has an empty list of genres
+        Genre genreWithEmptyList = new Genre(new ArrayList<>());
+        testDataAccess.setGenre(genreWithEmptyList);
+
+        // Execute the use case
+        RecGenreInputData inputData = new RecGenreInputData();
+        interactor.execute(inputData);
+
+        // Assert failure message
+        assertEquals("No genres found in the user's preferences.", testPresenter.getFailureMessage());
+    }
+
+    @Test
+    public void testExecute_GenreRecommendationSuccess() {
+        // Test with a list of genres
+        ArrayList<String> genres = new ArrayList<>();
+        genres.add("rock");
+        genres.add("jazz");
+        testDataAccess.setGenre(new Genre(genres));
+
+        // Execute the use case
+        RecGenreInputData inputData = new RecGenreInputData();
+        interactor.execute(inputData);
+
+        // Assert success message
+        assertNotNull(testPresenter.getSuccessData());
+    }
+
+    @Test
+    public void testExecute_GenreRecommendationSpecificCheck() {
+        // Test with a specific genre
+        ArrayList<String> genres = new ArrayList<>();
+        genres.add("rock");
+        testDataAccess.setGenre(new Genre(genres));
+
+        // Execute the use case
+        RecGenreInputData inputData = new RecGenreInputData();
+        interactor.execute(inputData);
+
+        // Assert specific genre recommended
+        Genre recommendedGenre = testPresenter.getSuccessData().getGenre();
+        assertEquals("rock", recommendedGenre.getGenres().get(0));
+    }
+
+    // Test implementations for RecGenreDataAccessInterface and RecGenreOutputBoundary
+    static class TestRecGenreDataAccess implements RecGenreDataAccessInterface {
+        private Genre genre;
+
+        public void setGenre(Genre genre) {
+            this.genre = genre;
+        }
 
         @Override
-        public void recommendGenre(Genre genre) {
-            this.recommendedGenre = genre;
+        public Genre getGenre() {
+            return genre;
         }
     }
 
-    // Stub class for testing RecGenreOutputBoundary
-    private static class TestRecGenreOutputBoundary implements RecGenreOutputBoundary {
-        RecGenreOutputData outputData;
+    static class TestRecGenrePresenter implements RecGenreOutputBoundary {
+        private String failureMessage;
+        private RecGenreOutputData successData;
+
+        @Override
+        public void prepareFailView(String message) {
+            this.failureMessage = message;
+        }
 
         @Override
         public void prepareSuccessView(RecGenreOutputData outputData) {
-            this.outputData = outputData;
+            this.successData = outputData;
+        }
+
+        public String getFailureMessage() {
+            return failureMessage;
+        }
+
+        public RecGenreOutputData getSuccessData() {
+            return successData;
         }
     }
 }
-
