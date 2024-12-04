@@ -9,9 +9,9 @@ public interface RecGenreUserDataAccessInterface {
 
     /**
      * Recommends a song for the user.
-     * @return returns a genre
+     * @param genre the new song
      */
-    Genre recommendGenre();
+    void recommendGenre(Genre genre);
     // add duplicate check
     // add previous recommended song retrieval (from list)
     // add recommendation saving (to list)
