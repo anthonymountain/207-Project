@@ -1,8 +1,8 @@
 package use_case.rec_artist;
 
-import entity.Artist;
-
 import java.util.ArrayList;
+
+import entity.Artist;
 
 /**
  * The Recommend Artist Interactor.

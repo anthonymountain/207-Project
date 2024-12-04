@@ -18,7 +18,9 @@ public class RecGenreInteractor implements RecGenreInputBoundary {
     @Override
     public void execute(RecGenreInputData recGenreInputData) {
         // Create a Genre instance using the input data
-        final Genre genre = new Genre(recGenreInputData.getGenres());
+
+
+        final Genre genre = new Genre(recGenreInputData());
 
         // Save or process the genre recommendation
         recGenreUserDataAccessObject.recommendGenre(genre);
