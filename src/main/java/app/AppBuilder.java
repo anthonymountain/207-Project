@@ -16,6 +16,7 @@ import interface_adapter.rec_genre.*;
 import interface_adapter.rec_playlist.*;
 import interface_adapter.rec_track.*;
 import interface_adapter.spotify_auth.*;
+import services.StorePlaylistService;
 import services.TokenService;
 import use_case.login.*;
 import use_case.logout.*;
@@ -51,12 +52,12 @@ public class AppBuilder {
     // thought question: is the hard dependency below a problem?
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
     private final TokenService tokenService = new TokenService();
-    private final SpotifyLoginView spotifyLoginView = new SpotifyLoginView(tokenService, viewManagerModel);
+    private final StorePlaylistService storePlaylistService = new StorePlaylistService();
+    private final spotifyLoginView spotifyLoginView = new spotifyLoginView(tokenService, viewManagerModel);
     private final SpotifyAuthController spotifyAuthController = new SpotifyAuthController(tokenService);
     private final InMemoryTrackDataAccessObject trackDataAccessObject = new InMemoryTrackDataAccessObject(spotifyAuthController);
     private final InMemoryPlaylistDataAccessObject playlistDataAccessObject = new InMemoryPlaylistDataAccessObject(spotifyAuthController);
     private final InMemoryArtistDataAccessObject artistDataAccessObject = new InMemoryArtistDataAccessObject(spotifyAuthController);
-
     private LoginViewModel loginViewModel;
     private LoggedInViewModel loggedInViewModel;
     private LoggedInView loggedInView;
@@ -238,7 +239,7 @@ public class AppBuilder {
      */
     public AppBuilder addRecPlaylistUseCase() {
         final RecPlaylistOutputBoundary recPlaylistOutputBoundary = new RecPlaylistPresenter(viewManagerModel,
-            recPlaylistViewModel);
+            recPlaylistViewModel, storePlaylistService, spotifyAuthController);
 
         final RecPlaylistInputBoundary recPlaylistInteractor =
                 new RecPlaylistInteractor(playlistDataAccessObject, recPlaylistOutputBoundary);
