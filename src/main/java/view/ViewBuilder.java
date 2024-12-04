@@ -159,8 +159,8 @@ public class ViewBuilder extends JPanel {
         }
 
         this.add(headerPanel, BorderLayout.NORTH);
-        this.add(mainPanel);
         this.add(buttonsPanel, BorderLayout.SOUTH);
+        this.add(mainPanel);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         return this;
     }
