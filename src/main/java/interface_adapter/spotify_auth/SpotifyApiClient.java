@@ -16,6 +16,7 @@ import org.springframework.stereotype.Component;
 import entity.Artist;
 import entity.Track;
 import entity.Album;
+import services.AlbumService;
 import services.ArtistService;
 import services.TokenService;
 import services.TrackService;
@@ -32,8 +33,10 @@ public class SpotifyApiClient {
     private final TokenService tokenService;
     private final ArtistService artistService;
     private final TrackService trackService;
+    private final AlbumService albumService;
 
     public SpotifyApiClient(TokenService tokenService) {
+        this.albumService = new AlbumService();
         this.artistService = new ArtistService();
         this.trackService = new TrackService();
         this.httpClient = HttpClient.newHttpClient();
@@ -321,7 +324,7 @@ public class SpotifyApiClient {
      * @return A JSON string containing the user's top items.
      * @throws RuntimeException yaddi yadda.
      */
-    public String getNewReleases() {
+    public ArrayList<Album> getNewReleases() {
         try {
             final String accessToken = tokenService.getToken();
 
@@ -336,13 +339,13 @@ public class SpotifyApiClient {
                     .build();
 
             final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
-            return response.body();
 
             final ArrayList<Album> albums = new ArrayList<Album>();
+            final JSONObject jsonResponse = new JSONObject(response.body());
             final JSONArray albumsJsonArray = jsonResponse.getJSONArray("items");
             for (int i = 0; i < albumsJsonArray.length(); i++) {
                 final JSONObject albumJson = albumsJsonArray.getJSONObject(i);
-                final Track album = albumService.parseAlbumFromJson(albumJson);
+                final Album album = albumService.getMostPopularNewRelease(albumJson);
                 albums.add(album);
             }
             return albums;
@@ -356,5 +359,5 @@ public class SpotifyApiClient {
         catch (URISyntaxException ex) {
             throw new RuntimeException("Invalid URI", ex);
         }
-
+    }
 }

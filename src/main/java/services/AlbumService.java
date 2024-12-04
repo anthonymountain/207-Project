@@ -6,36 +6,26 @@ import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
 import entity.Album;
-import interface_adapter.spotify_auth.SpotifyApiClient;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 @Service
 public class AlbumService {
-
-    private final SpotifyApiClient spotifyApiClient;
-
-    public AlbumService(TokenService tokenService) {
-        this.spotifyApiClient = new SpotifyApiClient(tokenService);
-    }
-
     /**
      * Gets the most popular new release.
+     * @param albumJson the JSON object response from the API.
      * @return the most popular new release.
      */
     public Album getMostPopularNewRelease(JSONObject albumJson) {
 
         final ArtistService artistService = new ArtistService();
         final TrackService trackService = new TrackService();
-        final JSONObject jsonObject = new JSONObject(response);
-        final JSONArray albums = jsonObject.getJSONObject("albums").getJSONArray("items");
+        final JSONArray albums = albumJson.getJSONArray("items");
 
-        Album mostPopularAlbum;
+        Album mostPopularAlbum = new Album("", "", 0, new ArrayList<Artist>(), new ArrayList<Track>());
         int highestPopularity = -1;
 
         for (int i = 0; i < albums.length(); i++) {
-            final JSONObject albumJson = albums.getJSONObject(i);
             final int popularity = albumJson.getInt("popularity");
 
             if (popularity > highestPopularity) {
