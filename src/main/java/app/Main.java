@@ -21,7 +21,6 @@ public class Main {
                                             .addLoggedInView()
                                             .addRecGenreView()
                                             .addRecGenreUseCase()
-                                            .addRecSongUseCase()
                                             .addRecTrackUseCase()
                                             .addLoginUseCase()
                                             .addLogoutUseCase()
