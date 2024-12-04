@@ -5,9 +5,14 @@ import javax.swing.*;
 import entity.DisplayPlaylist;
 import entity.Playlist;
 import entity.Track;
+import interface_adapter.import_playlist.ImportPlaylistController;
+import interface_adapter.import_playlist.ImportPlaylistPresenter;
 import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.rec_playlist.RecPlaylistController;
 import interface_adapter.rec_playlist.RecPlaylistViewModel;
+import services.StorePlaylistService;
+import use_case.import_playlist.ImportPlaylistInteractor;
+
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -19,8 +24,11 @@ import java.util.ArrayList;
 public class RecPlaylistView extends JPanel {
 
     private final JPanel view;
-    //    private ImportPlaylistController importPlaylistController;
+    private ImportPlaylistController importPlaylistController = new ImportPlaylistController();
+    private ImportPlaylistInteractor importPlaylistInteractor = new ImportPlaylistInteractor(importPlaylistPresenter);
+    private ImportPlaylistPresenter importPlaylistPresenter = new ImportPlaylistPresenter();
     private ArrayList<Track> playlist;
+    private StorePlaylistService storage;
 
     //    private static final String FONT = "Futura";
     private static final int TWENTY = 20;
@@ -28,7 +36,7 @@ public class RecPlaylistView extends JPanel {
 
     private static final Color DARK_BACKGROUND = new Color(24, 24, 32);
 
-    public RecPlaylistView() {
+    public RecPlaylistView(StorePlaylistService storage) {
         final ViewBuilder builder = new ViewBuilder();
 
         builder.addLabel("New Playlist: Recommended Playlist")
@@ -42,7 +50,7 @@ public class RecPlaylistView extends JPanel {
 
         importPlaylist = builder.getButton("importplaylist");
 
-    //        initializeButtonActions();
+        initializeButtonActions();
     }
 
     private void initializeButtonActions () {
@@ -50,7 +58,7 @@ public class RecPlaylistView extends JPanel {
     }
 
     private void handleImportPlaylistAction () {
-        // importPlaylistController.execute();
+         importPlaylistController.execute(storage);
     }
 
     //    public void setImportPlaylistController(ImportPlaylistController importPlaylistController) {
@@ -63,6 +71,7 @@ public class RecPlaylistView extends JPanel {
      */
     public void setPlaylist(ArrayList<Track> playlist) {
         this.playlist = playlist;
+        storage.storePlaylist(playlist);
         final JPanel playlistPanel = new JPanel();
         playlistPanel.setBackground(DARK_BACKGROUND);
 
