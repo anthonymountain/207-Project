@@ -3,13 +3,9 @@ package data_access;
 import java.util.HashMap;
 import java.util.Map;
 
-import entity.Artist;
-import entity.Genre;
-import entity.Track;
 import entity.User;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
-import use_case.rec_genre.RecGenreDataAccessInterface;
 
 /**
  * In-memory implementation of the DAO for storing user data. This implementation does
@@ -21,10 +17,6 @@ public class InMemoryUserDataAccessObject implements LoginUserDataAccessInterfac
     private final Map<String, User> users = new HashMap<>();
 
     private String currentUsername;
-    private Track recommendedSong;
-    private Genre recommendedGenre;
-    private Artist recommendedArtist;
-    private Genre genre;
 
     @Override
     public boolean existsByName(String identifier) {
