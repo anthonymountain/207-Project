@@ -11,7 +11,6 @@ public class Album {
     private final int popularity;
     private final ArrayList<Artist> artists;
     private final ArrayList<Track> tracks;
-    private final ArrayList<Genre> genres;
 
     /**
      * Creates an album.
@@ -21,17 +20,15 @@ public class Album {
      * @param popularity the popularity of the album
      * @param artists the artists of the album
      * @param tracks the tracks of the album
-     * @param genres the genres of the album
      */
 
     public Album(String id, String name, int popularity,
-                 ArrayList<Artist> artists, ArrayList<Track> tracks, ArrayList<Genre> genres) {
+                 ArrayList<Artist> artists, ArrayList<Track> tracks) {
         this.id = id;
         this.name = name;
         this.popularity = popularity;
         this.artists = artists;
         this.tracks = tracks;
-        this.genres = genres;
     }
 
     /**
@@ -43,7 +40,6 @@ public class Album {
         this.popularity = 0;
         this.artists = new ArrayList<>();
         this.tracks = new ArrayList<>();
-        this.genres = new ArrayList<>();
     }
 
     /**
@@ -90,14 +86,4 @@ public class Album {
     public ArrayList<Track> getTracks() {
         return tracks;
     }
-
-    /**
-     * Returns the genres of the album.
-     *
-     * @return the genres of the album
-     */
-    public ArrayList<Genre> getGenres() {
-        return genres;
-    }
-
 }

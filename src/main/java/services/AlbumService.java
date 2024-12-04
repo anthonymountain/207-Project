@@ -1,6 +1,6 @@
 package services;
 
-import entity.Artist;
+import entity.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
@@ -27,6 +27,7 @@ public class AlbumService {
     public Album getMostPopularNewRelease() {
         final ArrayList<Album> response = spotifyApiClient.getNewReleases();
         final ArtistService artistService = new ArtistService();
+        final TrackService trackService = new TrackService();
         final JSONObject jsonObject = new JSONObject(response);
         final JSONArray albums = jsonObject.getJSONObject("albums").getJSONArray("items");
 
@@ -39,20 +40,24 @@ public class AlbumService {
 
             if (popularity > highestPopularity) {
                 highestPopularity = popularity;
-                ArrayList<Artist> artists = new ArrayList<>;
-                JSONArray artistArray = albumJson.getJSONArray("artists");
+                final ArrayList<Artist> artists = new ArrayList<>();
+                final JSONArray artistArray = albumJson.getJSONArray("artists");
                 for (int j = 0; j < artistArray.length(); j++) {
-                    JSONObject artistJson = artistArray.getJSONObject(j);
+                    final JSONObject artistJson = artistArray.getJSONObject(j);
                     artists.add(artistService.parseArtistFromJson(artistJson));
                 }
-                ArrayList<Track> tracks = new ArrayList<>();
+                final ArrayList<Track> tracks = new ArrayList<>();
+                final JSONArray trackArray = albumJson.getJSONObject("tracks").getJSONArray("items");
+                for (int j = 0; j < trackArray.length(); j++) {
+                    final JSONObject trackJson = trackArray.getJSONObject(j);
+                    tracks.add(trackService.parseTrackFromJson(trackJson));
+                }
                 mostPopularAlbum = new Album(
                         albumJson.getString("id"),
                         albumJson.getString("name"),
                         albumJson.getInt("popularity"),
                         artists,
-                        albumJson.getJSONArray("tracks"),
-                        albumJson.getJSONArray("genres")
+                        tracks
                 );
             }
         }
