@@ -35,7 +35,7 @@ public class RecPlaylistView extends JPanel {
                 .addButton("importplaylist", "Import Playlist")
                 .setViewName("Recommended Playlist");
         view = builder.build();
-        this.setLayout(new GridLayout(0, 1));
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         this.add(view);
         this.setBackground(DARK_BACKGROUND);
 //        view.setBorder(BorderFactory.createEmptyBorder(TWENTY, TWENTY, TWENTY, TWENTY));
@@ -72,7 +72,7 @@ public class RecPlaylistView extends JPanel {
             final JLabel playlistLabel = new JLabel(currentTrack.getName());
             playlistLabel.setFont(ViewBuilder.LABEL_FONT);
             playlistLabel.setForeground(ViewBuilder.BUTTON_TEXT_COLOR);
-            playlistLabel.setAlignmentY(Component.TOP_ALIGNMENT);
+            playlistLabel.setAlignmentX(Component.TOP_ALIGNMENT);
             playlistPanel.add(playlistLabel);
             playlistPanel.add(Box.createRigidArea(new Dimension(10, 10)));
         }
