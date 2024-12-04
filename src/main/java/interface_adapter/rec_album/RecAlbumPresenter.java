@@ -24,7 +24,7 @@ public class RecAlbumPresenter implements RecAlbumOutputBoundary {
         final JDialog dialog = new JDialog(new JFrame(),
                 "Album Recommendation", true);
         final RecAlbumView recAlbumView = new RecAlbumView();
-        recAlbumView.setAlbumName(outputData.getAlbumName());
+        recAlbumView.setAlbum(outputData.getAlbum());
         dialog.getContentPane().add(recAlbumView);
         dialog.pack();
         dialog.setResizable(false);

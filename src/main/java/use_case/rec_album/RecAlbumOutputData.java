@@ -1,12 +1,16 @@
 package use_case.rec_album;
 
+import entity.Album;
+
+import java.util.ArrayList;
+
 public class RecAlbumOutputData {
     private final String id;
     private final String name;
     private final boolean success;
     private final String message;
 
-    public RecAlbumOutputData(String albumId, String albumName, String id, String name, boolean success, String message) {
+    public RecAlbumOutputData(String id, String name, boolean success, String message) {
         this.id = id;
         this.name = name;
         this.success = success;
@@ -27,6 +31,10 @@ public class RecAlbumOutputData {
 
     public String getMessage() {
         return message;
+    }
+
+    public Album getAlbum() {
+        return new Album(this.id, this.name, 0, new ArrayList<>(), new ArrayList<>());
     }
 }
 
