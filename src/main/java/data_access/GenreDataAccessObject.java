@@ -1,12 +1,8 @@
 package data_access;
 
-import entity.Artist;
 import entity.Genre;
-import entity.Track;
 import interface_adapter.spotify_auth.SpotifyAuthController;
 import use_case.rec_genre.RecGenreDataAccessInterface;
-
-import java.util.ArrayList;
 
 /**
  * This DAO is going to get data for genres.

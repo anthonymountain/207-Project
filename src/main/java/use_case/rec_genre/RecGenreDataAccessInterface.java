@@ -15,6 +15,7 @@ public interface RecGenreDataAccessInterface {
 
     /**
      * Sets the genre.
+     * @param genre the genre to be set
      */
-    void setGenre();
+    void setGenre(Genre genre);
 }
