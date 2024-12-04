@@ -115,7 +115,7 @@ public class SpotifyApiClient {
      * @param trackUris  JSON array of track URIs to add to the playlist.
      * @throws RuntimeException for funsies.
      */
-    public void addTracksToPlaylist(String playlistId, JSONArray trackUris) {
+    public void addTracksToPlaylist(String playlistId, String trackUris) {
         try {
             final String accessToken = tokenService.getToken();
 

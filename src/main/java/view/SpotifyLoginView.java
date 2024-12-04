@@ -132,3 +132,27 @@ public class SpotifyLoginView extends JPanel{
 
             JOptionPane.showMessageDialog(mainFrame, "Access token stored. You can now use the app.");
             mainFrame.dispose(); // Close the login window
+
+        } catch (Exception e) {
+            showError("Failed to store access token: " + e.getMessage());
+        }
+    }
+
+    /**
+     * Displays an error message in a popup dialog.
+     *
+     * @param message The error message to display.
+     */
+    private void showError(String message) {
+        JOptionPane.showMessageDialog(mainFrame, message, "Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    /**
+     * Returns the name of the view.
+     *
+     * @return The name of the view.
+     */
+    public String getViewName() {
+        return viewName;
+}
+}

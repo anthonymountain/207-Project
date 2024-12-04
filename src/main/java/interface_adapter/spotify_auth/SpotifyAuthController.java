@@ -15,6 +15,9 @@ import services.AlbumService;
 import services.PlaylistService;
 import services.RecommendationService;
 import services.TokenService;
+import services.UserService;
+
+import java.util.List;
 
 import java.util.ArrayList;
 
@@ -24,10 +27,12 @@ public class SpotifyAuthController {
 
     private final RecommendationService recommendationService;
     private final PlaylistService playlistService;
+    private final UserService userService;
 
     public SpotifyAuthController(TokenService tokenService) {
         this.recommendationService = new RecommendationService(tokenService);
         this.playlistService = new PlaylistService(tokenService);
+        this.userService = new UserService();
     }
 
     @GetMapping("/recommendation")
@@ -60,11 +65,11 @@ public class SpotifyAuthController {
     }
 
     @PostMapping("/playlist/recommendations")
-    public String createPlaylistForRecommendations(
-            @RequestBody JSONArray recommendations,
+    public String createPlaylist(
+            @RequestBody String tracks,
             @RequestParam String userId
     ) {
-        return playlistService.createPlaylistForRecommendations(userId, recommendations);
+        return playlistService.createPlaylist(userId, tracks);
     }
 
     @PostMapping("/playlist/artist")
@@ -79,5 +84,9 @@ public class SpotifyAuthController {
     @GetMapping("/browse/new-releases")
     public ArrayList<Album> getNewReleases() {
         return recommendationService.getNewReleases();
+    }
+
+    public String getCurrentUserProfile() {
+        return userService.createUserFromJson(playlistService.getCurrentUserProfile()).getId();
     }
 }

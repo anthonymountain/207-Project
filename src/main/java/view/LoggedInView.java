@@ -17,7 +17,7 @@ import interface_adapter.rec_album.RecAlbumController;
 import interface_adapter.rec_artist.RecArtistController;
 import interface_adapter.rec_genre.RecGenreController;
 import interface_adapter.rec_playlist.RecPlaylistController;
-import interface_adapter.rec_song.RecSongController;
+import interface_adapter.rec_track.RecTrackController;
 
 /**
  * The View for the LoggedIn Use Case.
@@ -42,7 +42,7 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
     private JButton logOut;
     private JButton recArtist;
     private JButton recPlaylist;
-    private JButton recSong;
+    private JButton recTrack;
     private JButton recGenre;
     private JButton recAlbum;
     private final ViewBuilder viewBuilder;
@@ -50,7 +50,7 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
     private LogoutController logoutController;
     private RecPlaylistController recPlaylistController;
     private RecArtistController recArtistController;
-    private RecSongController recSongController;
+    private RecTrackController recTrackController;
     private RecGenreController recGenreController;
     private RecAlbumController recAlbumController;
 
@@ -64,7 +64,7 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
 
         viewBuilder = new ViewBuilder();
         viewBuilder.addLabel("Currently logged in: ")
-                .addButton("recSong", "Recommend Song")
+                .addButton("recTrack", "Recommend Track")
                 .addButton("recArtist", "Recommend Artist")
                 .addButton("recGenre", "Recommend Genre")
                 .addButton("recPlaylist", "Recommend Playlist")
@@ -72,7 +72,7 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
                 .addButton("logout", "Log Out")
                 .setViewName(viewName);
 
-        recSong = viewBuilder.getButton("recSong");
+        recTrack = viewBuilder.getButton("recTrack");
         recGenre = viewBuilder.getButton("recGenre");
         recArtist = viewBuilder.getButton("recArtist");
         recPlaylist = viewBuilder.getButton("recPlaylist");
@@ -110,7 +110,7 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
     private void initializeButtonActions(LoggedInViewModel viewModel) {
         logOut.addActionListener(evt -> handleLogoutAction(viewModel));
         recGenre.addActionListener(evt -> openGenreRecommendationDialog());
-        recSong.addActionListener(evt -> openSongRecommendationDialog());
+        recTrack.addActionListener(evt -> openTrackRecommendationDialog());
         recArtist.addActionListener(evt -> openArtistRecommendationDialog());
         recPlaylist.addActionListener(evt -> openPlaylistRecommendationDialog());
         recAlbum.addActionListener(evt -> openAlbumRecommendationDialog());
@@ -125,8 +125,8 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
         recGenreController.execute();
     }
 
-    private void openSongRecommendationDialog() {
-        recSongController.execute(null, null, 0, null, null);
+    private void openTrackRecommendationDialog() {
+        recTrackController.execute();
     }
 
     private void openArtistRecommendationDialog() {
@@ -165,8 +165,8 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
         this.recPlaylistController = recPlaylistController;
     }
 
-    public void setRecSongController(RecSongController recSongController) {
-        this.recSongController = recSongController;
+    public void setRecTrackController(RecTrackController recTrackController) {
+        this.recTrackController = recTrackController;
     }
 
     public void setRecArtistController(RecArtistController recArtistController) {
