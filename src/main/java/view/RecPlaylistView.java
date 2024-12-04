@@ -76,7 +76,7 @@ public class RecPlaylistView extends JPanel {
             playlistPanel.add(playlistLabel);
             playlistPanel.add(Box.createRigidArea(new Dimension(10, 10)));
         }
-        playlistPanel.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        playlistPanel.setLayout(new GridLayout(0, 1));
         this.add(playlistPanel);
 
     }
