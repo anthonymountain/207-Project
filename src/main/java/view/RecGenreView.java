@@ -62,11 +62,12 @@ public class RecGenreView extends JPanel {
      */
     public void setGenre(RecGenreViewModel recGenreViewModel) {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        final String label = recGenreViewModel.getGenre();
         final JPanel artistPanel = new JPanel();
         artistPanel.setBackground(DARK_BACKGROUND);
 
-        builder.addHeaderLabel(recGenreViewModel.getArtistName());
-        final JLabel artistLabel = builder.getLabel(RecGenreViewModel.getArtistName());
+        builder.addHeaderLabel(label);
+        final JLabel artistLabel = builder.getLabel(label);
         artistLabel.setFont(ViewBuilder.LABEL_FONT);
         artistLabel.setForeground(ViewBuilder.BUTTON_TEXT_COLOR);
         artistLabel.setAlignmentX(Component.LEFT_ALIGNMENT);

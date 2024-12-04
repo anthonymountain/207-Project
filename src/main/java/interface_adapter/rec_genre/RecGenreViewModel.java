@@ -10,7 +10,7 @@ public class RecGenreViewModel {
         this.genre = genre;
     }
 
-    public String getArtistName() {
+    public String getGenre() {
         return this.genre;
     }
 }
