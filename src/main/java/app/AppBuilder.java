@@ -16,6 +16,7 @@ import interface_adapter.rec_genre.*;
 import interface_adapter.rec_playlist.*;
 import interface_adapter.rec_track.*;
 import interface_adapter.spotify_auth.*;
+import org.jetbrains.annotations.NotNull;
 import services.TokenService;
 import use_case.login.*;
 import use_case.logout.*;
@@ -39,12 +40,7 @@ import view.*;
 public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
-    private final User user = new User();
-    private final Track track = new Track();
-    private final Genre genre = new Genre();
-    private final Artist artist = new Artist();
-    private final Playlist playlist = new Playlist();
-    // thought question: is the hard dependency below a problem?
+
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
@@ -56,6 +52,7 @@ public class AppBuilder {
     private final InMemoryTrackDataAccessObject trackDataAccessObject = new InMemoryTrackDataAccessObject(spotifyAuthController);
     private final InMemoryPlaylistDataAccessObject playlistDataAccessObject = new InMemoryPlaylistDataAccessObject(spotifyAuthController);
     private final InMemoryArtistDataAccessObject artistDataAccessObject = new InMemoryArtistDataAccessObject(spotifyAuthController);
+    private final GenreDataAccessObject genreDataAccessObject = new GenreDataAccessObject(spotifyAuthController);
 
     private LoginViewModel loginViewModel;
     private LoggedInViewModel loggedInViewModel;
@@ -110,9 +107,8 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addRecGenreView() {
-        this.recGenreView = new RecGenreView();
-        cardPanel.add(recGenreView.getView(), "Recommended Genre");
-        return this;
+
+        return getAppBuilder();
     }
 
     //    /**
@@ -181,23 +177,23 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addRecGenreUseCase() {
-        // Initialize RecGenreViewModel and ViewManagerModel before use
-        final RecGenreViewModel recGenreViewModel = new RecGenreViewModel();
-        final ViewManagerModel viewManagerModel = new ViewManagerModel();
 
-        // Pass initialized ViewModel and ViewManagerModel to the Presenter
+        return getAppBuilder();
+    }
+
+    @NotNull
+    private AppBuilder getAppBuilder() {
         final RecGenreOutputBoundary recGenreOutputBoundary =
-             new RecGenrePresenter(recGenreViewModel, viewManagerModel);
+                new RecGenrePresenter(recGenreViewModel, recGenreView);
 
-        // Create Interactor with initialized Presenter
-        final RecGenreInputBoundary recGenreInteractor = 
-            new RecGenreInteractor(userDataAccessObject, recGenreOutputBoundary);
+        final RecGenreInputBoundary recGenreInteractor =
+                new RecGenreInteractor(genreDataAccessObject, recGenreOutputBoundary);
 
-        // Create Controller with initialized Interactor
         final RecGenreController recGenreController = new RecGenreController(recGenreInteractor);
 
-        // Set Controller in the View
-        recGenreView.setRecGenreController(recGenreController);
+        this.recGenreView = new RecGenreView(recGenreController);
+        cardPanel.add(recGenreView.getView(), "Recommended Genre");
+
         return this;
     }
 

@@ -10,11 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import services.GenreService;
 import services.PlaylistService;
 import services.RecommendationService;
 import services.TokenService;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -22,10 +24,12 @@ public class SpotifyAuthController {
 
     private final RecommendationService recommendationService;
     private final PlaylistService playlistService;
+    private final GenreService genreService;
 
     public SpotifyAuthController(TokenService tokenService) {
         this.recommendationService = new RecommendationService(tokenService);
         this.playlistService = new PlaylistService(tokenService);
+        this.genreService = new GenreService();
     }
 
     @GetMapping("/recommendation")
@@ -72,5 +76,10 @@ public class SpotifyAuthController {
             @RequestBody JSONArray topTracks
     ) {
         return playlistService.createArtistPlaylist(userId, artistId, topTracks);
+    }
+
+    @GetMapping("/recommendations/available-genre-seeds")
+    public ArrayList<String> getGenres() {
+        return genreService.getGenres();
     }
 }

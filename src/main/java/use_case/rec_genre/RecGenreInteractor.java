@@ -1,36 +1,62 @@
 package use_case.rec_genre;
 
+import java.util.ArrayList;
+import java.util.Random;
+
 import entity.Genre;
 
 /**
  * The Recommend Genre Interactor.
  */
 public class RecGenreInteractor implements RecGenreInputBoundary {
-    private final RecGenreUserDataAccessInterface recGenreUserDataAccessObject;
+    private final RecGenreDataAccessInterface recGenreUserDataAccessObject;
     private final RecGenreOutputBoundary recGenrePresenter;
 
-    public RecGenreInteractor(RecGenreUserDataAccessInterface recGenreUserDataAccessInterface,
+    /**
+     * Constructs a RecGenreInteractor with the provided DataAccessObject and OutputBoundary.
+     *
+     * @param recGenreUserDataAccessObject The DAO for accessing genre user data.
+     * @param recGenreOutputBoundary The output boundary for preparing the output data.
+     */
+    public RecGenreInteractor(RecGenreDataAccessInterface recGenreUserDataAccessObject,
                               RecGenreOutputBoundary recGenreOutputBoundary) {
-        this.recGenreUserDataAccessObject = recGenreUserDataAccessInterface;
+        this.recGenreUserDataAccessObject = recGenreUserDataAccessObject;
         this.recGenrePresenter = recGenreOutputBoundary;
     }
 
+    /**
+     * Executes the genre recommendation use case.
+     *
+     * @param recGenreInputData The input data containing the user information.
+     */
     @Override
-    public RecGenreOutputData execute(RecGenreInputData recGenreInputData) {
-        // Create a Genre instance using the input data
-        final Genre genre = new Genre(recGenreInputData.getGenres());
+    public void execute(RecGenreInputData recGenreInputData) {
+        final Genre userPreferredGenres = recGenreUserDataAccessObject.getGenre();
 
-        // Save or process the genre recommendation
-        recGenreUserDataAccessObject.recommendGenre(genre);
+        if (userPreferredGenres == null || userPreferredGenres.getGenres() == null || userPreferredGenres
+                .getGenres().isEmpty()) {
+            recGenrePresenter.prepareFailView("No preferred genres found for user.");
+        }
+        else {
+            final Random random = new Random();
+            final ArrayList<String> genres = userPreferredGenres.getGenres();
 
-        // Create output data
-        final RecGenreOutputData recGenreOutputData = new RecGenreOutputData(genre);
+            if (genres == null || genres.isEmpty()) {
+                recGenrePresenter.prepareFailView("No genres found in the user's preferences.");
+            }
+            else {
+                final String recommendedGenreName = genres.get(random.nextInt(genres.size()));
 
-        // Notify the Presenter to update the ViewModel
-        recGenrePresenter.prepareSuccessView(recGenreOutputData);
+                final ArrayList<String> recommendedGenreList = new ArrayList<>();
+                recommendedGenreList.add(recommendedGenreName);
 
-        // Return the output data for further use by the controller or higher layers
-        return recGenreOutputData;
+                final Genre recommendedGenre = new Genre(recommendedGenreList);
+
+                final RecGenreOutputData outputData = new RecGenreOutputData(recommendedGenre);
+
+                recGenrePresenter.prepareSuccessView(outputData);
+            }
+        }
     }
 }
 
