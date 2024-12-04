@@ -68,6 +68,8 @@ class RecArtistInteractorTest {
             public void prepareSuccessView(RecArtistOutputData outputData) {
                 assertEquals(testArtistDataAccessObject.getArtist(), outputData.getArtist());
                 assertEquals(testArtistDataAccessObject.getArtist().getName(), outputData.getName());
+                assertEquals(outputData.isUseCaseFailed(), false);
+
             }
 
             @Override

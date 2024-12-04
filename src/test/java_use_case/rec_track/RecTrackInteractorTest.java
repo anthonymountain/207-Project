@@ -67,6 +67,7 @@ class RecTrackInteractorTest {
             public void prepareSuccessView(RecTrackOutputData outputData) {
                 assertEquals(testTrackDataAccessObject.getTrack(), outputData.getTrack());
                 assertEquals(testTrackDataAccessObject.getTrack().getName(), outputData.getName());
+                assertEquals(outputData.isUseCaseFailed(), false);
             }
 
             @Override
