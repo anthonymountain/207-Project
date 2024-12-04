@@ -3,12 +3,11 @@ package interface_adapter.rec_artist;
 import javax.swing.*;
 
 import interface_adapter.ViewManagerModel;
-import use_case.rec_artist.RecArtistOutputBoundary;
-import use_case.rec_artist.RecArtistOutputData;
+import use_case.rec_artist.*;
 import view.RecArtistView;
 
 /**
- * This is a presenter for a recommended artist.
+ * This is a presenter for a recommended song.
  */
 public class RecArtistPresenter implements RecArtistOutputBoundary {
 
@@ -22,22 +21,20 @@ public class RecArtistPresenter implements RecArtistOutputBoundary {
 
     @Override
     public void prepareSuccessView(RecArtistOutputData outputData) {
-
-        // This code tells the View Manager to switch to the RecArtistView.
-        //        this.viewManagerModel.setState(recArtistViewModel.getViewName());
-        //        this.viewManagerModel.firePropertyChanged();
         final JDialog dialog = new JDialog(new JFrame(),
                 "Artist Recommendation", true);
         final RecArtistView recArtistView = new RecArtistView();
-        dialog.getContentPane().add(recArtistView.getView());
+        recArtistView.setArtist(outputData.getArtist());
+        dialog.getContentPane().add(recArtistView);
         dialog.pack();
         dialog.setResizable(false);
-        //        dialog.setLocationRelativeTo(dialog);
+        // Makes sure the dialog is centred in the screen.
+        dialog.setLocationRelativeTo(null);
         dialog.setVisible(true);
     }
 
     @Override
     public void prepareFailView(String errorMessage) {
-        // Apparently it can't fail... KABOOM
+        // ¯\_(ツ)_/¯
     }
 }
