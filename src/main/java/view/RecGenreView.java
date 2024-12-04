@@ -73,7 +73,11 @@ public class RecGenreView extends JPanel {
         artistLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
     }
 
-
+    /**
+     * Updates the view with the provided genre information.
+     * Handles displaying the genre recommendation or showing an error message based on the view model data.
+     * @param viewModel The view model containing the data to be displayed in the view.
+     */
     public void update(RecGenreViewModel viewModel) {
         if (viewModel.getErrorMessage() != null) {
             // Show error dialog
