@@ -1,13 +1,13 @@
-package use_case.rec_song;
+package use_case.rec_track;
 
 /**
  * Input Boundary for actions which are related to recommending songs.
  */
-public interface RecSongInputBoundary {
+public interface RecTrackInputBoundary {
 
     /**
      * Executes the RecSong use case.
      * @param recSongInputData the input data
      */
-    void execute(RecSongInputData recSongInputData);
+    void execute(RecTrackInputData recSongInputData);
 }

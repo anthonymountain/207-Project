@@ -1,13 +1,11 @@
 package app;
 
 import java.awt.CardLayout;
-import java.util.ArrayList;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
-import ch.qos.logback.core.subst.Token;
 import data_access.*;
 import entity.*;
 import interface_adapter.ViewManagerModel;
@@ -16,7 +14,7 @@ import interface_adapter.logout.*;
 import interface_adapter.rec_artist.*;
 import interface_adapter.rec_genre.*;
 import interface_adapter.rec_playlist.*;
-import interface_adapter.rec_song.*;
+import interface_adapter.rec_track.*;
 import interface_adapter.spotify_auth.*;
 import services.StorePlaylistService;
 import services.TokenService;
@@ -25,7 +23,7 @@ import use_case.logout.*;
 import use_case.rec_artist.*;
 import use_case.rec_genre.*;
 import use_case.rec_playlist.*;
-import use_case.rec_song.*;
+import use_case.rec_track.*;
 import view.*;
 
 /**
@@ -57,7 +55,7 @@ public class AppBuilder {
     private final StorePlaylistService storePlaylistService = new StorePlaylistService();
     private final spotifyLoginView spotifyLoginView = new spotifyLoginView(tokenService, viewManagerModel);
     private final SpotifyAuthController spotifyAuthController = new SpotifyAuthController(tokenService);
-    private final InMemorySongDataAccessObject songDataAccessObject = new InMemorySongDataAccessObject(spotifyAuthController);
+    private final InMemoryTrackDataAccessObject trackDataAccessObject = new InMemoryTrackDataAccessObject(spotifyAuthController);
     private final InMemoryPlaylistDataAccessObject playlistDataAccessObject = new InMemoryPlaylistDataAccessObject(spotifyAuthController);
     private final InMemoryArtistDataAccessObject artistDataAccessObject = new InMemoryArtistDataAccessObject(spotifyAuthController);
     private LoginViewModel loginViewModel;
@@ -66,8 +64,8 @@ public class AppBuilder {
     private LoginView loginView;
     private RecGenreViewModel recGenreViewModel;
     private RecGenreView recGenreView;
-    private RecSongViewModel recSongViewModel;
-    private RecSongView recSongView;
+    private RecTrackViewModel recTrackViewModel;
+    private RecTrackView recTrackView;
     private RecArtistViewModel recArtistViewModel;
     private RecArtistView recArtistView;
     private RecPlaylistView recPlaylistView;
@@ -109,7 +107,7 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the RecSong View to the application.
+     * Adds the RecTrack View to the application.
      * @return this builder
      */
     public AppBuilder addRecGenreView() {
@@ -118,15 +116,15 @@ public class AppBuilder {
         return this;
     }
 
-    /**
-     * Adds the RecSong View to the application.
-     * @return this builder
-     */
-    public AppBuilder addRecSongView() {
-        this.recSongView = new RecSongView();
-        cardPanel.add(recSongView.getView(), "Recommended Song");
-        return this;
-    }
+    //    /**
+    //     * Adds the RecTrack View to the application.
+    //     * @return this builder
+    //     */
+    //    public AppBuilder addRecTrackView() {
+    //        this.recTrackView = new RecTrackView();
+    //        cardPanel.add(recTrackView.getView(), "Recommended Track");
+    //        return this;
+    //    }
 
     //    /**
     //     * Adds the RecArtist View to the application.
@@ -180,21 +178,6 @@ public class AppBuilder {
     }
 
     /**
-     * Adds the RecSong Use Case to the application.
-     * @return this builder
-     */
-    public AppBuilder addRecSongUseCase() {
-        final RecSongOutputBoundary recSongOutputBoundary = new RecSongPresenter(viewManagerModel, recSongViewModel);
-
-        final RecSongInputBoundary recSongInteractor =
-                new RecSongInteractor(songDataAccessObject, recSongOutputBoundary);
-
-        final RecSongController recSongController = new RecSongController(recSongInteractor);
-        loggedInView.setRecSongController(recSongController);
-        return this;
-    }
-
-    /**
      * Adds the RecGenre Use Case to the application.
      * @return this builder
      */
@@ -216,6 +199,21 @@ public class AppBuilder {
 
         // Set Controller in the View
         recGenreView.setRecGenreController(recGenreController);
+        return this;
+    }
+
+    /**
+     * Adds the RecTrack Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addRecTrackUseCase() {
+        final RecTrackOutputBoundary recTrackOutputBoundary = new RecTrackPresenter(viewManagerModel, recTrackViewModel);
+
+        final RecTrackInputBoundary recTrackInteractor =
+                new RecTrackInteractor(trackDataAccessObject, recTrackOutputBoundary);
+
+        final RecTrackController recTrackController = new RecTrackController(recTrackInteractor);
+        loggedInView.setRecTrackController(recTrackController);
         return this;
     }
 
