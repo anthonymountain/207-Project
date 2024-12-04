@@ -12,14 +12,12 @@ import services.TokenService;
 
 import javax.swing.*;
 
-import ch.qos.logback.core.subst.Token;
-
 import java.awt.*;
 
 /**
  * A Swing-based UI for logging in to Spotify.
  */
-public class spotifyLoginView extends JPanel{
+public class SpotifyLoginView extends JPanel{
 
     private final SpotifyAuthService spotifyAuthService;
     private final TokenService tokenService;
@@ -30,7 +28,7 @@ public class spotifyLoginView extends JPanel{
     private JLabel statusLabel;
     private JButton loginButton;
 
-    public spotifyLoginView(TokenService tokenService, ViewManagerModel viewManagerModel) {
+    public SpotifyLoginView(TokenService tokenService, ViewManagerModel viewManagerModel) {
         this.spotifyAuthService = new SpotifyAuthService();
         this.tokenService = tokenService;
         this.viewManagerModel = viewManagerModel;

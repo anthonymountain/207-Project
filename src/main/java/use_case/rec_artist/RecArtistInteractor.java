@@ -20,16 +20,19 @@ public class RecArtistInteractor implements RecArtistInputBoundary {
     @Override
     public void execute(RecArtistInputData recArtistInputData) {
         final ArrayList<Artist> artists = this.recArtistUserDataAccessObject.getUserTopArtists();
+        final Artist artist;
         final int min = 0;
-        final int max = 9;
-        final int random = min + (int) (Math.random() * ((max - min) + 1));
-        Artist artist = artists.get(random);
-        if (artist == null) {
+        final int max = artists.size();
+        final int random = min + (int) (Math.random() * ((max - min)));
+        if (artists.isEmpty()) {
             // Handle null artist (e.g., create a default artist or return a failure response)
             artist = new Artist("default-id", "Peewee", new ArrayList<>());
             recArtistUserDataAccessObject.setArtist(artist);
         }
-        recArtistUserDataAccessObject.setArtist(artist);
+        else {
+            artist = artists.get(random);
+            recArtistUserDataAccessObject.setArtist(artist);
+        }
         final RecArtistOutputData recArtistOutputData = new RecArtistOutputData(artist, false);
         recArtistPresenter.prepareSuccessView(recArtistOutputData);
     }

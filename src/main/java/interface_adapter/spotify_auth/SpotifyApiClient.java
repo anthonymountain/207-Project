@@ -171,7 +171,7 @@ public class SpotifyApiClient {
 
             // Prepare the URL
             final URI uri = new URI(String.format(
-                    "https://api.spotify.com/v1/me/top/artists?offset=5&limit=50"));
+                    "https://api.spotify.com/v1/me/top/artists?offset=0&limit=50"));
 
             // Make the API request
             final HttpRequest request = HttpRequest.newBuilder()
@@ -215,7 +215,7 @@ public class SpotifyApiClient {
 
             // Prepare the URL
             final URI uri = new URI(String.format(
-                    "https://api.spotify.com/v1/me/top/tracks?offset=5&limit=50"));
+                    "https://api.spotify.com/v1/me/top/tracks?offset=0&limit=50"));
 
             // Make the API request
             final HttpRequest request = HttpRequest.newBuilder()

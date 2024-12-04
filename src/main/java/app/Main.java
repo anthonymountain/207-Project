@@ -20,12 +20,11 @@ public class Main {
                                             .addLoginView()
                                             .addLoggedInView()
                                             .addRecGenreView()
-                                            .addRecSongView()
                                             .addRecGenreUseCase()
                                             .addRecSongUseCase()
+                                            .addRecTrackUseCase()
                                             .addLoginUseCase()
                                             .addLogoutUseCase()
-                                            .addRecSongUseCase()
                                             .addRecArtistUseCase()
                                             .addRecPlaylistUseCase()
                                             .build();
