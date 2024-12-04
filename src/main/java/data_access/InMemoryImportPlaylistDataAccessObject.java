@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class InMemoryImportPlaylistDataAccessObject implements ImportPlaylistDataAccessInterface {
-    private final SpotifyAuthController spotifyAuthController;
+    private SpotifyAuthController spotifyAuthController;
     private StorePlaylistService storePlaylistService;
 
     public InMemoryImportPlaylistDataAccessObject(SpotifyAuthController spotifyAuthController, StorePlaylistService storePlaylistService) {
@@ -26,7 +26,7 @@ public class InMemoryImportPlaylistDataAccessObject implements ImportPlaylistDat
             }
 
             // Get Spotify user ID using the Auth controller
-            final String userId = spotifyAuthController.getCurrentUserProfile();
+            String userId = spotifyAuthController.getCurrentUserProfile();
 
             // Create a new playlist
             spotifyAuthController.createPlaylist(userId, trackUris);

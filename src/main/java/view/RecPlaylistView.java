@@ -29,11 +29,7 @@ public class RecPlaylistView extends JPanel {
     private ArrayList<Track> playlist;
     private StorePlaylistService storage;
     private SpotifyAuthController spotifyAuthController;
-
-    private ImportPlaylistDataAccessInterface dataAccess = new InMemoryImportPlaylistDataAccessObject(spotifyAuthController, storage);
-    private ImportPlaylistOutputBoundary importPlaylistPresenter = new ImportPlaylistPresenter();
-    private ImportPlaylistInteractor importPlaylistInteractor = new ImportPlaylistInteractor(dataAccess, importPlaylistPresenter);
-    private ImportPlaylistController importPlaylistController = new ImportPlaylistController(importPlaylistInteractor);
+    private ImportPlaylistController importPlaylistController;
 
 
     //    private static final String FONT = "Futura";
@@ -46,6 +42,10 @@ public class RecPlaylistView extends JPanel {
         final ViewBuilder builder = new ViewBuilder();
         this.spotifyAuthController = spotifyAuthController;
         this.storage = storage;
+        ImportPlaylistDataAccessInterface dataAccess = new InMemoryImportPlaylistDataAccessObject(spotifyAuthController, storage);
+        ImportPlaylistOutputBoundary importPlaylistPresenter = new ImportPlaylistPresenter();
+        ImportPlaylistInteractor importPlaylistInteractor = new ImportPlaylistInteractor(dataAccess, importPlaylistPresenter);
+        this.importPlaylistController = new ImportPlaylistController(importPlaylistInteractor);
 
         builder.addLabel("New Playlist: Recommended Playlist")
                 .addButton("importplaylist", "Import Playlist")
@@ -61,11 +61,11 @@ public class RecPlaylistView extends JPanel {
         initializeButtonActions();
     }
 
-    private void initializeButtonActions () {
+    private void initializeButtonActions() {
         importPlaylist.addActionListener(evt -> handleImportPlaylistAction());
     }
 
-    private void handleImportPlaylistAction () {
+    private void handleImportPlaylistAction() {
         importPlaylistController.execute(storage);
     }
 

@@ -30,7 +30,7 @@ public class RecPlaylistPresenter implements RecPlaylistOutputBoundary {
     public void prepareSuccessView(RecPlaylistOutputData outputData) {
         final JDialog dialog = new JDialog(new JFrame(),
                 "Playlist Recommendation", true);
-        final RecPlaylistView recPlaylistView = new RecPlaylistView(this.storePlaylistService, this.spotifyAuthController);
+        RecPlaylistView recPlaylistView = new RecPlaylistView(this.storePlaylistService, this.spotifyAuthController);
         recPlaylistView.setPlaylist(outputData.getPlaylist());
         dialog.getContentPane().add(recPlaylistView);
         dialog.pack();
