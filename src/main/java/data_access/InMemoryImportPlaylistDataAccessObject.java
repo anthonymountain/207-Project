@@ -10,27 +10,24 @@ import java.util.List;
 public class InMemoryImportPlaylistDataAccessObject implements ImportPlaylistDataAccessInterface {
     private final SpotifyAuthController spotifyAuthController;
 
-    public ImportPlaylistDataAccessObject(SpotifyAuthController spotifyAuthController, ArrayList<Track> trackList) {
+    public InMemoryImportPlaylistDataAccessObject(SpotifyAuthController spotifyAuthController, ArrayList<Track> tracks) {
         this.spotifyAuthController = spotifyAuthController;
     }
 
     @Override
-    public void savePlaylistData(String playlistName, ArrayList<Track> trackList) {
+    public void savePlaylistData(ArrayList<Track> trackList) {
         try {
             // Convert track list to URI list
-            final List<String> trackUris = new ArrayList<>();
+            String trackUris = "";
             for (Track track : trackList) {
-                trackUris.add(track.getUri());
+                trackUris = trackUris.concat(track.getUri() + ",");
             }
 
             // Get Spotify user ID using the Auth controller
             final String userId = spotifyAuthController.getCurrentUserProfile();
 
             // Create a new playlist
-            final String playlistId = spotifyAuthController.createPlaylist(userId, playlistName);
-
-            // Add tracks to the playlist
-            spotifyAuthController.addTracksToPlaylist(playlistId, trackUris.toArray(new String[0]));
+            spotifyAuthController.createPlaylist(userId, trackUris);
 
         } catch (Exception e) {
             e.printStackTrace();

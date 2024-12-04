@@ -1,4 +1,4 @@
-package service;
+package services;
 
 import entity.User;
 import org.json.JSONObject;
@@ -6,7 +6,7 @@ import org.json.JSONObject;
 /**
  * Service to parse Spotify user information JSON and create a User entity.
  */
-public class SpotifyUserService {
+public class UserService {
 
     /**
      * Parses Spotify user JSON and creates a User entity.
@@ -15,10 +15,10 @@ public class SpotifyUserService {
      * @return User entity created from the JSON data
      */
     public User createUserFromJson(String json) {
-        JSONObject jsonObject = new JSONObject(json);
+        final JSONObject jsonObject = new JSONObject(json);
 
-        String id = jsonObject.getString("id");
-        String displayName = jsonObject.getString("display_name");
+        final String id = jsonObject.getString("id");
+        final String displayName = jsonObject.getString("display_name");
 
         return new User(id, displayName);
     }

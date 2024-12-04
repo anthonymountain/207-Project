@@ -1,25 +1,17 @@
 package use_case.import_playlist;
 
+import entity.Track;
+
+import java.util.ArrayList;
+
 public class ImportPlaylistInputData {
-    private final String spotifyUserId;
-    private final String playlistName;
-    private final String[] trackIds;
+    private final ArrayList<Track> tracks;
 
-    public ImportPlaylistInputData(String spotifyUserId, String playlistName, String[] trackIds) {
-        this.spotifyUserId = spotifyUserId;
-        this.playlistName = playlistName;
-        this.trackIds = trackIds;
+    public ImportPlaylistInputData(ArrayList<Track> tracks) {
+        this.tracks = tracks;
     }
 
-    public String getSpotifyUserId() {
-        return spotifyUserId;
-    }
-
-    public String getPlaylistName() {
-        return playlistName;
-    }
-
-    public String[] getTrackIds() {
-        return trackIds;
+    public ArrayList<Track> getTracks() {
+        return tracks;
     }
 }

@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import services.PlaylistService;
 import services.RecommendationService;
 import services.TokenService;
+import services.UserService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -19,10 +22,12 @@ public class SpotifyAuthController {
 
     private final RecommendationService recommendationService;
     private final PlaylistService playlistService;
+    private final UserService userService;
 
     public SpotifyAuthController(TokenService tokenService) {
         this.recommendationService = new RecommendationService(tokenService);
         this.playlistService = new PlaylistService(tokenService);
+        this.userService = new UserService();
     }
 
     @GetMapping("/recommendation")
@@ -36,10 +41,10 @@ public class SpotifyAuthController {
 
     @PostMapping("/playlist/recommendations")
     public String createPlaylist(
-            @RequestBody JSONArray recommendations,
+            @RequestBody String tracks,
             @RequestParam String userId
     ) {
-        return playlistService.createPlaylistForRecommendations(userId, recommendations);
+        return playlistService.createPlaylist(userId, tracks);
     }
 
     @PostMapping("/playlist/artist")
@@ -52,6 +57,6 @@ public class SpotifyAuthController {
     }
 
     public String getCurrentUserProfile() {
-        return playlistService.getCurrentUserProfile();
+        return userService.createUserFromJson(playlistService.getCurrentUserProfile()).getId();
     }
 }
