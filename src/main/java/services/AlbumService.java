@@ -11,47 +11,42 @@ import java.util.ArrayList;
 
 @Service
 public class AlbumService {
+
     /**
-     * Gets the most popular new release.
-     * @param albumJson the JSON object response from the API.
-     * @return the most popular new release.
+     * Parses a single album JSON object into an Album entity.
+     * @param albumJson the JSON object representing a single album.
+     * @return an Album object.
      */
     public Album getMostPopularNewRelease(JSONObject albumJson) {
-
         final ArtistService artistService = new ArtistService();
         final TrackService trackService = new TrackService();
-        final JSONArray albums = albumJson.getJSONArray("items");
 
-        Album mostPopularAlbum = new Album("", "", 0, new ArrayList<Artist>(), new ArrayList<Track>());
-        int highestPopularity = -1;
+        // Extract artists
+        final ArrayList<Artist> artists = new ArrayList<>();
+        final JSONArray artistArray = albumJson.getJSONArray("artists");
+        for (int j = 0; j < artistArray.length(); j++) {
+            final JSONObject artistJson = artistArray.getJSONObject(j);
+            artists.add(artistService.parseArtistFromJson(artistJson));
+        }
 
-        for (int i = 0; i < albums.length(); i++) {
-            final int popularity = albumJson.getInt("popularity");
-
-            if (popularity > highestPopularity) {
-                highestPopularity = popularity;
-                final ArrayList<Artist> artists = new ArrayList<>();
-                final JSONArray artistArray = albumJson.getJSONArray("artists");
-                for (int j = 0; j < artistArray.length(); j++) {
-                    final JSONObject artistJson = artistArray.getJSONObject(j);
-                    artists.add(artistService.parseArtistFromJson(artistJson));
-                }
-                final ArrayList<Track> tracks = new ArrayList<>();
-                final JSONArray trackArray = albumJson.getJSONObject("tracks").getJSONArray("items");
-                for (int j = 0; j < trackArray.length(); j++) {
-                    final JSONObject trackJson = trackArray.getJSONObject(j);
-                    tracks.add(trackService.parseTrackFromJson(trackJson));
-                }
-                mostPopularAlbum = new Album(
-                        albumJson.getString("id"),
-                        albumJson.getString("name"),
-                        albumJson.getInt("popularity"),
-                        artists,
-                        tracks
-                );
+        // Tracks are not always included directly in the album JSON; handle gracefully
+        final ArrayList<Track> tracks = new ArrayList<>();
+        if (albumJson.has("tracks") && albumJson.getJSONObject("tracks").has("items")) {
+            final JSONArray trackArray = albumJson.getJSONObject("tracks").getJSONArray("items");
+            for (int j = 0; j < trackArray.length(); j++) {
+                final JSONObject trackJson = trackArray.getJSONObject(j);
+                tracks.add(trackService.parseTrackFromJson(trackJson));
             }
         }
 
-        return mostPopularAlbum;
+        // Construct the Album object
+        return new Album(
+                albumJson.getString("id"),
+                albumJson.getString("name"),
+                albumJson.optInt("popularity", 0),
+                // Use 0 as a default if popularity is missing
+                artists,
+                tracks
+        );
     }
 }
