@@ -9,7 +9,7 @@ import entity.Track;
 import entity.User;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
-import use_case.rec_genre.RecGenreUserDataAccessInterface;
+import use_case.rec_genre.RecGenreDataAccessInterface;
 
 /**
  * In-memory implementation of the DAO for storing user data. This implementation does
@@ -17,7 +17,7 @@ import use_case.rec_genre.RecGenreUserDataAccessInterface;
  */
 public class InMemoryUserDataAccessObject implements LoginUserDataAccessInterface,
         LogoutUserDataAccessInterface,
-        RecGenreUserDataAccessInterface {
+        RecGenreDataAccessInterface {
 
     private final Map<String, User> users = new HashMap<>();
 
