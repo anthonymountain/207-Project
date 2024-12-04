@@ -38,6 +38,17 @@ public class RecGenreView extends JPanel {
         view.setBorder(BorderFactory.createEmptyBorder(TEN, TEN, TEN, TEN));
 
         recGenre = builder.getButton("recSong");
+
+        recGenre.addActionListener(evt -> {
+            if (recGenreController != null) {
+                // Call the controller to handle the genre recommendation logic
+                recGenreController.execute();
+            }
+            else {
+                // Log or handle the case where the controller is not set
+                System.err.println("RecGenreController is not set!");
+            }
+        });
     }
 
     /**
