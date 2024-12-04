@@ -51,7 +51,7 @@ public class AppBuilder {
     // thought question: is the hard dependency below a problem?
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
     private final TokenService tokenService = new TokenService();
-    private final spotifyLoginView spotifyLoginView = new spotifyLoginView(tokenService, viewManagerModel);
+    private final SpotifyLoginView spotifyLoginView = new SpotifyLoginView(tokenService, viewManagerModel);
     private final SpotifyAuthController spotifyAuthController = new SpotifyAuthController(tokenService);
     private final InMemoryTrackDataAccessObject trackDataAccessObject = new InMemoryTrackDataAccessObject(spotifyAuthController);
     private final InMemoryPlaylistDataAccessObject playlistDataAccessObject = new InMemoryPlaylistDataAccessObject(spotifyAuthController);
