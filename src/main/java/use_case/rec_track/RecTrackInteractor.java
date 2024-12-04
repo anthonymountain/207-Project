@@ -20,16 +20,19 @@ public class RecTrackInteractor implements RecTrackInputBoundary {
     @Override
     public void execute(RecTrackInputData recTrackInputData) {
         final ArrayList<Track> tracks = this.recTrackUserDataAccessObject.getUserTopTracks();
+        final Track track;
         final int min = 0;
-        final int max = 9;
-        final int random = min + (int) (Math.random() * ((max - min) + 1));
-        Track track = tracks.get(random);
-        if (track == null) {
+        final int max = tracks.size();
+        final int random = min + (int) (Math.random() * ((max - min)));
+        if (tracks.isEmpty()) {
             // Handle null track (e.g., create a default track or return a failure response)
             track = new Track("default-id", "Peewee", 0, null, new ArrayList<>());
             recTrackUserDataAccessObject.setTrack(track);
         }
-        recTrackUserDataAccessObject.setTrack(track);
+        else {
+            track = tracks.get(random);
+            recTrackUserDataAccessObject.setTrack(track);
+        }
         final RecTrackOutputData recTrackOutputData = new RecTrackOutputData(track, false);
         recTrackPresenter.prepareSuccessView(recTrackOutputData);
     }

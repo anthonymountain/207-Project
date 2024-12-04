@@ -9,8 +9,12 @@ import org.junit.jupiter.api.Test;
 import use_case.rec_artist.RecArtistInteractor;
 import use_case.rec_artist.RecArtistOutputBoundary;
 import use_case.rec_artist.RecArtistOutputData;
+import use_case.rec_artist.*;
 
 import java.util.ArrayList;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 class RecArtistInteractorTest {
 
@@ -53,55 +57,107 @@ class RecArtistInteractorTest {
         Assertions.assertTrue(outputBoundary.wasSuccessViewPrepared());
     }
 
-    // Stub class for SpotifyAuthController
-    private static class SpotifyAuthControllerStub extends SpotifyAuthController {
-        private boolean returnEmptyList = false;
+    @Test
+    public void successArtistRecommendedTest(){
+        RecArtistInputData recArtistInputData = new RecArtistInputData();
+        TestArtistDataAccessObject testArtistDataAccessObject = new TestArtistDataAccessObject(new SpotifyAuthControllerStub());
 
-        public SpotifyAuthControllerStub() {
-            super(null); // Pass null as TokenService isn't needed here
-        }
-
-        public void setReturnEmptyList(boolean returnEmptyList) {
-            this.returnEmptyList = returnEmptyList;
-        }
-
-        @Override
-        public ArrayList<Artist> getUserTopArtists() {
-            if (returnEmptyList) {
-                return new ArrayList<>();
+        // Presenter to see if our use case handles as expected
+        RecArtistOutputBoundary recArtistPresenter = new RecArtistOutputBoundary() {
+            @Override
+            public void prepareSuccessView(RecArtistOutputData outputData) {
+                assertEquals(testArtistDataAccessObject.getArtist(), outputData.getArtist());
+                assertEquals(testArtistDataAccessObject.getArtist().getName(), outputData.getName());
             }
-            ArrayList<Artist> artists = new ArrayList<>();
-            artists.add(new Artist("1", "Artist1", new ArrayList<>()));
-            return artists;
-        }
 
-        @Override
-        public ArrayList<Track> getArtistsTopTracks(String artistId, String market) {
-            return new ArrayList<>();
-        }
+            @Override
+            public void prepareFailView(String errorMessage) {
+                fail("Use case failure is unexpected");
+            }
+        };
+
+        RecArtistInputBoundary recArtistInteractor = new RecArtistInteractor(testArtistDataAccessObject,
+                recArtistPresenter);
+        recArtistInteractor.execute(recArtistInputData);
+    }
+}
+
+class TestArtistDataAccessObject implements RecArtistDataAccessInterface {
+    private Artist artist;
+    private SpotifyAuthControllerStub spotifyAuthController;
+
+    public TestArtistDataAccessObject(SpotifyAuthControllerStub spotifyAuthController) {
+        this.spotifyAuthController = spotifyAuthController;
     }
 
-    // Test output boundary
-    private static class TestOutputBoundary implements RecArtistOutputBoundary {
-        private boolean successViewPrepared = false;
-        private boolean failViewPrepared = false;
+    @Override
+    public void setArtist(Artist artist) {
+        this.artist = artist;
+    }
 
-        @Override
-        public void prepareSuccessView(RecArtistOutputData outputData) {
-            successViewPrepared = true;
-        }
+    @Override
+    public Artist getArtist() {
+        return artist;
+    }
 
-        @Override
-        public void prepareFailView(String errorMessage) {
-            failViewPrepared = true;
-        }
+    public ArrayList<Artist> getUserTopArtists() {
+        return this.spotifyAuthController.getUserTopArtists();
+    }
 
-        public boolean wasSuccessViewPrepared() {
-            return successViewPrepared;
-        }
+    @Override
+    public ArrayList<Track> getArtistsTopTracks() {
+        return this.spotifyAuthController.getArtistsTopTracks(this.artist.getId(), "");
+    }
+}
 
-        public boolean wasFailViewPrepared() {
-            return failViewPrepared;
+// Stub class for SpotifyAuthController
+class SpotifyAuthControllerStub extends SpotifyAuthController {
+    private boolean returnEmptyList = false;
+
+    public SpotifyAuthControllerStub() {
+        super(null); // Pass null as TokenService isn't needed here
+    }
+
+    public void setReturnEmptyList(boolean returnEmptyList) {
+        this.returnEmptyList = returnEmptyList;
+    }
+
+    @Override
+    public ArrayList<Artist> getUserTopArtists() {
+        if (returnEmptyList) {
+            return new ArrayList<>();
         }
+        ArrayList<Artist> artists = new ArrayList<>();
+        artists.add(new Artist("1", "Artist1", new ArrayList<>()));
+        return artists;
+    }
+
+    @Override
+    public ArrayList<Track> getArtistsTopTracks(String artistId, String market) {
+        return new ArrayList<>();
+    }
+}
+
+// Test output boundary
+class TestOutputBoundary implements RecArtistOutputBoundary {
+    private boolean successViewPrepared = false;
+    private boolean failViewPrepared = false;
+
+    @Override
+    public void prepareSuccessView(RecArtistOutputData outputData) {
+        successViewPrepared = true;
+    }
+
+    @Override
+    public void prepareFailView(String errorMessage) {
+        failViewPrepared = true;
+    }
+
+    public boolean wasSuccessViewPrepared() {
+        return successViewPrepared;
+    }
+
+    public boolean wasFailViewPrepared() {
+        return failViewPrepared;
     }
 }
