@@ -27,7 +27,7 @@ public class RecGenrePresenter implements RecGenreOutputBoundary {
     }
 
     @Override
-    public void prepareFailureView(String errorMessage) {
+    public void prepareFailView(String errorMessage) {
         // Update the ViewModel with the error message
         recGenreViewModel.setErrorMessage(errorMessage);
         recGenreView.update(recGenreViewModel);
