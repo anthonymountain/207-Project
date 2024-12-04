@@ -241,7 +241,7 @@ public class AppBuilder {
      */
     public AppBuilder addRecPlaylistUseCase() {
         final RecPlaylistOutputBoundary recPlaylistOutputBoundary = new RecPlaylistPresenter(viewManagerModel,
-            recPlaylistViewModel,storePlaylistService);
+            recPlaylistViewModel, storePlaylistService, spotifyAuthController);
 
         final RecPlaylistInputBoundary recPlaylistInteractor =
                 new RecPlaylistInteractor(playlistDataAccessObject, recPlaylistOutputBoundary);

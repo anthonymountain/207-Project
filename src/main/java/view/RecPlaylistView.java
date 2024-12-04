@@ -7,11 +7,13 @@ import entity.Playlist;
 import entity.Track;
 import interface_adapter.import_playlist.ImportPlaylistController;
 import interface_adapter.import_playlist.ImportPlaylistPresenter;
+import data_access.InMemoryImportPlaylistDataAccessObject;
 import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.rec_playlist.RecPlaylistController;
 import interface_adapter.rec_playlist.RecPlaylistViewModel;
+import interface_adapter.spotify_auth.SpotifyAuthController;
 import services.StorePlaylistService;
-import use_case.import_playlist.ImportPlaylistInteractor;
+import use_case.import_playlist.*;
 
 
 import java.awt.*;
@@ -24,11 +26,15 @@ import java.util.ArrayList;
 public class RecPlaylistView extends JPanel {
 
     private final JPanel view;
-    private ImportPlaylistController importPlaylistController = new ImportPlaylistController();
-    private ImportPlaylistInteractor importPlaylistInteractor = new ImportPlaylistInteractor(importPlaylistPresenter);
-    private ImportPlaylistPresenter importPlaylistPresenter = new ImportPlaylistPresenter();
     private ArrayList<Track> playlist;
     private StorePlaylistService storage;
+    private SpotifyAuthController spotifyAuthController;
+
+    private ImportPlaylistDataAccessInterface dataAccess = new InMemoryImportPlaylistDataAccessObject(spotifyAuthController, storage);
+    private ImportPlaylistOutputBoundary importPlaylistPresenter = new ImportPlaylistPresenter();
+    private ImportPlaylistInteractor importPlaylistInteractor = new ImportPlaylistInteractor(dataAccess, importPlaylistPresenter);
+    private ImportPlaylistController importPlaylistController = new ImportPlaylistController(importPlaylistInteractor);
+
 
     //    private static final String FONT = "Futura";
     private static final int TWENTY = 20;
@@ -36,8 +42,10 @@ public class RecPlaylistView extends JPanel {
 
     private static final Color DARK_BACKGROUND = new Color(24, 24, 32);
 
-    public RecPlaylistView(StorePlaylistService storage) {
+    public RecPlaylistView(StorePlaylistService storage, SpotifyAuthController spotifyAuthController) {
         final ViewBuilder builder = new ViewBuilder();
+        this.spotifyAuthController = spotifyAuthController;
+        this.storage = storage;
 
         builder.addLabel("New Playlist: Recommended Playlist")
                 .addButton("importplaylist", "Import Playlist")
@@ -58,7 +66,7 @@ public class RecPlaylistView extends JPanel {
     }
 
     private void handleImportPlaylistAction () {
-         importPlaylistController.execute(storage);
+        importPlaylistController.execute(storage);
     }
 
     //    public void setImportPlaylistController(ImportPlaylistController importPlaylistController) {

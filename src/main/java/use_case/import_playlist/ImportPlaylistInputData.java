@@ -1,17 +1,20 @@
 package use_case.import_playlist;
 
 import entity.Track;
+import services.PlaylistService;
+import services.StorePlaylistService;
 
 import java.util.ArrayList;
 
 public class ImportPlaylistInputData {
-    private final ArrayList<Track> tracks;
+    private final StorePlaylistService service;
 
-    public ImportPlaylistInputData(ArrayList<Track> tracks) {
-        this.tracks = tracks;
+    public ImportPlaylistInputData(StorePlaylistService service) {
+
+        this.service = service;
     }
 
-    public ArrayList<Track> getTracks() {
-        return tracks;
+    public StorePlaylistService getTracks() {
+        return service;
     }
 }

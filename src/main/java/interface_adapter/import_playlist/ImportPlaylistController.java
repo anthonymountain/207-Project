@@ -17,7 +17,7 @@ public class ImportPlaylistController {
     }
 
     public void execute(StorePlaylistService service) {
-        final ImportPlaylistInputData inputData = new ImportPlaylistInputData(service.getPlaylist());
+        final ImportPlaylistInputData inputData = new ImportPlaylistInputData(service);
         interactor.importPlaylist(inputData);
     }
 }

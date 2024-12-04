@@ -1,7 +1,5 @@
 package use_case.import_playlist;
 
-import use_case.import_playlist.ImportPlaylistDataAccessInterface;
-
 public class ImportPlaylistInteractor implements ImportPlaylistInputBoundary {
     private final ImportPlaylistDataAccessInterface dataAccess;
     private final ImportPlaylistOutputBoundary outputdata;

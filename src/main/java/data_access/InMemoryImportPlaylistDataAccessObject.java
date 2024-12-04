@@ -1,7 +1,7 @@
 package data_access;
 
 import entity.Track;
-import services.PlaylistService;
+import services.StorePlaylistService;
 import interface_adapter.spotify_auth.SpotifyAuthController;
 import use_case.import_playlist.ImportPlaylistDataAccessInterface;
 import java.util.ArrayList;
@@ -9,17 +9,19 @@ import java.util.List;
 
 public class InMemoryImportPlaylistDataAccessObject implements ImportPlaylistDataAccessInterface {
     private final SpotifyAuthController spotifyAuthController;
+    private StorePlaylistService storePlaylistService;
 
-    public InMemoryImportPlaylistDataAccessObject(SpotifyAuthController spotifyAuthController, ArrayList<Track> tracks) {
+    public InMemoryImportPlaylistDataAccessObject(SpotifyAuthController spotifyAuthController, StorePlaylistService storePlaylistService) {
         this.spotifyAuthController = spotifyAuthController;
+        this.storePlaylistService = storePlaylistService;
     }
 
     @Override
-    public void savePlaylistData(ArrayList<Track> trackList) {
+    public void savePlaylistData(StorePlaylistService storePlaylistService) {
         try {
             // Convert track list to URI list
             String trackUris = "";
-            for (Track track : trackList) {
+            for (Track track : storePlaylistService.getPlaylist()) {
                 trackUris = trackUris.concat(track.getUri() + ",");
             }
 
