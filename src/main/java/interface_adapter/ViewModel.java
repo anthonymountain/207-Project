@@ -62,7 +62,9 @@ public class ViewModel<T> {
         this.support.addPropertyChangeListener(listener);
     }
 
-
+    /**
+     * Notifies a state change.
+     */
     public void notifyStateChanged() {
         // Simplified notification without property-specific details
         firePropertyChanged("state");
