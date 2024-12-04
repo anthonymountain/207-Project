@@ -16,7 +16,7 @@ public class RecGenreInteractor implements RecGenreInputBoundary {
     }
 
     @Override
-    public RecGenreOutputData execute(RecGenreInputData recGenreInputData) {
+    public void execute(RecGenreInputData recGenreInputData) {
         // Create a Genre instance using the input data
         final Genre genre = new Genre(recGenreInputData.getGenres());
 
