@@ -8,60 +8,24 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import ch.qos.logback.core.subst.Token;
-import data_access.InMemoryPlaylistDataAccessObject;
-import data_access.InMemoryUserDataAccessObject;
-import entity.Track;
-import entity.User;
-import entity.Genre;
-import entity.Artist;
-import entity.Playlist;
-import view.LoggedInView;
-import view.LoginView;
-import view.RecArtistView;
-import view.RecGenreView;
-import view.RecPlaylistView;
-import view.RecSongView;
-import view.ViewManager;
-import view.spotifyLoginView;
-import interface_adapter.spotify_auth.LoginController;
-import interface_adapter.spotify_auth.LoginPresenter;
-import interface_adapter.spotify_auth.LoginViewModel;
-import interface_adapter.spotify_auth.SpotifyAuthController;
+import data_access.*;
+import entity.*;
 import interface_adapter.ViewManagerModel;
-import interface_adapter.loggedin.LoggedInViewModel;
-import interface_adapter.logout.LogoutController;
-import interface_adapter.logout.LogoutPresenter;
-import interface_adapter.rec_artist.RecArtistController;
-import interface_adapter.rec_artist.RecArtistPresenter;
-import interface_adapter.rec_artist.RecArtistViewModel;
-import interface_adapter.rec_genre.RecGenreController;
-import interface_adapter.rec_genre.RecGenrePresenter;
-import interface_adapter.rec_genre.RecGenreViewModel;
-import interface_adapter.rec_playlist.RecPlaylistController;
-import interface_adapter.rec_playlist.RecPlaylistPresenter;
-import interface_adapter.rec_playlist.RecPlaylistViewModel;
-import interface_adapter.rec_song.RecSongController;
-import interface_adapter.rec_song.RecSongPresenter;
-import interface_adapter.rec_song.RecSongViewModel;
-import use_case.login.LoginInputBoundary;
-import use_case.login.LoginInteractor;
-import use_case.login.LoginOutputBoundary;
-import use_case.logout.LogoutInputBoundary;
-import use_case.logout.LogoutInteractor;
-import use_case.logout.LogoutOutputBoundary;
-import use_case.rec_artist.RecArtistInputBoundary;
-import use_case.rec_artist.RecArtistInteractor;
-import use_case.rec_artist.RecArtistOutputBoundary;
-import use_case.rec_genre.RecGenreInputBoundary;
-import use_case.rec_genre.RecGenreInteractor;
-import use_case.rec_genre.RecGenreOutputBoundary;
-import use_case.rec_playlist.RecPlaylistInputBoundary;
-import use_case.rec_playlist.RecPlaylistInteractor;
-import use_case.rec_playlist.RecPlaylistOutputBoundary;
-import use_case.rec_song.RecSongInputBoundary;
-import use_case.rec_song.RecSongInteractor;
-import use_case.rec_song.RecSongOutputBoundary;
+import interface_adapter.loggedin.*;
+import interface_adapter.logout.*;
+import interface_adapter.rec_artist.*;
+import interface_adapter.rec_genre.*;
+import interface_adapter.rec_playlist.*;
+import interface_adapter.rec_song.*;
+import interface_adapter.spotify_auth.*;
 import services.TokenService;
+import use_case.login.*;
+import use_case.logout.*;
+import use_case.rec_artist.*;
+import use_case.rec_genre.*;
+import use_case.rec_playlist.*;
+import use_case.rec_song.*;
+import view.*;
 
 /**
  * The AppBuilder class is responsible for putting together the pieces of
@@ -91,7 +55,9 @@ public class AppBuilder {
     private final TokenService tokenService = new TokenService();
     private final spotifyLoginView spotifyLoginView = new spotifyLoginView(tokenService, viewManagerModel);
     private final SpotifyAuthController spotifyAuthController = new SpotifyAuthController(tokenService);
+    private final InMemorySongDataAccessObject songDataAccessObject = new InMemorySongDataAccessObject(spotifyAuthController);
     private final InMemoryPlaylistDataAccessObject playlistDataAccessObject = new InMemoryPlaylistDataAccessObject(spotifyAuthController);
+    private final InMemoryArtistDataAccessObject artistDataAccessObject = new InMemoryArtistDataAccessObject(spotifyAuthController);
 
     private LoginViewModel loginViewModel;
     private LoggedInViewModel loggedInViewModel;
@@ -161,15 +127,15 @@ public class AppBuilder {
         return this;
     }
 
-    /**
-     * Adds the RecArtist View to the application.
-     * @return this builder
-     */
-    public AppBuilder addRecArtistView() {
-        this.recArtistView = new RecArtistView();
-        cardPanel.add(recArtistView.getView(), "Recommended Artist");
-        return this;
-    }
+    //    /**
+    //     * Adds the RecArtist View to the application.
+    //     * @return this builder
+    //     */
+    //    public AppBuilder addRecArtistView() {
+    //        this.recArtistView = new RecArtistView();
+    //        cardPanel.add(recArtistView.getView(), "Recommended Artist");
+    //        return this;
+    //    }
 
     //    /**
     //     * Adds the RecPlaylist View to the application.
@@ -220,7 +186,7 @@ public class AppBuilder {
         final RecSongOutputBoundary recSongOutputBoundary = new RecSongPresenter(viewManagerModel, recSongViewModel);
 
         final RecSongInputBoundary recSongInteractor =
-                new RecSongInteractor(userDataAccessObject, recSongOutputBoundary);
+                new RecSongInteractor(songDataAccessObject, recSongOutputBoundary);
 
         final RecSongController recSongController = new RecSongController(recSongInteractor);
         loggedInView.setRecSongController(recSongController);
@@ -261,9 +227,9 @@ public class AppBuilder {
                 recArtistViewModel);
 
         final RecArtistInputBoundary recArtistInteractor =
-                new RecArtistInteractor(userDataAccessObject, recArtistOutputBoundary);
+                new RecArtistInteractor(artistDataAccessObject, recArtistOutputBoundary);
+
         final RecArtistController recArtistController = new RecArtistController(recArtistInteractor);
-        recArtistView.setRecArtistController(recArtistController);
         loggedInView.setRecArtistController(recArtistController);
         return this;
     }

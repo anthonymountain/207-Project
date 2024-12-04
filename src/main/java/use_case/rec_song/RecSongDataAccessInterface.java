@@ -5,13 +5,13 @@ import entity.Track;
 /**
  * DAO for the Recommend Song Use Case.
  */
-public interface RecSongUserDataAccessInterface {
+public interface RecSongDataAccessInterface {
 
     /**
-     * Recommends a song for the user.
+     * Sets a song.
      * @param track the new song
      */
-    void recommendSong(Track track);
+    void setTrack(Track track);
     // add duplicate check
     // add previous recommended song retrieval (from list)
     // add recommendation saving (to list)

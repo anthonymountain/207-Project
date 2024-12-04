@@ -1,12 +1,13 @@
 package services;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Service;
 
-import entity.Track;
+import entity.*;
 import interface_adapter.spotify_auth.SpotifyApiClient;
 
 @Service
@@ -47,4 +48,23 @@ public class RecommendationService {
 //        }
 
     }
+
+    public ArrayList<Artist> getUserTopArtists() {
+        return spotifyApiClient.getUserTopArtists();
+    }
+
+    public ArrayList<Track> getUserTopTracks() {
+        return spotifyApiClient.getUserTopTracks();
+    }
+
+    /**
+     * Retrieves the artist's top tracks.
+     * @param artistId the Spotify ID of the artist.
+     * @param market the market for the songs.
+     * @return the artist's tracks.
+     */
+    public ArrayList<Track> getArtistsTopTracks(String artistId, String market) {
+        return spotifyApiClient.getArtistTopTracks(artistId, market);
+    }
+
 }

@@ -1,4 +1,4 @@
-package use_case.rec_album;
+package java_use_case.rec_album;
 
 public class RecAlbumInteractorTest {
 }
