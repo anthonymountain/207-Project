@@ -16,7 +16,7 @@ public class RecGenreOutputData {
         return this.genre;
     }
 
-    public String getType() {
-        return this.genre.getType();
+    public String getGenreName() {
+        return this.genre.toString();
     }
 }

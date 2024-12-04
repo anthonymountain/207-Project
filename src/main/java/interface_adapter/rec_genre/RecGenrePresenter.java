@@ -1,11 +1,8 @@
 package interface_adapter.rec_genre;
 
-import interface_adapter.ViewManagerModel;
 import use_case.rec_genre.RecGenreOutputBoundary;
 import use_case.rec_genre.RecGenreOutputData;
 import view.RecGenreView;
-
-import javax.swing.*;
 
 /**
  * This is a presenter for a recommended genre.
@@ -13,30 +10,27 @@ import javax.swing.*;
 public class RecGenrePresenter implements RecGenreOutputBoundary {
 
     private final RecGenreViewModel recGenreViewModel;
-    private final ViewManagerModel viewManagerModel;
+    private final RecGenreView recGenreView;
 
-    public RecGenrePresenter(RecGenreViewModel recGenreViewModel, ViewManagerModel viewManagerModel) {
+    public RecGenrePresenter(RecGenreViewModel recGenreViewModel, RecGenreView recGenreView) {
         this.recGenreViewModel = recGenreViewModel;
-        this.viewManagerModel = viewManagerModel;
+        this.recGenreView = recGenreView;
     }
 
     @Override
     public void prepareSuccessView(RecGenreOutputData outputData) {
-        final JDialog dialog = new JDialog(new JFrame(), "Genre Recommendation", true);
-        final RecGenreView recGenreView = new RecGenreView();
-        recGenreView.setGenre(outputData.getGenre());
-        dialog.getContentPane().add(recGenreView);
-        dialog.pack();
-        dialog.setResizable(false);
-        // Makes sure the dialog is centred in the screen.
-        dialog.setLocationRelativeTo(null);
-        dialog.setVisible(true);
+        // Update the view model with the data
+        recGenreViewModel.setGenreName(outputData.getGenreName());
+
+        // Notify the view with updated data
+        recGenreView.update(recGenreViewModel);
+    }
+
+    @Override
+    public void prepareFailureView(String errorMessage) {
+        // Update the ViewModel with the error message
+        recGenreViewModel.setErrorMessage(errorMessage);
+        recGenreView.update(recGenreViewModel);
     }
 }
-
-//    @Override
-//    public void prepareFailureView(String errorMessage) {
-//        // can't have bugs if you don't test for them.
-
-    //}
 

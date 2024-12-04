@@ -62,7 +62,7 @@ public class RecGenreView extends JPanel {
      */
     public void setGenre(RecGenreViewModel recGenreViewModel) {
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        final String label = recGenreViewModel.getGenre();
+        final String label = recGenreViewModel.getGenreName();
         final JPanel artistPanel = new JPanel();
         artistPanel.setBackground(DARK_BACKGROUND);
 
@@ -71,5 +71,23 @@ public class RecGenreView extends JPanel {
         artistLabel.setFont(ViewBuilder.LABEL_FONT);
         artistLabel.setForeground(ViewBuilder.BUTTON_TEXT_COLOR);
         artistLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+    }
+
+
+    public void update(RecGenreViewModel viewModel) {
+        if (viewModel.getErrorMessage() != null) {
+            // Show error dialog
+            JOptionPane.showMessageDialog(null, viewModel.getErrorMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+        else {
+            // Show success dialog
+            final JDialog dialog = new JDialog(new JFrame(), "Genre Recommendation", true);
+            final JLabel genreLabel = new JLabel("Recommended Genre: " + viewModel.getGenreName());
+            dialog.getContentPane().add(genreLabel);
+            dialog.pack();
+            dialog.setResizable(false);
+            dialog.setLocationRelativeTo(null);
+            dialog.setVisible(true);
+        }
     }
 }
