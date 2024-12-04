@@ -70,15 +70,6 @@ public class SpotifyAuthController {
         return playlistService.createPlaylist(userId, tracks);
     }
 
-    @PostMapping("/playlist/artist")
-    public String createArtistPlaylist(
-            @RequestParam String userId,
-            @RequestParam String artistId,
-            @RequestBody JSONArray topTracks
-    ) {
-        return playlistService.createArtistPlaylist(userId, artistId, topTracks);
-    }
-
     public String getCurrentUserProfile() {
         return userService.createUserFromJson(playlistService.getCurrentUserProfile()).getId();
     }

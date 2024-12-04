@@ -53,7 +53,7 @@ public class AppBuilder {
     private final InMemoryUserDataAccessObject userDataAccessObject = new InMemoryUserDataAccessObject();
     private final TokenService tokenService = new TokenService();
     private final StorePlaylistService storePlaylistService = new StorePlaylistService();
-    private final spotifyLoginView spotifyLoginView = new spotifyLoginView(tokenService, viewManagerModel);
+    private final SpotifyLoginView spotifyLoginView = new SpotifyLoginView(tokenService, viewManagerModel);
     private final SpotifyAuthController spotifyAuthController = new SpotifyAuthController(tokenService);
     private final InMemoryTrackDataAccessObject trackDataAccessObject = new InMemoryTrackDataAccessObject(spotifyAuthController);
     private final InMemoryPlaylistDataAccessObject playlistDataAccessObject = new InMemoryPlaylistDataAccessObject(spotifyAuthController);
@@ -177,30 +177,30 @@ public class AppBuilder {
         return this;
     }
 
-    /**
-     * Adds the RecGenre Use Case to the application.
-     * @return this builder
-     */
-    public AppBuilder addRecGenreUseCase() {
-        // Initialize RecGenreViewModel and ViewManagerModel before use
-        final RecGenreViewModel recGenreViewModel = new RecGenreViewModel();
-        final ViewManagerModel viewManagerModel = new ViewManagerModel();
-
-        // Pass initialized ViewModel and ViewManagerModel to the Presenter
-        final RecGenreOutputBoundary recGenreOutputBoundary =
-             new RecGenrePresenter(recGenreViewModel, viewManagerModel);
-
-        // Create Interactor with initialized Presenter
-        final RecGenreInputBoundary recGenreInteractor = 
-            new RecGenreInteractor(userDataAccessObject, recGenreOutputBoundary);
-
-        // Create Controller with initialized Interactor
-        final RecGenreController recGenreController = new RecGenreController(recGenreInteractor);
-
-        // Set Controller in the View
-        recGenreView.setRecGenreController(recGenreController);
-        return this;
-    }
+//    /**
+//     * Adds the RecGenre Use Case to the application.
+//     * @return this builder
+//     */
+//    public AppBuilder addRecGenreUseCase() {
+//        // Initialize RecGenreViewModel and ViewManagerModel before use
+//        final RecGenreViewModel recGenreViewModel = new RecGenreViewModel();
+//        final ViewManagerModel viewManagerModel = new ViewManagerModel();
+//
+//        // Pass initialized ViewModel and ViewManagerModel to the Presenter
+//        final RecGenreOutputBoundary recGenreOutputBoundary =
+//             new RecGenrePresenter(recGenreViewModel, viewManagerModel);
+//
+//        // Create Interactor with initialized Presenter
+//        final RecGenreInputBoundary recGenreInteractor =
+//            new RecGenreInteractor(userDataAccessObject, recGenreOutputBoundary);
+//
+//        // Create Controller with initialized Interactor
+//        final RecGenreController recGenreController = new RecGenreController(recGenreInteractor);
+//
+//        // Set Controller in the View
+//        recGenreView.setRecGenreController(recGenreController);
+//        return this;
+//    }
 
     /**
      * Adds the RecTrack Use Case to the application.

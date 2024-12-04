@@ -16,8 +16,7 @@ import use_case.rec_genre.RecGenreUserDataAccessInterface;
  * NOT persist data between runs of the program.
  */
 public class InMemoryUserDataAccessObject implements LoginUserDataAccessInterface,
-        LogoutUserDataAccessInterface,
-        RecGenreUserDataAccessInterface {
+        LogoutUserDataAccessInterface {
 
     private final Map<String, User> users = new HashMap<>();
 
@@ -50,10 +49,4 @@ public class InMemoryUserDataAccessObject implements LoginUserDataAccessInterfac
     public String getCurrentUsername() {
         return this.currentUsername;
     }
-
-    @Override
-    public void recommendGenre(Genre genre) {
-        this.recommendedGenre = genre;
-    }
-
 }

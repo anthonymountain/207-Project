@@ -23,15 +23,6 @@ public class PlaylistService {
         return playlistId;
     }
 
-    public String createArtistPlaylist(String userId, String artistId, JSONArray topTracks) {
-        final String playlistResponse = spotifyApiClient.createPlaylist(userId, "Artist Playlist");
-        final JSONObject playlist = new JSONObject(playlistResponse);
-        final String playlistId = playlist.getString("id");
-
-        spotifyApiClient.addTracksToPlaylist(playlistId, topTracks);
-        return playlistId;
-    }
-
     public String getCurrentUserProfile() {
         return spotifyApiClient.getCurrentUserProfile();
     }

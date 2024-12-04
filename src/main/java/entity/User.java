@@ -45,4 +45,8 @@ public class User {
     public String getName() {
         return display_name;
     }
+
+    public String getPassword() {
+        return "";
+    }
 }
