@@ -1,10 +1,11 @@
 package interface_adapter.rec_genre;
 
-import java.util.List;
-
 import interface_adapter.ViewManagerModel;
 import use_case.rec_genre.RecGenreOutputBoundary;
 import use_case.rec_genre.RecGenreOutputData;
+import view.RecGenreView;
+
+import javax.swing.*;
 
 /**
  * This is a presenter for a recommended genre.
@@ -21,23 +22,21 @@ public class RecGenrePresenter implements RecGenreOutputBoundary {
 
     @Override
     public void prepareSuccessView(RecGenreOutputData outputData) {
-        // Update the ViewModel with data from OutputData
-        final List<String> genres = outputData.getGenre().getGenres();
-        recGenreViewModel.updateGenres(genres);
-
-        // Trigger state update for the View
-        viewManagerModel.setState(recGenreViewModel.getViewName());
-        viewManagerModel.firePropertyChanged();
+        final JDialog dialog = new JDialog(new JFrame(), "Genre Recommendation", true);
+        final RecGenreView recGenreView = new RecGenreView();
+        recGenreView.setGenre(outputData.getGenre());
+        dialog.getContentPane().add(recGenreView);
+        dialog.pack();
+        dialog.setResizable(false);
+        // Makes sure the dialog is centred in the screen.
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
     }
 }
 
 //    @Override
 //    public void prepareFailureView(String errorMessage) {
-//        // Populate the ViewModel with an error message
-//        recGenreViewModel.setError(errorMessage);
-//
-//        // Trigger state update for the error view
-//        viewManagerModel.setState(recGenreViewModel.getViewName());
-//        viewManagerModel.firePropertyChanged();
-//    }
+//        // can't have bugs if you don't test for them.
+
+    //}
 

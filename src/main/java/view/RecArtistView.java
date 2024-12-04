@@ -1,7 +1,6 @@
 package view;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 import javax.swing.*;
 
