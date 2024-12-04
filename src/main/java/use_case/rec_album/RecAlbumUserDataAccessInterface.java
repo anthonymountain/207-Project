@@ -7,12 +7,5 @@ import entity.Album;
  */
 public interface RecAlbumUserDataAccessInterface {
 
-    /**
-     * Recommends an Album for the user.
-     * @param album the new Album
-     */
-    void recommendAlbum(Album album);
-    // add duplicate check
-    // add previous recommended Album retrieval (from list)
-    // add recommendation saving (to list)
+    void recommedAlbum(Album album);
 }
