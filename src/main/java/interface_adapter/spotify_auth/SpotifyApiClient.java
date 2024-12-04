@@ -329,7 +329,7 @@ public class SpotifyApiClient {
             final String accessToken = tokenService.getToken();
 
             final URI uri = new URI(
-                    String.format("https://api.spotify.com/v1/browse/new-releases"));
+                    String.format("https://api.spotify.com/v1/browse/new-releases?offset=5&limit=20"));
             // prob not this.
 
             final HttpRequest request = HttpRequest.newBuilder()
@@ -342,7 +342,10 @@ public class SpotifyApiClient {
 
             final ArrayList<Album> albums = new ArrayList<Album>();
             final JSONObject jsonResponse = new JSONObject(response.body());
-            final JSONArray albumsJsonArray = jsonResponse.getJSONArray("items");
+
+            final JSONObject albumsObject = jsonResponse.getJSONObject("albums");
+            final JSONArray albumsJsonArray = albumsObject.getJSONArray("items");
+
             for (int i = 0; i < albumsJsonArray.length(); i++) {
                 final JSONObject albumJson = albumsJsonArray.getJSONObject(i);
                 final Album album = albumService.getMostPopularNewRelease(albumJson);

@@ -13,6 +13,9 @@ import entity.*;
 import interface_adapter.ViewManagerModel;
 import interface_adapter.loggedin.*;
 import interface_adapter.logout.*;
+import interface_adapter.rec_album.RecAlbumController;
+import interface_adapter.rec_album.RecAlbumPresenter;
+import interface_adapter.rec_album.RecAlbumViewModel;
 import interface_adapter.rec_artist.*;
 import interface_adapter.rec_genre.*;
 import interface_adapter.rec_playlist.*;
@@ -21,6 +24,9 @@ import interface_adapter.spotify_auth.*;
 import services.TokenService;
 import use_case.login.*;
 import use_case.logout.*;
+import use_case.rec_album.RecAlbumInputBoundary;
+import use_case.rec_album.RecAlbumInteractor;
+import use_case.rec_album.RecAlbumOutputBoundary;
 import use_case.rec_artist.*;
 import use_case.rec_genre.*;
 import use_case.rec_playlist.*;
@@ -58,6 +64,7 @@ public class AppBuilder {
     private final InMemorySongDataAccessObject songDataAccessObject = new InMemorySongDataAccessObject(spotifyAuthController);
     private final InMemoryPlaylistDataAccessObject playlistDataAccessObject = new InMemoryPlaylistDataAccessObject(spotifyAuthController);
     private final InMemoryArtistDataAccessObject artistDataAccessObject = new InMemoryArtistDataAccessObject(spotifyAuthController);
+    private final InMemoryAlbumDataAccessObject albumDataAccessObject = new InMemoryAlbumDataAccessObject(spotifyAuthController);
 
     private LoginViewModel loginViewModel;
     private LoggedInViewModel loggedInViewModel;
@@ -71,6 +78,8 @@ public class AppBuilder {
     private RecArtistView recArtistView;
     private RecPlaylistView recPlaylistView;
     private RecPlaylistViewModel recPlaylistViewModel;
+    private RecAlbumView recAlbumView;
+    private RecAlbumViewModel recAlbumViewModel;
 
     public AppBuilder() {
         cardPanel.setLayout(cardLayout);
@@ -249,6 +258,21 @@ public class AppBuilder {
         // Lowkey setting the RecPlaylistController to the recPlaylist View is probably useless
         // instead we should probably be setting an import playlist controller or something.
         loggedInView.setRecPlaylistController(recPlaylistController);
+        return this;
+    }
+
+    /**
+     * Adds the RecArtist Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addRecAlbumUseCase() {
+        final RecAlbumOutputBoundary recAlbumOutputBoundary = new RecAlbumPresenter(recAlbumViewModel, viewManagerModel);
+
+        final RecAlbumInputBoundary recAlbumInteractor =
+                new RecAlbumInteractor(recAlbumOutputBoundary, albumDataAccessObject);
+
+        final RecAlbumController recAlbumController = new RecAlbumController(recAlbumInteractor);
+        loggedInView.setRecAlbumController(recAlbumController);
         return this;
     }
 

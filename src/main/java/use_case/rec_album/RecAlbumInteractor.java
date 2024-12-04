@@ -11,12 +11,9 @@ import services.AlbumService;
 public class RecAlbumInteractor implements RecAlbumInputBoundary {
     private final RecAlbumOutputBoundary recAlbumPresenter;
     private final RecAlbumUserDataAccessInterface dataAccessObject;
-    private final AlbumService albumService;
 
-    public RecAlbumInteractor(RecAlbumOutputBoundary recAlbumPresenter,
-                              AlbumService albumService, RecAlbumUserDataAccessInterface dataAccessObject) {
+    public RecAlbumInteractor(RecAlbumOutputBoundary recAlbumPresenter, RecAlbumUserDataAccessInterface dataAccessObject) {
         this.recAlbumPresenter = recAlbumPresenter;
-        this.albumService = albumService;
         this.dataAccessObject = dataAccessObject;
     }
 

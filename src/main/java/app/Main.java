@@ -30,6 +30,7 @@ public class Main {
                                             .addRecSongUseCase()
                                             .addRecArtistUseCase()
                                             .addRecPlaylistUseCase()
+                                            .addRecAlbumUseCase()
                                             .build();
 
         // Set the frame size to a larger size (e.g., 1200x800)
