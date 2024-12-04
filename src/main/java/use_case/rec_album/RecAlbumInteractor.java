@@ -28,7 +28,8 @@ public class RecAlbumInteractor implements RecAlbumInputBoundary {
                 .orElse(null);
 
         // present output (successfully recommend album)
-        final RecAlbumOutputData outputData = new RecAlbumOutputData(mostPopularAlbum.getId(), mostPopularAlbum.getName(), true, "Album recommended successfully.");
+        final RecAlbumOutputData outputData = new RecAlbumOutputData(mostPopularAlbum.getId(),
+                mostPopularAlbum.getName(), true, "Album recommended successfully.");
         recAlbumPresenter.prepareSuccessView(outputData);
     }
 }
