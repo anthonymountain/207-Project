@@ -4,12 +4,9 @@ import java.awt.*;
 
 import javax.swing.*;
 
-import entity.Artist;
 import entity.Genre;
-import interface_adapter.rec_artist.RecArtistController;
 import interface_adapter.rec_genre.RecGenreController;
 import interface_adapter.rec_genre.RecGenreViewModel;
-import use_case.rec_genre.RecGenreOutputData;
 
 /**
  * The View for when the user generates a genre recommendation.
