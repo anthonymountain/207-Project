@@ -21,5 +21,9 @@ public interface RecAlbumUserDataAccessInterface {
      */
     Album getAlbum();
 
+    /**
+     * Get new album releases on Spotify.
+     * @return new album releases
+     */
     ArrayList<Album> getNewReleases();
 }
