@@ -15,12 +15,11 @@ public class PlaylistService {
         this.spotifyApiClient = new SpotifyApiClient(tokenService);
     }
 
-    public String createPlaylistForRecommendations(String userId, JSONArray recommendedTracks) {
+    public String createPlaylist(String userId, String tracks) {
         final String playlistResponse = spotifyApiClient.createPlaylist(userId, "Recommended Playlist");
         final JSONObject playlist = new JSONObject(playlistResponse);
         final String playlistId = playlist.getString("id");
-
-        spotifyApiClient.addTracksToPlaylist(playlistId, recommendedTracks);
+        spotifyApiClient.addTracksToPlaylist(playlistId, tracks);
         return playlistId;
     }
 
@@ -32,4 +31,9 @@ public class PlaylistService {
         spotifyApiClient.addTracksToPlaylist(playlistId, topTracks);
         return playlistId;
     }
+
+    public String getCurrentUserProfile() {
+        return spotifyApiClient.getCurrentUserProfile();
+    }
+
 }

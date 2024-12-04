@@ -6,14 +6,14 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 import entity.*;
-import interface_adapter.rec_artist.RecArtistController;
+import interface_adapter.rec_track.RecTrackController;
 
 /**
- * The View for when the user generates a artist.
+ * The View for when the user generates a track.
  * //Note: if you want to figure out the correct format and structure, look at LoggedInView.java
- * //import interface_adapter.rec_artist.RecArtistState;  could be unnecessary
+ * //import interface_adapter.rec_track.RecTrackState;  could be unnecessary
  */
-public class RecArtistView extends JPanel {
+public class RecTrackView extends JPanel {
 
     // UI
     private static final Color DARK_BACKGROUND = new Color(24, 24, 32);
@@ -23,15 +23,14 @@ public class RecArtistView extends JPanel {
     private final ViewBuilder builder = new ViewBuilder();
 
     private final JPanel view;
-    private RecArtistController recArtistController;
+    private RecTrackController recTrackController;
     private JButton recSong;
-    private Artist artist;
+    private Track track;
 
-    public RecArtistView() {
-        builder.addLabel("Recommended Artist:")
+    public RecTrackView() {
+        builder.addLabel("Recommended Track:")
 
-                .addButton("recSong", "Recommend Song")
-                .setViewName("Recommended Artist");
+                .setViewName("Recommended Track");
 
         builder.setPreferredSize(400,400);
         view = builder.build();
@@ -55,21 +54,21 @@ public class RecArtistView extends JPanel {
     //    }
 
     /**
-     * Set the artist and make the labels.
-     * @param artist the artist to be set.
+     * Set the track and make the labels.
+     * @param track the track to be set.
      */
-    public void setArtist(Artist artist) {
-        this.artist = artist;
+    public void setTrack(Track track) {
+        this.track = track;
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-        final JPanel artistPanel = new JPanel();
-        artistPanel.setBackground(DARK_BACKGROUND);
+        final JPanel trackPanel = new JPanel();
+        trackPanel.setBackground(DARK_BACKGROUND);
 
-        builder.addHeaderLabel(this.artist.getName());
-        final JLabel artistLabel = builder.getLabel(this.artist.getName());
-        artistLabel.setFont(ViewBuilder.LABEL_FONT);
-        artistLabel.setForeground(ViewBuilder.BUTTON_TEXT_COLOR);
-        artistLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        builder.addHeaderLabel(this.track.getName());
+        final JLabel trackLabel = builder.getLabel(this.track.getName());
+        trackLabel.setFont(ViewBuilder.LABEL_FONT);
+        trackLabel.setForeground(ViewBuilder.BUTTON_TEXT_COLOR);
+        trackLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        this.add(artistLabel);
+        this.add(trackLabel);
     }
 }

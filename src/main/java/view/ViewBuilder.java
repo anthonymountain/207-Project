@@ -37,19 +37,19 @@ public class ViewBuilder extends JPanel {
         this.setBackground(DARK_BACKGROUND);
 
         headerPanel = new JPanel();
-        headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.Y_AXIS));
+        headerPanel.setLayout(new BoxLayout(headerPanel, BoxLayout.PAGE_AXIS));
         headerPanel.setBackground(DARK_BACKGROUND);
         this.add(headerPanel, BorderLayout.NORTH);
 
         // Main content area
         mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
         mainPanel.setBackground(DARK_BACKGROUND);
         this.add(mainPanel, BorderLayout.CENTER);
 
         // Buttons panel
         buttonsPanel = new JPanel();
-        buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.Y_AXIS));
+        buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.PAGE_AXIS));
         // Vertical alignment
         buttonsPanel.setBackground(DARK_BACKGROUND);
         this.add(buttonsPanel, BorderLayout.CENTER);
@@ -161,7 +161,7 @@ public class ViewBuilder extends JPanel {
         this.add(headerPanel, BorderLayout.NORTH);
         this.add(buttonsPanel, BorderLayout.SOUTH);
         this.add(mainPanel);
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
         return this;
     }
 }
