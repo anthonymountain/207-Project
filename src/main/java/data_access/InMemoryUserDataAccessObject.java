@@ -16,8 +16,7 @@ import use_case.rec_genre.RecGenreDataAccessInterface;
  * NOT persist data between runs of the program.
  */
 public class InMemoryUserDataAccessObject implements LoginUserDataAccessInterface,
-        LogoutUserDataAccessInterface,
-        RecGenreDataAccessInterface {
+        LogoutUserDataAccessInterface {
 
     private final Map<String, User> users = new HashMap<>();
 
@@ -25,6 +24,7 @@ public class InMemoryUserDataAccessObject implements LoginUserDataAccessInterfac
     private Track recommendedSong;
     private Genre recommendedGenre;
     private Artist recommendedArtist;
+    private Genre genre;
 
     @Override
     public boolean existsByName(String identifier) {
@@ -50,10 +50,4 @@ public class InMemoryUserDataAccessObject implements LoginUserDataAccessInterfac
     public String getCurrentUsername() {
         return this.currentUsername;
     }
-
-    @Override
-    public void recommendGenre(Genre genre) {
-        this.recommendedGenre = genre;
-    }
-
 }
