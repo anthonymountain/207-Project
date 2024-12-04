@@ -10,6 +10,8 @@ import entity.User;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
 import use_case.rec_genre.RecGenreUserDataAccessInterface;
+import use_case.rec_song.RecSongUserDataAccessInterface;
+import use_case.rec_album.RecAlbumUserDataAccessInterface;
 
 /**
  * In-memory implementation of the DAO for storing user data. This implementation does
@@ -18,6 +20,9 @@ import use_case.rec_genre.RecGenreUserDataAccessInterface;
 public class InMemoryUserDataAccessObject implements LoginUserDataAccessInterface,
         LogoutUserDataAccessInterface,
         RecGenreUserDataAccessInterface {
+        RecGenreUserDataAccessInterface,
+        RecSongUserDataAccessInterface,
+        RecArtistUserDataAccessInterface, RecAlbumUserDataAccessInterface {
 
     private final Map<String, User> users = new HashMap<>();
 
@@ -25,6 +30,7 @@ public class InMemoryUserDataAccessObject implements LoginUserDataAccessInterfac
     private Track recommendedSong;
     private Genre recommendedGenre;
     private Artist recommendedArtist;
+    private Album recommendedAlbum;
 
     @Override
     public boolean existsByName(String identifier) {
@@ -52,8 +58,23 @@ public class InMemoryUserDataAccessObject implements LoginUserDataAccessInterfac
     }
 
     @Override
+    public void recommendSong(Track song) {
+        this.recommendedSong = song;
+    }
+
+    @Override
     public void recommendGenre(Genre genre) {
         this.recommendedGenre = genre;
+    }
+
+    @Override
+    public void recommendArtist(Artist artist) {
+        this.recommendedArtist = artist;
+    }
+
+    @Override
+    public void recommendAlbum(Album album) {
+        this.recommendedAlbum = album;
     }
 
 }

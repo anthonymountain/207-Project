@@ -15,6 +15,8 @@ import org.springframework.stereotype.Component;
 
 import entity.Artist;
 import entity.Track;
+import entity.Album;
+import services.AlbumService;
 import services.ArtistService;
 import services.TokenService;
 import services.TrackService;
@@ -31,8 +33,10 @@ public class SpotifyApiClient {
     private final TokenService tokenService;
     private final ArtistService artistService;
     private final TrackService trackService;
+    private final AlbumService albumService;
 
     public SpotifyApiClient(TokenService tokenService) {
+        this.albumService = new AlbumService();
         this.artistService = new ArtistService();
         this.trackService = new TrackService();
         this.httpClient = HttpClient.newHttpClient();
@@ -311,6 +315,49 @@ public class SpotifyApiClient {
         }
         catch (IOException | InterruptedException | URISyntaxException ex) {
             throw new RuntimeException("Failed to get user top items", ex);
+        }
+    }
+
+    /**
+     * Get the user's top items so we have a seed for getRecommendations().
+     *
+     * @return A JSON string containing the user's top items.
+     * @throws RuntimeException yaddi yadda.
+     */
+    public ArrayList<Album> getNewReleases() {
+        try {
+            final String accessToken = tokenService.getToken();
+
+            final URI uri = new URI(
+                    String.format("https://api.spotify.com/v1/browse/new-releases"));
+            // prob not this.
+
+            final HttpRequest request = HttpRequest.newBuilder()
+                    .uri(uri)
+                    .header(AUTHORIZATION, BEARER + accessToken)
+                    .GET()
+                    .build();
+
+            final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+
+            final ArrayList<Album> albums = new ArrayList<Album>();
+            final JSONObject jsonResponse = new JSONObject(response.body());
+            final JSONArray albumsJsonArray = jsonResponse.getJSONArray("items");
+            for (int i = 0; i < albumsJsonArray.length(); i++) {
+                final JSONObject albumJson = albumsJsonArray.getJSONObject(i);
+                final Album album = albumService.getMostPopularNewRelease(albumJson);
+                albums.add(album);
+            }
+            return albums;
+        }
+        catch (IOException ex) {
+            throw new RuntimeException("Failed to fetch top items", ex);
+        }
+        catch (InterruptedException ex) {
+            throw new RuntimeException("Request interrupted", ex);
+        }
+        catch (URISyntaxException ex) {
+            throw new RuntimeException("Invalid URI", ex);
         }
     }
 }
