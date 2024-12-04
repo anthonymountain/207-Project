@@ -3,7 +3,7 @@ package use_case.rec_genre;
 import entity.Genre;
 
 /**
- * DAO for the Recommend Song Use Case.
+ * DAO interface for the Recommend Song Use Case.
  */
 public interface RecGenreDataAccessInterface {
 
