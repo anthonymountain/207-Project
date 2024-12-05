@@ -24,6 +24,8 @@ public class InMemoryImportPlaylistDataAccessObject implements ImportPlaylistDat
             for (Track track : storePlaylistService.getPlaylist()) {
                 trackUris = trackUris.concat(track.getUri() + ",");
             }
+            trackUris = trackUris.substring(0, trackUris.length() - 1);
+            System.out.println("uris" + trackUris);
 
             // Get Spotify user ID using the Auth controller
             String userId = spotifyAuthController.getCurrentUserProfile();

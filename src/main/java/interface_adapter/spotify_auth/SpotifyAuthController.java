@@ -64,8 +64,8 @@ public class SpotifyAuthController {
 
     @PostMapping("/playlist/recommendations")
     public String createPlaylist(
-            @RequestBody String tracks,
-            @RequestParam String userId
+            @RequestParam String userId,
+            @RequestBody String tracks
     ) {
         return playlistService.createPlaylist(userId, tracks);
     }

@@ -16,10 +16,12 @@ public class PlaylistService {
     }
 
     public String createPlaylist(String userId, String tracks) {
-        final String playlistResponse = spotifyApiClient.createPlaylist(userId, "Recommended Playlist");
+        System.out.println("createPlaylist" + tracks);
+        final String playlistResponse = spotifyApiClient.createPlaylist(userId, "Recommended Playlist 1");
         final JSONObject playlist = new JSONObject(playlistResponse);
         System.out.println(playlist);
         final String playlistId = playlist.getString("id");
+        System.out.println("playlistId" + playlistId);
         spotifyApiClient.addTracksToPlaylist(playlistId, tracks);
         return playlistId;
     }

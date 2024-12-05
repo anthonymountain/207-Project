@@ -115,7 +115,7 @@ public class SpotifyApiClient {
         try {
             final String accessToken = tokenService.getToken();
 
-            final URI uri = new URI(String.format("https://api.spotify.com/v1/playlists/%s/tracks", playlistId));
+            final URI uri = new URI(String.format("https://api.spotify.com/v1/playlists/%s/tracks?uris=%s", playlistId, trackUris));
 
             final JSONObject payload = new JSONObject();
             payload.put("uris", trackUris);
@@ -126,8 +126,9 @@ public class SpotifyApiClient {
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(payload.toString()))
                     .build();
-
-            httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(request + "   kill me now" );
+            final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println("response sample" + response.body());
         }
         catch (IOException | InterruptedException | URISyntaxException ex) {
             throw new RuntimeException("Failed to add tracks", ex);
