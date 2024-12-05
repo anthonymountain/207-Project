@@ -18,6 +18,7 @@ public class PlaylistService {
     public String createPlaylist(String userId, String tracks) {
         final String playlistResponse = spotifyApiClient.createPlaylist(userId, "Recommended Playlist");
         final JSONObject playlist = new JSONObject(playlistResponse);
+        System.out.println(playlist);
         final String playlistId = playlist.getString("id");
         spotifyApiClient.addTracksToPlaylist(playlistId, tracks);
         return playlistId;

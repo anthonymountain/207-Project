@@ -27,6 +27,7 @@ public class InMemoryImportPlaylistDataAccessObject implements ImportPlaylistDat
 
             // Get Spotify user ID using the Auth controller
             String userId = spotifyAuthController.getCurrentUserProfile();
+            System.out.println(userId);
 
             // Create a new playlist
             spotifyAuthController.createPlaylist(userId, trackUris);
