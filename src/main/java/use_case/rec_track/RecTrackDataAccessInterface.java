@@ -16,6 +16,12 @@ public interface RecTrackDataAccessInterface {
     void setTrack(Track track);
 
     /**
+     * Retrieves the track.
+     * @return the track.
+     */
+    Track getTrack();
+
+    /**
      * Retrieves user's top tracks.
      * @return the user's top tracks.
      */

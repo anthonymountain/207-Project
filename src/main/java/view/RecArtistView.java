@@ -1,12 +1,12 @@
 package view;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 import javax.swing.*;
 
 import entity.*;
 import interface_adapter.rec_artist.RecArtistController;
+import interface_adapter.rec_track.RecTrackController;
 
 /**
  * The View for when the user generates a artist.
@@ -24,13 +24,16 @@ public class RecArtistView extends JPanel {
 
     private final JPanel view;
     private RecArtistController recArtistController;
-    private JButton recSong;
+    private JButton recTrack;
     private Artist artist;
+
+    // rec track from artist
+//    private RecTrackController recTrackController = new RecTrackController();
 
     public RecArtistView() {
         builder.addLabel("Recommended Artist:")
 
-                .addButton("recSong", "Recommend Song")
+                .addButton("recTrack", "Recommend Track")
                 .setViewName("Recommended Artist");
 
         builder.setPreferredSize(400,400);
@@ -39,20 +42,20 @@ public class RecArtistView extends JPanel {
         this.setBackground(DARK_BACKGROUND);
         view.setBorder(BorderFactory.createEmptyBorder(TEN, TEN, TEN, TEN));
 
-        recSong = builder.getButton("recSong");
+        recTrack = builder.getButton("recTrack");
     }
 
     private void initializeButtonActions() {
-        recSong.addActionListener(evt -> handleRecSong());
+        recTrack.addActionListener(evt -> handleRecTrack());
     }
 
-    private void handleRecSong() {
-        // RecSongController.execute();
+    private void handleRecTrack() {
+//        recTrackController.execute();
     }
 
-    //    public void setRecSongController(RecSongController recSongController) {
-    //        this.recSongController = recSongController;
-    //    }
+//    public void setRecTrackController(RecTrackController recTrackController) {
+//        this.recTrackController = recTrackController;
+//    }
 
     /**
      * Set the artist and make the labels.

@@ -1,7 +1,7 @@
 package java_use_case.rec_playlist;
 
 import data_access.InMemoryPlaylistDataAccessObject;
-import data_access.TestPlaylistDataAcessObject;
+import data_access.TestPlaylistDataAccessObject;
 import interface_adapter.rec_playlist.RecPlaylistPresenter;
 import org.junit.Test;
 import use_case.rec_playlist.*;
@@ -15,7 +15,7 @@ public class RecPlaylistInteractorTest {
     public void successPlaylistRecommendedTest(){
         // Just making sure that we get a playlist from our API calls
         RecPlaylistInputData recPlaylistInputData = new RecPlaylistInputData();
-        RecPlaylistDataAccessInterface recPlaylistRepository = new TestPlaylistDataAcessObject();
+        RecPlaylistDataAccessInterface recPlaylistRepository = new TestPlaylistDataAccessObject();
 
         // Presenter to see if our use case handles as expected
         RecPlaylistOutputBoundary recPlaylistPresenter = new RecPlaylistOutputBoundary() {

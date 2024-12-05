@@ -44,4 +44,13 @@ public class Genre {
     public String toString() {
         return genres.toString();
     }
+
+    /**
+     * Converts the genres to a string.
+     * @param index the length of the genres.
+     * @return the genres as a string
+     */
+    public String get(int index) {
+        return genres.get(index);
+    }
 }

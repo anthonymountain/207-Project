@@ -40,12 +40,7 @@ import view.*;
 public class AppBuilder {
     private final JPanel cardPanel = new JPanel();
     private final CardLayout cardLayout = new CardLayout();
-    private final User user = new User();
-    private final Track track = new Track();
-    private final Genre genre = new Genre();
-    private final Artist artist = new Artist();
-    private final Playlist playlist = new Playlist();
-    // thought question: is the hard dependency below a problem?
+
     private final ViewManagerModel viewManagerModel = new ViewManagerModel();
     private final ViewManager viewManager = new ViewManager(cardPanel, cardLayout, viewManagerModel);
 
@@ -58,6 +53,8 @@ public class AppBuilder {
     private final InMemoryTrackDataAccessObject trackDataAccessObject = new InMemoryTrackDataAccessObject(spotifyAuthController);
     private final InMemoryPlaylistDataAccessObject playlistDataAccessObject = new InMemoryPlaylistDataAccessObject(spotifyAuthController);
     private final InMemoryArtistDataAccessObject artistDataAccessObject = new InMemoryArtistDataAccessObject(spotifyAuthController);
+    private final GenreDataAccessObject genreDataAccessObject = new GenreDataAccessObject(spotifyAuthController);
+
     private LoginViewModel loginViewModel;
     private LoggedInViewModel loggedInViewModel;
     private LoggedInView loggedInView;
@@ -111,9 +108,8 @@ public class AppBuilder {
      * @return this builder
      */
     public AppBuilder addRecGenreView() {
-        this.recGenreView = new RecGenreView();
-        cardPanel.add(recGenreView.getView(), "Recommended Genre");
-        return this;
+
+        return getAppBuilder();
     }
 
     //    /**
@@ -177,30 +173,30 @@ public class AppBuilder {
         return this;
     }
 
-//    /**
-//     * Adds the RecGenre Use Case to the application.
-//     * @return this builder
-//     */
-//    public AppBuilder addRecGenreUseCase() {
-//        // Initialize RecGenreViewModel and ViewManagerModel before use
-//        final RecGenreViewModel recGenreViewModel = new RecGenreViewModel();
-//        final ViewManagerModel viewManagerModel = new ViewManagerModel();
-//
-//        // Pass initialized ViewModel and ViewManagerModel to the Presenter
-//        final RecGenreOutputBoundary recGenreOutputBoundary =
-//             new RecGenrePresenter(recGenreViewModel, viewManagerModel);
-//
-//        // Create Interactor with initialized Presenter
-//        final RecGenreInputBoundary recGenreInteractor =
-//            new RecGenreInteractor(userDataAccessObject, recGenreOutputBoundary);
-//
-//        // Create Controller with initialized Interactor
-//        final RecGenreController recGenreController = new RecGenreController(recGenreInteractor);
-//
-//        // Set Controller in the View
-//        recGenreView.setRecGenreController(recGenreController);
-//        return this;
-//    }
+    /**
+     * Adds the RecGenre Use Case to the application.
+     * @return this builder
+     */
+    public AppBuilder addRecGenreUseCase() {
+
+        return getAppBuilder();
+    }
+
+    @NotNull
+    private AppBuilder getAppBuilder() {
+        final RecGenreOutputBoundary recGenreOutputBoundary =
+                new RecGenrePresenter(recGenreViewModel, recGenreView);
+
+        final RecGenreInputBoundary recGenreInteractor =
+                new RecGenreInteractor(genreDataAccessObject, recGenreOutputBoundary);
+
+        final RecGenreController recGenreController = new RecGenreController(recGenreInteractor);
+
+        this.recGenreView = new RecGenreView(recGenreController);
+        cardPanel.add(recGenreView.getView(), "Recommended Genre");
+
+        return this;
+    }
 
     /**
      * Adds the RecTrack Use Case to the application.
@@ -239,7 +235,7 @@ public class AppBuilder {
      */
     public AppBuilder addRecPlaylistUseCase() {
         final RecPlaylistOutputBoundary recPlaylistOutputBoundary = new RecPlaylistPresenter(viewManagerModel,
-            recPlaylistViewModel, storePlaylistService, spotifyAuthController);
+            recPlaylistViewModel);
 
         final RecPlaylistInputBoundary recPlaylistInteractor =
                 new RecPlaylistInteractor(playlistDataAccessObject, recPlaylistOutputBoundary);

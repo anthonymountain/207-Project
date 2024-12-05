@@ -8,7 +8,7 @@ import java.util.ArrayList;
 /**
  * This is a DAO for the unit test.
  */
-public class TestPlaylistDataAcessObject implements RecPlaylistDataAccessInterface {
+public class TestPlaylistDataAccessObject implements RecPlaylistDataAccessInterface {
     @Override
     public ArrayList<Track> getRecommendations() {
         return null;

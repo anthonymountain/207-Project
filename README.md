@@ -46,7 +46,19 @@ This Spotify Playlist Generator is meant to be used for generating music based o
 
 ## Usage Guide
 
-**Anthony please insert screenshots here.**
+<img width="959" alt="image" src="https://github.com/user-attachments/assets/8849bb64-492f-4819-ae9d-8db8ae9eb288">
+<img width="959" alt="image" src="https://github.com/user-attachments/assets/a529aef3-73d9-4721-90c0-6f7df4e2710c">
+<img width="959" alt="image" src="https://github.com/user-attachments/assets/0c129998-b2e9-4d2d-a5fc-41405ec9dd92">
+<img width="959" alt="image" src="https://github.com/user-attachments/assets/92cab980-21f2-48c9-a3b3-959561cbf762">
+<img width="959" alt="image" src="https://github.com/user-attachments/assets/50976c23-01ed-437a-8d8a-ecae5cd68295">
+<img width="959" alt="image" src="https://github.com/user-attachments/assets/c9ac8229-c329-4283-b9e0-35b16f2352f7">
+<img width="959" alt="image" src="https://github.com/user-attachments/assets/03586292-28d3-4361-8424-135ced7c206d">
+<img width="959" alt="image" src="https://github.com/user-attachments/assets/a02e548c-cad2-4ff9-938f-0490ebee1f32">
+<img width="959" alt="image" src="https://github.com/user-attachments/assets/ab3e11e8-0ce3-42b6-881f-79c477597880">
+<img width="959" alt="image" src="https://github.com/user-attachments/assets/b1aaa85b-371d-4300-ae28-39425c25352d">
+<img width="959" alt="image" src="https://github.com/user-attachments/assets/20d668dd-0b88-4422-ae69-e19621ce5003">
+<img width="959" alt="image" src="https://github.com/user-attachments/assets/b807af50-b61e-48b1-a3c8-4e8fbe55f24e">
+<img width="959" alt="image" src="https://github.com/user-attachments/assets/771532fa-0d97-433f-b00f-65ce8f4a4f03">
 
 ## License
 

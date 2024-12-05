@@ -10,14 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import services.GenreService;
 import services.PlaylistService;
 import services.RecommendationService;
 import services.TokenService;
-import services.UserService;
-
-import java.util.List;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api")
@@ -25,12 +24,12 @@ public class SpotifyAuthController {
 
     private final RecommendationService recommendationService;
     private final PlaylistService playlistService;
-    private final UserService userService;
+    private final GenreService genreService;
 
     public SpotifyAuthController(TokenService tokenService) {
         this.recommendationService = new RecommendationService(tokenService);
         this.playlistService = new PlaylistService(tokenService);
-        this.userService = new UserService();
+        this.genreService = new GenreService();
     }
 
     @GetMapping("/recommendation")
@@ -63,14 +62,24 @@ public class SpotifyAuthController {
     }
 
     @PostMapping("/playlist/recommendations")
-    public String createPlaylist(
-            @RequestParam String userId,
-            @RequestBody String tracks
+    public String createPlaylistForRecommendations(
+            @RequestBody JSONArray recommendations,
+            @RequestParam String userId
     ) {
-        return playlistService.createPlaylist(userId, tracks);
+        return playlistService.createPlaylistForRecommendations(userId, recommendations);
     }
 
-    public String getCurrentUserProfile() {
-        return userService.createUserFromJson(playlistService.getCurrentUserProfile()).getId();
+    @PostMapping("/playlist/artist")
+    public String createArtistPlaylist(
+            @RequestParam String userId,
+            @RequestParam String artistId,
+            @RequestBody JSONArray topTracks
+    ) {
+        return playlistService.createArtistPlaylist(userId, artistId, topTracks);
+    }
+
+    @GetMapping("/recommendations/available-genre-seeds")
+    public ArrayList<String> getGenres() {
+        return genreService.getGenres();
     }
 }
