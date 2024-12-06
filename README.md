@@ -1,3 +1,38 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # Spotify Playlist Generator
 ## Group 236
 ## Members
@@ -62,7 +97,7 @@ This Spotify Playlist Generator is meant to be used for generating music based o
 
 ## License
 
-This project is licensed under the MIT license. See the [LICENSE](LICENSE.md) file for more details.
+This project is licensed under the MIT license. See the [LICENSE](LICENSE) file for more details.
 
 ## Feedback
 
