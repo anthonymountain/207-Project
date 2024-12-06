@@ -5,16 +5,9 @@ import javax.swing.*;
 import entity.DisplayPlaylist;
 import entity.Playlist;
 import entity.Track;
-import interface_adapter.import_playlist.ImportPlaylistController;
-import interface_adapter.import_playlist.ImportPlaylistPresenter;
-import data_access.InMemoryImportPlaylistDataAccessObject;
 import interface_adapter.loggedin.LoggedInViewModel;
 import interface_adapter.rec_playlist.RecPlaylistController;
 import interface_adapter.rec_playlist.RecPlaylistViewModel;
-import interface_adapter.spotify_auth.SpotifyAuthController;
-import services.StorePlaylistService;
-import use_case.import_playlist.*;
-
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -26,11 +19,8 @@ import java.util.ArrayList;
 public class RecPlaylistView extends JPanel {
 
     private final JPanel view;
+    //    private ImportPlaylistController importPlaylistController;
     private ArrayList<Track> playlist;
-    private StorePlaylistService storage;
-    private SpotifyAuthController spotifyAuthController;
-    private ImportPlaylistController importPlaylistController;
-
 
     //    private static final String FONT = "Futura";
     private static final int TWENTY = 20;
@@ -38,14 +28,8 @@ public class RecPlaylistView extends JPanel {
 
     private static final Color DARK_BACKGROUND = new Color(24, 24, 32);
 
-    public RecPlaylistView(StorePlaylistService storage, SpotifyAuthController spotifyAuthController) {
+    public RecPlaylistView() {
         final ViewBuilder builder = new ViewBuilder();
-        this.spotifyAuthController = spotifyAuthController;
-        this.storage = storage;
-        ImportPlaylistDataAccessInterface dataAccess = new InMemoryImportPlaylistDataAccessObject(spotifyAuthController, storage);
-        ImportPlaylistOutputBoundary importPlaylistPresenter = new ImportPlaylistPresenter();
-        ImportPlaylistInteractor importPlaylistInteractor = new ImportPlaylistInteractor(dataAccess, importPlaylistPresenter);
-        this.importPlaylistController = new ImportPlaylistController(importPlaylistInteractor);
 
         builder.addLabel("New Playlist: Recommended Playlist")
                 .addButton("importplaylist", "Import Playlist")
@@ -58,15 +42,15 @@ public class RecPlaylistView extends JPanel {
 
         importPlaylist = builder.getButton("importplaylist");
 
-        initializeButtonActions();
+    //        initializeButtonActions();
     }
 
-    private void initializeButtonActions() {
+    private void initializeButtonActions () {
         importPlaylist.addActionListener(evt -> handleImportPlaylistAction());
     }
 
-    private void handleImportPlaylistAction() {
-        importPlaylistController.execute(storage);
+    private void handleImportPlaylistAction () {
+        // importPlaylistController.execute();
     }
 
     //    public void setImportPlaylistController(ImportPlaylistController importPlaylistController) {
@@ -79,7 +63,6 @@ public class RecPlaylistView extends JPanel {
      */
     public void setPlaylist(ArrayList<Track> playlist) {
         this.playlist = playlist;
-        storage.storePlaylist(playlist);
         final JPanel playlistPanel = new JPanel();
         playlistPanel.setBackground(DARK_BACKGROUND);
 
