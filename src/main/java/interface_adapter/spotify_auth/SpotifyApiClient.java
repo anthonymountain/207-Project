@@ -111,11 +111,11 @@ public class SpotifyApiClient {
      * @param trackUris  JSON array of track URIs to add to the playlist.
      * @throws RuntimeException for funsies.
      */
-    public void addTracksToPlaylist(String playlistId, JSONArray trackUris) {
+    public void addTracksToPlaylist(String playlistId, String trackUris) {
         try {
             final String accessToken = tokenService.getToken();
 
-            final URI uri = new URI(String.format("https://api.spotify.com/v1/playlists/%s/tracks", playlistId));
+            final URI uri = new URI(String.format("https://api.spotify.com/v1/playlists/%s/tracks?uris=%s", playlistId, trackUris));
 
             final JSONObject payload = new JSONObject();
             payload.put("uris", trackUris);
@@ -126,8 +126,9 @@ public class SpotifyApiClient {
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(payload.toString()))
                     .build();
-
-            httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(request + "   kill me now" );
+            final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println("response sample" + response.body());
         }
         catch (IOException | InterruptedException | URISyntaxException ex) {
             throw new RuntimeException("Failed to add tracks", ex);
@@ -171,7 +172,7 @@ public class SpotifyApiClient {
 
             // Prepare the URL
             final URI uri = new URI(String.format(
-                    "https://api.spotify.com/v1/me/top/artists?offset=0&limit=50"));
+                    "https://api.spotify.com/v1/me/top/artists?offset=5&limit=50"));
 
             // Make the API request
             final HttpRequest request = HttpRequest.newBuilder()
@@ -215,7 +216,7 @@ public class SpotifyApiClient {
 
             // Prepare the URL
             final URI uri = new URI(String.format(
-                    "https://api.spotify.com/v1/me/top/tracks?offset=0&limit=50"));
+                    "https://api.spotify.com/v1/me/top/tracks?offset=5&limit=50"));
 
             // Make the API request
             final HttpRequest request = HttpRequest.newBuilder()

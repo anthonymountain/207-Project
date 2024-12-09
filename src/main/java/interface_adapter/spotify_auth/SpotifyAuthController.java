@@ -14,9 +14,12 @@ import services.GenreService;
 import services.PlaylistService;
 import services.RecommendationService;
 import services.TokenService;
+import services.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping("/api")
@@ -24,12 +27,12 @@ public class SpotifyAuthController {
 
     private final RecommendationService recommendationService;
     private final PlaylistService playlistService;
-    private final GenreService genreService;
+    private final UserService userService;
 
     public SpotifyAuthController(TokenService tokenService) {
         this.recommendationService = new RecommendationService(tokenService);
         this.playlistService = new PlaylistService(tokenService);
-        this.genreService = new GenreService();
+        this.userService = new UserService();
     }
 
     @GetMapping("/recommendation")
@@ -62,24 +65,14 @@ public class SpotifyAuthController {
     }
 
     @PostMapping("/playlist/recommendations")
-    public String createPlaylistForRecommendations(
-            @RequestBody JSONArray recommendations,
-            @RequestParam String userId
-    ) {
-        return playlistService.createPlaylistForRecommendations(userId, recommendations);
-    }
-
-    @PostMapping("/playlist/artist")
-    public String createArtistPlaylist(
+    public String createPlaylist(
             @RequestParam String userId,
-            @RequestParam String artistId,
-            @RequestBody JSONArray topTracks
+            @RequestBody String tracks
     ) {
-        return playlistService.createArtistPlaylist(userId, artistId, topTracks);
+        return playlistService.createPlaylist(userId, tracks);
     }
 
-    @GetMapping("/recommendations/available-genre-seeds")
-    public ArrayList<String> getGenres() {
-        return genreService.getGenres();
+    public String getCurrentUserProfile() {
+        return userService.createUserFromJson(playlistService.getCurrentUserProfile()).getId();
     }
 }

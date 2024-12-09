@@ -15,21 +15,19 @@ public class PlaylistService {
         this.spotifyApiClient = new SpotifyApiClient(tokenService);
     }
 
-    public String createPlaylistForRecommendations(String userId, JSONArray recommendedTracks) {
-        final String playlistResponse = spotifyApiClient.createPlaylist(userId, "Recommended Playlist");
+    public String createPlaylist(String userId, String tracks) {
+        System.out.println("createPlaylist" + tracks);
+        final String playlistResponse = spotifyApiClient.createPlaylist(userId, "Recommended Playlist 1");
         final JSONObject playlist = new JSONObject(playlistResponse);
+        System.out.println(playlist);
         final String playlistId = playlist.getString("id");
-
-        spotifyApiClient.addTracksToPlaylist(playlistId, recommendedTracks);
+        System.out.println("playlistId" + playlistId);
+        spotifyApiClient.addTracksToPlaylist(playlistId, tracks);
         return playlistId;
     }
 
-    public String createArtistPlaylist(String userId, String artistId, JSONArray topTracks) {
-        final String playlistResponse = spotifyApiClient.createPlaylist(userId, "Artist Playlist");
-        final JSONObject playlist = new JSONObject(playlistResponse);
-        final String playlistId = playlist.getString("id");
-
-        spotifyApiClient.addTracksToPlaylist(playlistId, topTracks);
-        return playlistId;
+    public String getCurrentUserProfile() {
+        return spotifyApiClient.getCurrentUserProfile();
     }
+
 }
