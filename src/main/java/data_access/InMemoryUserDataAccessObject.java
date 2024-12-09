@@ -3,6 +3,9 @@ package data_access;
 import java.util.HashMap;
 import java.util.Map;
 
+import entity.Artist;
+import entity.Genre;
+import entity.Track;
 import entity.User;
 import use_case.login.LoginUserDataAccessInterface;
 import use_case.logout.LogoutUserDataAccessInterface;
@@ -17,6 +20,9 @@ public class InMemoryUserDataAccessObject implements LoginUserDataAccessInterfac
     private final Map<String, User> users = new HashMap<>();
 
     private String currentUsername;
+    private Track recommendedSong;
+    private Genre recommendedGenre;
+    private Artist recommendedArtist;
 
     @Override
     public boolean existsByName(String identifier) {
