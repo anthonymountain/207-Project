@@ -20,6 +20,7 @@ public class RecAlbumOutputData {
     public String getId() {
         return id;
     }
+}
 
     public String getAlbumName() {
         return name;

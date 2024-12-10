@@ -18,10 +18,13 @@ import use_case.rec_genre.RecGenreUserDataAccessInterface;
 public class InMemoryUserDataAccessObject implements LoginUserDataAccessInterface,
         LogoutUserDataAccessInterface,
         RecGenreUserDataAccessInterface {
+        LogoutUserDataAccessInterface {
+
     private final Map<String, User> users = new HashMap<>();
 
     private String currentUsername;
     private Genre recommendedGenre;
+    private Artist recommendedArtist;
 
     @Override
     public boolean existsByName(String identifier) {

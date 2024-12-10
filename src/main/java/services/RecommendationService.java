@@ -67,8 +67,4 @@ public class RecommendationService {
         return spotifyApiClient.getArtistTopTracks(artistId, market);
     }
 
-    public ArrayList<Album> getNewReleases() {
-        return spotifyApiClient.getNewReleases();
-    }
-
 }

@@ -25,6 +25,11 @@ public class InMemoryTrackDataAccessObject implements RecTrackDataAccessInterfac
     }
 
     @Override
+    public Track getTrack() {
+        return this.track;
+    }
+
+    @Override
     public ArrayList<Track> getUserTopTracks() {
         return spotifyAuthController.getUserTopTracks();
     }

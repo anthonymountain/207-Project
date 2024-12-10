@@ -1,6 +1,5 @@
 package interface_adapter.spotify_auth;
 
-import entity.Album;
 import entity.Artist;
 import entity.Track;
 import org.json.JSONArray;
@@ -11,12 +10,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import services.AlbumService;
+import services.GenreService;
 import services.PlaylistService;
 import services.RecommendationService;
 import services.TokenService;
 import services.UserService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import java.util.ArrayList;
@@ -66,24 +66,10 @@ public class SpotifyAuthController {
 
     @PostMapping("/playlist/recommendations")
     public String createPlaylist(
-            @RequestBody String tracks,
-            @RequestParam String userId
+            @RequestParam String userId,
+            @RequestBody String tracks
     ) {
         return playlistService.createPlaylist(userId, tracks);
-    }
-
-    @PostMapping("/playlist/artist")
-    public String createArtistPlaylist(
-            @RequestParam String userId,
-            @RequestParam String artistId,
-            @RequestBody JSONArray topTracks
-    ) {
-        return playlistService.createArtistPlaylist(userId, artistId, topTracks);
-    }
-
-    @GetMapping("/browse/new-releases")
-    public ArrayList<Album> getNewReleases() {
-        return recommendationService.getNewReleases();
     }
 
     public String getCurrentUserProfile() {

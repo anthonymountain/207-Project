@@ -177,4 +177,7 @@ public class LoggedInView extends JPanel implements java.beans.PropertyChangeLis
         this.recAlbumController = recAlbumController;
     }
 
+    public void setRecGenreController(RecGenreController recGenreController) {
+        this.recGenreController = recGenreController;
+    }
 }

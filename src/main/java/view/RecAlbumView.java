@@ -52,4 +52,5 @@ public class RecAlbumView extends JPanel {
 
         this.add(artistLabel);
     }
+public class RecAlbumView {
 }

@@ -15,8 +15,6 @@ import org.springframework.stereotype.Component;
 
 import entity.Artist;
 import entity.Track;
-import entity.Album;
-import services.AlbumService;
 import services.ArtistService;
 import services.TokenService;
 import services.TrackService;
@@ -33,10 +31,8 @@ public class SpotifyApiClient {
     private final TokenService tokenService;
     private final ArtistService artistService;
     private final TrackService trackService;
-    private final AlbumService albumService;
 
     public SpotifyApiClient(TokenService tokenService) {
-        this.albumService = new AlbumService();
         this.artistService = new ArtistService();
         this.trackService = new TrackService();
         this.httpClient = HttpClient.newHttpClient();
@@ -119,7 +115,7 @@ public class SpotifyApiClient {
         try {
             final String accessToken = tokenService.getToken();
 
-            final URI uri = new URI(String.format("https://api.spotify.com/v1/playlists/%s/tracks", playlistId));
+            final URI uri = new URI(String.format("https://api.spotify.com/v1/playlists/%s/tracks?uris=%s", playlistId, trackUris));
 
             final JSONObject payload = new JSONObject();
             payload.put("uris", trackUris);
@@ -130,8 +126,9 @@ public class SpotifyApiClient {
                     .header("Content-Type", "application/json")
                     .POST(HttpRequest.BodyPublishers.ofString(payload.toString()))
                     .build();
-
-            httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println(request + "   kill me now" );
+            final HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
+            System.out.println("response sample" + response.body());
         }
         catch (IOException | InterruptedException | URISyntaxException ex) {
             throw new RuntimeException("Failed to add tracks", ex);

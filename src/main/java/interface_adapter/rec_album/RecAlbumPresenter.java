@@ -1,23 +1,7 @@
 package interface_adapter.rec_album;
 
-import interface_adapter.ViewManagerModel;
-import use_case.rec_album.RecAlbumOutputBoundary;
-import use_case.rec_album.RecAlbumOutputData;
-import view.RecAlbumView;
-
-import javax.swing.*;
-
-/**
- * Presenter for the Recommend Album Use Case.
- */
-public class RecAlbumPresenter implements RecAlbumOutputBoundary {
-    private final RecAlbumViewModel recAlbumViewModel;
-    private final ViewManagerModel viewManagerModel;
-
-    public RecAlbumPresenter(RecAlbumViewModel recAlbumViewModel, ViewManagerModel viewManagerModel) {
-        this.recAlbumViewModel = recAlbumViewModel;
-        this.viewManagerModel = viewManagerModel;
-    }
+public class RecAlbumPresenter {
+}
 
     @Override
     public void prepareSuccessView(RecAlbumOutputData outputData) {

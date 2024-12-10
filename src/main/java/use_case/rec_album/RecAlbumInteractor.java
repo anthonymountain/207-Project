@@ -32,4 +32,5 @@ public class RecAlbumInteractor implements RecAlbumInputBoundary {
                 mostPopularAlbum.getName(), true, "Album recommended successfully.");
         recAlbumPresenter.prepareSuccessView(outputData);
     }
+public class RecAlbumInteractor {
 }
